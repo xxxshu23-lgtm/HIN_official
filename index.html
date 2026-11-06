@@ -2909,6 +2909,21 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 /* 5) spec: slower line draw */
 .hxs-rule{transition-duration:1.2s !important;}
 </style>
+
+<style id="update-2026-11-06-f">
+/* 1) Here I Am Now lead: smaller + bold */
+@media (min-width:681px){ #pdPage .hpd-lead{font-size:clamp(20px,2.25vw,36px) !important;} }
+@media (max-width:680px){ #pdPage .hpd-lead{font-size:20px !important;} }
+#pdPage .hpd-lead{font-weight:600 !important; letter-spacing:-.015em !important; line-height:1.26 !important;}
+/* 2) OTHER COLORS tiles: smaller, square */
+.sh-tile{width:calc(36*var(--u)) !important; height:calc(36*var(--u)) !important; min-width:24px; min-height:24px; border-radius:0 !important;}
+.sh-tiles{gap:calc(8*var(--u)) !important;}
+.sh-tile.on{box-shadow:0 0 0 2px #000, 0 0 0 3px #E4E6EA !important;}
+/* 3) HIN-001 letter spacing like MAIN */
+.sc-name{letter-spacing:.13em !important;}
+/* 5) unit letters in Aeonik */
+#pdPage .hpd-num .hpd-v small{font-family:"Aeonik Hangul",var(--grotesk) !important; font-weight:500 !important; letter-spacing:0 !important;}
+</style>
 </head>
 <body>
 
@@ -2937,7 +2952,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 
   <div class="viewer-box">
     <model-viewer id="viewer"
-      src="assets/hin-001.glb"
+      data-glb="assets/hin-001.glb"
       alt="HIN 제품 3D 모델"
       camera-controls disable-zoom disable-pan
       touch-action="pan-y"
@@ -2949,7 +2964,23 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       interpolation-decay="120"
       auto-rotate rotation-per-second="7deg" auto-rotate-delay="0"
       min-camera-orbit="auto 40deg auto" max-camera-orbit="auto 105deg auto">
-    </model-viewer>
+    </model-viewer><script>
+/* 3D model: download the gzip copy, unpack in the browser, share one blob URL with every viewer */
+(() => {
+  const plain='assets/hin-001.glb', gz='assets/hin-001.glb.gz';
+  const main=document.getElementById('viewer');
+  const setAll=url=>{ main.setAttribute('src',url); ['s_viewer','p_viewer','c_viewer'].forEach(id=>{ const v=document.getElementById(id); if(v && v.hasAttribute('src')) v.setAttribute('src',url); }); if(document.documentElement.dataset.view==='shop' && window.__shopEnter) window.__shopEnter(); };
+  const load=async()=>{
+    if('DecompressionStream' in window){
+      try{ const r=await fetch(gz); if(!r.ok) throw 0;
+        const blob=await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).blob();
+        return setAll(URL.createObjectURL(new Blob([blob],{type:'model/gltf-binary'}))); }catch(e){}
+    }
+    setAll(plain);
+  };
+  if(main) load();
+})();
+</script>
   </div>
 
   <div class="hero-copy l blur-t">HIN™ Founded in Korea, 2026.<br>HERE I AM NOW</div>
@@ -3504,21 +3535,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     <figure class="hxs-fig"><img src="assets/spec-colors.webp" alt="옐로우, 그레이, 블랙 세 가지 컬러의 HIN-001" loading="lazy" decoding="async"></figure>
   </div>
 </section>
-<section class="hpd-blk" id="hpd-work">
-  <div class="hpd-gallery hpd-railwrap reveal">
-    <div class="hpd-rail" data-rail>
-      <div class="hpd-track">
-        <article class="hpd-card hpd-tall"><div class="hpd-fig"><img src="assets/x-56cb95cc68.webp" alt="HIN 매거진 이슈 01 표지" loading="lazy" decoding="async" draggable="false"><i>01</i></div><p><b>The state-keeping issue.</b>HIN Magazine, Issue 01</p></article>
-        <article class="hpd-card hpd-tall"><div class="hpd-fig"><img src="assets/x-3966b125a5.webp" alt="노트북을 펼치고 바닥에 앉은 모델" loading="lazy" decoding="async" draggable="false"><i>02</i></div><p><b>Between meetings.</b>HIN Magazine, Issue 01</p></article>
-        <article class="hpd-card hpd-tall"><div class="hpd-fig"><img src="assets/x-8af58eef0f.webp" alt="기차 창가에서 노트북으로 작업하는 모습" loading="lazy" decoding="async" draggable="false"><i>03</i></div><p><b>Where the journey becomes a session.</b>HIN Magazine, Issue 01</p></article>
-        <article class="hpd-card hpd-tall"><div class="hpd-fig"><img src="assets/x-b22f15cdf4.webp" alt="투명한 가방을 든 모델" loading="lazy" decoding="async" draggable="false"><i>04</i></div><p><b>Should move with your workspace.</b>HIN Magazine, Issue 01</p></article>
-        <article class="hpd-card hpd-tall"><div class="hpd-fig"><img src="assets/x-34a1ce1c26.webp" alt="풀밭 위에서 작업하는 모델" loading="lazy" decoding="async" draggable="false"><i>05</i></div><p><b>Here, I am, Now.</b>HIN Magazine, Issue 01</p></article>
-        <article class="hpd-card hpd-tall"><div class="hpd-fig"><img src="assets/x-07b56ac8ae.jpg" alt="서류와 가방을 든 채 거리를 걷는 모델" loading="lazy" decoding="async" draggable="false"><i>06</i></div><p><b>Digital nomad workers &amp; creators.</b>HIN Magazine, Issue 01</p></article>
-      </div>
-    </div>
-    <div class="hpd-railctl"><button type="button" class="hpd-round" data-prev aria-label="이전"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.6 2.6 5.2 8l5.4 5.4-1.1 1.1L3 8l6.5-6.5z"/></svg></button><button type="button" class="hpd-round" data-next aria-label="다음"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.4 2.6 10.8 8l-5.4 5.4 1.1 1.1L13 8 6.5 1.5z"/></svg></button><div class="hpd-prog" aria-hidden="true"><i></i></div></div>
-  </div>
-</section>
+
 <section class="hx-note" aria-label="배송 및 보증 안내">
   <p><span><b>배송</b> 주문 후 2–3 영업일 이내 출고</span><i aria-hidden="true">·</i><span><b>보증</b> 구입일로부터 12개월 품질 보증</span><i aria-hidden="true">·</i><span><b>반품</b> 수령 후 14일 이내, 미개봉 기준</span><i aria-hidden="true">·</i><span><b>문의</b> <a href="mailto:hello@hin.co.kr">hello@hin.co.kr</a></span></p>
 </section>
@@ -4287,7 +4304,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     const home=document.getElementById('viewHome'), prod=document.getElementById('viewProduct'), shopEl=document.getElementById('viewShop');
     const CH={
       home:[['#heroPinWrap','Arrival'],['#productRise','Manifesto'],['#hingeGallery','Workers'],['section.slider.second','People'],['#magStack','Issue 01'],['section.slider.first','Campaign'],['#aboutSection','Studio']],
-      shop:[['#s_viewWrap','Configure'],['#hpd-intro','Overview'],['#hpd-fold','Portable'],['#hxFeatures','Features'],['#hpd-chapters','Chapters'],['#hxPin','Details'],['#hpd-numbers','Dimensions'],['#hxColor','Colours'],['#hxSpec','Specifications'],['#hpd-work','Magazine'],['#shopAboutSlot','Studio']]
+      shop:[['#s_viewWrap','Configure'],['#hpd-intro','Overview'],['#hpd-fold','Portable'],['#hxFeatures','Features'],['#hpd-chapters','Chapters'],['#hxPin','Details'],['#hpd-numbers','Dimensions'],['#hxColor','Colours'],['#hxSpec','Specifications'],['#shopAboutSlot','Studio']]
     };
     const list=v=>(CH[v]||[]).map(([sel,name])=>[q(v==='home'?home:shopEl, sel), name]).filter(x=>x[0]);
     let cur=-1, curView='';
