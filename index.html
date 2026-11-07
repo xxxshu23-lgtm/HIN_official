@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
 <title>HIN : Here I Am Now</title>
 <link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-<script src="assets/model-viewer.min.js"></script>
+<script src="assets/model-viewer.min.js?v=6"></script>
 <style>
   @font-face{
     font-family:"HIN Type";
@@ -2460,6 +2460,41 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 /* 5) unit letters in Aeonik */
 #pdPage .hpd-num .hpd-v small{font-family:"Aeonik Hangul",var(--grotesk) !important; font-weight:500 !important; letter-spacing:0 !important;}
 </style>
+
+<style id="update-2026-11-07-a">
+/* 1) view toggle: square, white glow frame like ORDER */
+@media (min-width:681px){
+  .shop-colors .shop-mode{position:static !important; transform:none !important; left:auto !important; bottom:auto !important; margin-left:calc(12*var(--u)); padding:calc(4*var(--u)) !important; gap:calc(3*var(--u)) !important;}
+  .shop-colors .shop-mode button{width:calc(46*var(--u)) !important; height:calc(30*var(--u)) !important; min-height:22px;}
+  .shop-colors .shop-mode button svg{width:calc(18*var(--u)) !important; height:calc(18*var(--u)) !important;}
+}
+.shop-mode{border-radius:0 !important; background:#000 !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; padding:calc(5*var(--u)) !important; gap:calc(4*var(--u)) !important;
+  box-shadow:inset 0 0 0 calc(2*var(--u)) #fff, inset 0 0 calc(10*var(--u)) rgba(255,255,255,.45), 0 0 calc(14*var(--u)) rgba(255,255,255,.5) !important; border:0 !important;}
+.shop-mode button{border-radius:0 !important; color:rgba(255,255,255,.5) !important; background:transparent !important; box-shadow:none !important;}
+.shop-mode button:hover{color:#fff !important;}
+.shop-mode button.on{background:#000 !important; color:#fff !important; box-shadow:inset 0 0 0 1px rgba(255,255,255,.85) !important;}
+@media (max-width:680px){ .shop-mode{padding:4px !important; gap:3px !important; box-shadow:inset 0 0 0 1.5px #fff, inset 0 0 8px rgba(255,255,255,.4), 0 0 10px rgba(255,255,255,.45) !important;} }
+
+/* 4) feature slider: type +18%, glowing yellow squares */
+.hxf-txt h3{font-size:max(17px,calc(30.7/14.4*1cqw)) !important;}
+.hxf-txt p{top:calc(var(--dy)*1.18/14.4*1cqw) !important; font-size:max(12.5px,calc(18.9/14.4*1cqw)) !important;}
+.hxf-lines .sq-y{filter:drop-shadow(0 0 4px rgba(255,251,186,.95)) drop-shadow(0 0 12px rgba(255,251,186,.45));}
+
+/* 5) pin captions: type +18% */
+.hxp-txt{width:calc(603/14.4*1cqw) !important;}
+.hxp-row h3{font-size:max(16px,calc(24.8/14.4*1cqw)) !important;}
+.hxp-row .kr{font-size:max(11px,calc(14.75/14.4*1cqw)) !important;}
+.hxp-line p{font-size:max(12px,calc(15.3/14.4*1cqw)) !important; margin-top:calc(10.6/14.4*1cqw) !important;}
+.hxp-rule{margin-top:calc(10.6/14.4*1cqw) !important;}
+</style>
+<style id="update-2026-11-07-b">
+/* pin captions: another +20% */
+.hxp-txt{width:calc(724/14.4*1cqw) !important;}
+.hxp-row h3{font-size:max(18px,calc(29.8/14.4*1cqw)) !important;}
+.hxp-row .kr{font-size:max(12px,calc(17.7/14.4*1cqw)) !important;}
+.hxp-line p{font-size:max(13px,calc(18.4/14.4*1cqw)) !important; margin-top:calc(12.7/14.4*1cqw) !important;}
+.hxp-rule{margin-top:calc(12.7/14.4*1cqw) !important;}
+</style>
 </head>
 <body>
 
@@ -2503,16 +2538,18 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     </model-viewer><script>
 /* 3D model: download the gzip copy, unpack in the browser, share one blob URL with every viewer */
 (() => {
-  const gz='assets/hin-001.glb.gz';
+  const V='?v=6', gz='assets/hin-001.glb.gz'+V, plain='assets/hin-001.glb'+V;
   const main=document.getElementById('viewer');
   const setAll=url=>{ main.setAttribute('src',url); ['s_viewer','p_viewer','c_viewer'].forEach(id=>{ const v=document.getElementById(id); if(v && v.hasAttribute('src')) v.setAttribute('src',url); }); if(document.documentElement.dataset.view==='shop' && window.__shopEnter) window.__shopEnter(); };
   const load=async()=>{
     if('DecompressionStream' in window){
       try{ const r=await fetch(gz); if(!r.ok) throw 0;
-        const blob=await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).blob();
-        return setAll(URL.createObjectURL(new Blob([blob],{type:'model/gltf-binary'}))); }catch(e){}
+        let buf=new Uint8Array(await r.arrayBuffer());
+        if(!(buf[0]===0x67&&buf[1]===0x6c&&buf[2]===0x54&&buf[3]===0x46)){
+          buf=new Uint8Array(await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()); }
+        if(buf[0]===0x67&&buf[1]===0x6c&&buf[2]===0x54&&buf[3]===0x46) return setAll(URL.createObjectURL(new Blob([buf],{type:'model/gltf-binary'}))); }catch(e){}
     }
-    setAll(gz.replace(/\.gz$/,'') );
+    setAll(plain);
   };
   if(main) load();
 })();
@@ -4225,6 +4262,13 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 <script>
 // 4) let :active work on touch screens for the dimension cards
 document.addEventListener('touchstart',()=>{},{passive:true});
+</script>
+<script>
+/* view toggle joins the colour row on desktop */
+(() => { const mode=document.getElementById('s_mode'), row=document.querySelector('.shop-colors'); if(!mode||!row) return;
+  const home=document.createComment('mode-home'); mode.before(home);
+  const mq=matchMedia('(min-width:681px)'); const place=()=>{ if(mq.matches){ if(mode.parentNode!==row) row.appendChild(mode); } else if(home.nextSibling!==mode) home.after(mode); };
+  mq.addEventListener ? mq.addEventListener('change',place) : mq.addListener(place); place(); })();
 </script>
 </body>
 </html>
