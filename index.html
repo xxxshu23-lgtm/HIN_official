@@ -2254,7 +2254,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 /* 1) pin + slider stages fit one screen under the top bar */
 @media (min-width:681px){
   .hxp-stage{width:min(100vw - 2*var(--gut), (100vh - 200px)*1.6) !important; margin-top:56px;}
-  .hxf{min-height:100vh; display:flex; align-items:center; padding:96px 0 64px; box-sizing:border-box;}
+  .hxf{height:300vh; position:relative;} /* vertical scroll drives 01 → 02 → 03 */
+  .hxf-sticky{position:sticky; top:0; height:100vh; display:flex; align-items:center; padding:96px 0 64px; box-sizing:border-box; overflow:hidden; background:#000;}
+  .hxf-viewport{cursor:default !important; touch-action:auto !important;}
   .hxf-viewport{width:min(100vw - 2*var(--gut), (100vh - 200px)*1.6); margin:0 auto;}
   .hxf-dots{bottom:16px !important;}
   .hxp-rise, .hxf-stage{-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent),linear-gradient(180deg,transparent,#000 6%,#000 94%,transparent); -webkit-mask-composite:source-in; mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent),linear-gradient(180deg,transparent,#000 6%,#000 94%,transparent); mask-composite:intersect;}
@@ -3058,7 +3060,8 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     <div class="reveal d2"><b data-words>Sets up instantly.</b><p data-words>복잡한 조립 과정 없이 빠르게 펼쳐지고, 한 번 펼친 후에는 설정한 높이와 위치가 그대로 유지됩니다.</p></div>
   </div>
 </section>
-<section class="hxf" id="hxFeatures" aria-label="HIN-001 기능 소개" aria-roledescription="슬라이더">
+<section class="hxf" id="hxFeatures" aria-label="HIN-001 기능 소개">
+ <div class="hxf-sticky">
   <div class="hxf-viewport" tabindex="0">
     <div class="hxf-slides">
       <article class="hxf-slide on" data-i="0" aria-label="1 / 3">
@@ -3089,6 +3092,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       <button type="button" role="tab" aria-selected="false" aria-label="03 MOUSE PAD"></button>
     </div>
   </div>
+ </div>
 </section>
 <section class="hxp" id="hxPin" aria-label="HIN-001 디테일">
   <div class="hxp-sticky">
@@ -4243,12 +4247,17 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       slides.forEach((s,k)=>{ s.classList.toggle('on',k===n); s.setAttribute('aria-hidden',k!==n); });
       dots.forEach((d,k)=>{ d.classList.toggle('on',k===n); d.setAttribute('aria-selected',k===n); }); };
     slides.forEach((s,k)=>s.setAttribute('aria-hidden',k!==0));
-    dots.forEach((d,k)=>d.addEventListener('click',e=>{ e.stopPropagation(); go(k); }));
+    const desk=matchMedia('(min-width:681px)');
+    const stepY=k=>{ const top=fx.getBoundingClientRect().top+scrollY, total=fx.offsetHeight-innerHeight; return top+total*(k+.5)/slides.length; };
+    const byScroll=()=>{ if(!desk.matches) return; const r=fx.getBoundingClientRect(), total=fx.offsetHeight-innerHeight; if(total<=0) return;
+      const p=Math.min(Math.max(-r.top/total,0),.9999); go(Math.floor(p*slides.length)); };
+    addEventListener('scroll',byScroll,{passive:true}); addEventListener('resize',byScroll); byScroll();
+    dots.forEach((d,k)=>d.addEventListener('click',e=>{ e.stopPropagation(); if(desk.matches) scrollTo({top:stepY(k),behavior:'smooth'}); else go(k); }));
     let x0=null, y0=0, dx=0, axis=null;
     vp.addEventListener('dragstart',e=>e.preventDefault());
-    vp.addEventListener('pointerdown',e=>{ if(e.button>0 || e.target.closest('.hxf-dots')) return; x0=e.clientX; y0=e.clientY; dx=0; axis=null; wrap.style.transition='none'; vp.classList.add('drag'); try{ vp.setPointerCapture(e.pointerId); }catch(_){} });
+    vp.addEventListener('pointerdown',e=>{ if(desk.matches || e.button>0 || e.target.closest('.hxf-dots')) return; x0=e.clientX; y0=e.clientY; dx=0; axis=null; wrap.style.transition='none'; vp.classList.add('drag'); try{ vp.setPointerCapture(e.pointerId); }catch(_){} });
     let acc=0, lock=false, idle=null;
-    vp.addEventListener('wheel',e=>{ const ax=Math.abs(e.deltaX), ay=Math.abs(e.deltaY); if(ax<=ay || ax<2) return; e.preventDefault();
+    vp.addEventListener('wheel',e=>{ if(desk.matches) return; const ax=Math.abs(e.deltaX), ay=Math.abs(e.deltaY); if(ax<=ay || ax<2) return; e.preventDefault();
       clearTimeout(idle); idle=setTimeout(()=>{ acc=0; },180); if(lock) return; acc+=e.deltaX;
       if(Math.abs(acc)>45){ go(cur+(acc>0?1:-1)); acc=0; lock=true; setTimeout(()=>{ lock=false; },650); } },{passive:false});
     addEventListener('pointermove',e=>{ if(x0===null) return; const mx=e.clientX-x0, my=e.clientY-y0;
