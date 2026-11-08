@@ -2171,6 +2171,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 .hxf-txt h3{margin:0; font:400 max(15px,calc(26/14.4*1cqw))/1.2 "HIN Typeer",var(--pixel); letter-spacing:.06em; color:#fff;}
 .hxf-txt p{position:absolute; left:0; top:calc(var(--dy)/14.4*1cqw); margin:0; white-space:nowrap; font:300 max(11px,calc(16/14.4*1cqw))/1.42 "Aeonik Hangul",var(--grotesk); color:#e6e6e6; letter-spacing:0;}
 .hxf-txt .hl{transition-delay:calc(.3s + var(--i,0)*140ms);}
+.hxf-txt.r{left:auto; right:calc((1440 - var(--rx))/14.4*1cqw); text-align:right;}
+.hxf-txt.r p{left:auto; right:0;}
+@media (max-width:680px){ .hxf-txt.r{text-align:left;} }
 .hxf-dots{position:absolute; left:50%; bottom:calc(36/1440*100vw); transform:translateX(-50%); display:flex; gap:14px; z-index:2;}
 #pdPage .hxf-dots button{width:9px; height:9px; padding:0; border:0; background:#5c5c5c; cursor:pointer; transition:background .3s ease, transform .3s ease;}
 #pdPage .hxf-dots button:hover{background:#9c9c9c;}
@@ -2983,8 +2986,8 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       <article class="hxf-slide" data-i="2" aria-label="3 / 3">
         <div class="hx-stage hxf-stage">
           <img class="hxf-img full" src="assets/f03-mousepad.webp" alt="본체에서 분리된 HIN-001 마우스패드" loading="lazy" decoding="async" draggable="false">
-          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M466 513V772H1188" pathLength="1"/><rect x="460" y="507" width="12" height="12" class="sq-y"/></svg>
-          <div class="hxf-txt" style="--x:906;--y:722"><h3 class="hl" style="--i:0">03 MOUSE PAD</h3><p class="hl" style="--i:1;--dy:66">A detachable mouse pad that adapts <br>to different spaces and working needs.</p></div>
+          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M881 128H576L492 357" pathLength="1"/><rect x="486" y="351" width="12" height="12" class="sq-y"/></svg>
+          <div class="hxf-txt r" style="--rx:881;--y:75"><h3 class="hl" style="--i:0">03 MOUSE PAD</h3><p class="hl" style="--i:1;--dy:82">A detachable mouse pad that adapts <br>to different spaces and working needs.</p></div>
         </div>
       </article>
     </div>
@@ -4263,29 +4266,6 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 <script>
 // 4) let :active work on touch screens for the dimension cards
 document.addEventListener('touchstart',()=>{},{passive:true});
-</script>
-<script>
-/* 03 MOUSE PAD: connector line follows the heading at every width.
-   At the 1440 design it lands at y=772 / x=1188 as drawn; when the heading hits its min font size
-   the line keeps the same gaps (centred between heading and body) and the same overhang past the heading. */
-(() => { const sl=document.querySelectorAll('#hxFeatures .hxf-slide')[2]; if(!sl) return;
-  const st=sl.querySelector('.hxf-stage'), path=sl.querySelector('.hxf-lines path'), t=sl.querySelector('.hxf-txt');
-  const h=t&&t.querySelector('h3'), p=t&&t.querySelector('p'); if(!st||!path||!h||!p) return;
-  const OVER=30.8/26, c=document.createElement('canvas').getContext('2d');
-  const fit=()=>{ const W=st.clientWidth; if(!W||!path.ownerSVGElement||getComputedStyle(path.ownerSVGElement).display==='none') return;
-    const k=1440/W, ch=getComputedStyle(h), cp=getComputedStyle(p);
-    c.font=`${ch.fontWeight} ${ch.fontSize} ${ch.fontFamily}`; const H=c.measureText(h.textContent);
-    c.font=`${cp.fontWeight} ${cp.fontSize} ${cp.fontFamily}`; const P=c.measureText(p.innerHTML.split(/<br\s*\/?>/i)[0].replace(/<[^>]+>/g,''));
-    if(!H.fontBoundingBoxAscent||!P.fontBoundingBoxAscent) return;
-    const hf=parseFloat(ch.fontSize), ls=parseFloat(ch.letterSpacing)||0, hl=parseFloat(ch.lineHeight), pl=parseFloat(cp.lineHeight);
-    const hInkBot=t.offsetTop+h.offsetTop+(hl-(H.fontBoundingBoxAscent+H.fontBoundingBoxDescent))/2+H.fontBoundingBoxAscent+H.actualBoundingBoxDescent;
-    const pInkTop=t.offsetTop+p.offsetTop+(pl-(P.fontBoundingBoxAscent+P.fontBoundingBoxDescent))/2+P.fontBoundingBoxAscent-P.actualBoundingBoxAscent;
-    const inkR=t.offsetLeft+h.offsetLeft+h.offsetWidth-ls+(H.actualBoundingBoxRight-H.width);
-    const y=(hInkBot+pInkTop)/2*k, x=(inkR+OVER*hf)*k;
-    if(isFinite(x)&&isFinite(y)) path.setAttribute('d','M466 513V'+y.toFixed(1)+'H'+x.toFixed(1)); };
-  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(fit);
-  if(window.ResizeObserver) new ResizeObserver(fit).observe(st); else addEventListener('resize',fit);
-  fit(); })();
 </script>
 </body>
 </html>
