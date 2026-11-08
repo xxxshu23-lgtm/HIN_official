@@ -3063,20 +3063,6 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     </article>
   </div>
 </section>
-<section class="hxc" id="hxColor" data-c="0" aria-label="HIN-001 컬러">
-  <div class="hxc-bg" aria-hidden="true"><i class="g on"></i><i class="k"></i><i class="y"></i></div>
-  <div class="hxc-txt">
-    <div class="hxc-line on"><h3 class="hl" style="--i:0">01 GRAY</h3><span class="hl mood" style="--i:1">FOCUS</span><p class="hl" style="--i:2">A balanced palette for focused work.</p></div>
-    <div class="hxc-line"><h3 class="hl" style="--i:0">02 BLACK</h3><span class="hl mood" style="--i:1">NIGHT</span><p class="hl" style="--i:2">A deep tone for focused nights.</p></div>
-    <div class="hxc-line"><h3 class="hl" style="--i:0">03 YELLOW</h3><span class="hl mood" style="--i:1">SIGNAL</span><p class="hl" style="--i:2">A soft signal that brightens any desk.</p></div>
-  </div>
-  <div class="hxc-view"><model-viewer id="c_viewer" alt="HIN-001 3D 모델 컬러 미리보기" camera-controls disable-zoom disable-pan touch-action="pan-y" interaction-prompt="none" environment-image="neutral" exposure="1.05" shadow-intensity="1" shadow-softness="0.8" camera-orbit="158deg 72deg 92%" field-of-view="24deg" auto-rotate rotation-per-second="9deg" auto-rotate-delay="0" interpolation-decay="120"></model-viewer></div>
-  <div class="hxc-chips" role="radiogroup" aria-label="컬러 선택">
-    <button type="button" class="on" role="radio" aria-checked="true" data-i="0"><i style="background:#8B8B87"></i>Gray</button>
-    <button type="button" role="radio" aria-checked="false" data-i="1"><i style="background:#1E1D1B"></i>Black</button>
-    <button type="button" role="radio" aria-checked="false" data-i="2"><i style="background:#FFFBBA"></i>Yellow</button>
-  </div>
-</section>
 
 <!-- ================= DETAIL RAIL ================= -->
 
@@ -3949,7 +3935,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     const home=document.getElementById('viewHome'), prod=document.getElementById('viewProduct'), shopEl=document.getElementById('viewShop');
     const CH={
       home:[['#heroPinWrap','Arrival'],['#productRise','Manifesto'],['#hingeGallery','Workers'],['section.slider.second','People'],['#magStack','Issue 01'],['section.slider.first','Campaign'],['#aboutSection','Studio']],
-      shop:[['#s_viewWrap','Configure'],['#hpd-intro','Overview'],['#hpd-fold','Portable'],['#hxFeatures','Features'],['#hxPin','Details'],['#hpd-numbers','Dimensions'],['#hxColor','Colours'],['#hxSpec','Specifications'],['#shopAboutSlot','Studio']]
+      shop:[['#s_viewWrap','Configure'],['#hpd-intro','Overview'],['#hpd-fold','Portable'],['#hxFeatures','Features'],['#hxPin','Details'],['#hpd-numbers','Dimensions'],['#hxSpec','Specifications'],['#shopAboutSlot','Studio']]
     };
     const list=v=>(CH[v]||[]).map(([sel,name])=>[q(v==='home'?home:shopEl, sel), name]).filter(x=>x[0]);
     let cur=-1, curView='';
