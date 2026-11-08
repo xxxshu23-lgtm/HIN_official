@@ -3122,9 +3122,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #hxLook .hxl-m{position:absolute; inset:0; margin:0; display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(1.015); transition:opacity .8s ease, transform 1.1s cubic-bezier(.22,1,.36,1);}
 #hxLook .hxl-m.on{opacity:1; transform:none;}
 #hxLook .hxl-m img{display:block; width:auto; height:auto; max-width:100%; max-height:100%;
-  /* feather every edge into the page black so photos never read as pasted rectangles */
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent); -webkit-mask-composite:source-in;
-  mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent); mask-composite:intersect;}
+  /* fade the outer edge into the page black (opacity falls off toward the rim) so photos never read as pasted rectangles */
+  -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 58%,rgba(0,0,0,.55) 78%,transparent 100%);
+  mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 58%,rgba(0,0,0,.55) 78%,transparent 100%);}
 #hxLook .hxl-stat{position:absolute; right:2%; top:8%; font:400 clamp(44px,6vw,108px)/1 "HIN Typeer",var(--pixel); letter-spacing:.02em; color:#8a8a8a;}
 #hxLook .hxl-stat small{font-family:"Aeonik Hangul",var(--grotesk); font-weight:500; font-size:.42em; margin-left:.25em; letter-spacing:0;}
 #hxLook .hxl-lw{position:absolute; left:calc(56px + 12px); top:0; bottom:0; width:min(440px,42%); overflow-y:auto; scrollbar-width:none; overscroll-behavior:auto; display:flex; flex-direction:column; justify-content:safe center;
