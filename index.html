@@ -2943,9 +2943,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 <section class="hx15" id="hx15" aria-label="어디서든 이어지는 작업">
   <div class="hx15-box">
     <div class="hx15-roll" aria-roledescription="사진 롤링">
-      <img class="on" src="assets/s15-photo-1.webp" alt="잔디밭에 앉아 노트북으로 함께 작업하는 사람들" loading="lazy" decoding="async">
-      <img src="assets/s15-photo-2.webp?v=2" alt="창가 회의실에서 노트북을 펼치고 회의하는 팀" loading="lazy" decoding="async">
-      <img src="assets/s15-photo-3.webp?v=2" alt="카페 테이블에서 노트북으로 작업하는 사람들" loading="lazy" decoding="async">
+      <img class="on" src="assets/s15-photo-1.webp?v=3" alt="잔디밭에 앉아 노트북으로 함께 작업하는 사람들" loading="lazy" decoding="async">
+      <img src="assets/s15-photo-2.webp?v=3" alt="창가 회의실에서 노트북을 펼치고 회의하는 팀" loading="lazy" decoding="async">
+      <img src="assets/s15-photo-3.webp?v=3" alt="카페 테이블에서 노트북으로 작업하는 사람들" loading="lazy" decoding="async">
     </div>
     <div class="hx15-panel">
       <i class="hx15-sq" aria-hidden="true"></i>
@@ -3017,7 +3017,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       <div class="hxp-rise">
         <div class="hxp-img on" data-i="0"><img class="cover" src="assets/d01-quick.webp?v=2" alt="펼쳐진 HIN-001 본체와 분리된 마우스패드, 라이트 모듈" loading="lazy" decoding="async"></div>
         <div class="hxp-img" data-i="1"><img class="cover" src="assets/d02-mark.webp?v=2" alt="HIN-001 상단 모듈에 각인된 HIN 마크" loading="lazy" decoding="async"></div>
-        <div class="hxp-img" data-i="2"><i class="hxp-glow" aria-hidden="true"></i><img class="d03" src="assets/d03-stable.webp?v=2" alt="노트북을 올린 HIN-001 정면" loading="lazy" decoding="async"></div>
+        <div class="hxp-img" data-i="2"><i class="hxp-glow" aria-hidden="true"></i><img class="d03" src="assets/d03-stable.webp?v=3" alt="노트북을 올린 HIN-001 정면" loading="lazy" decoding="async"></div>
       </div>
       <i class="hxp-fade" aria-hidden="true"></i>
       <div class="hxp-txt">
@@ -3111,7 +3111,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 </section>
 
 <section class="hx-note" aria-label="배송 및 보증 안내">
-  <p><span><b>배송</b> 주문 후 2–3 영업일 이내 출고</span><i aria-hidden="true">·</i><span><b>보증</b> 구입일로부터 12개월 품질 보증</span><i aria-hidden="true">·</i><span><b>반품</b> 수령 후 14일 이내, 미개봉 기준</span><i aria-hidden="true">·</i><span><b>문의</b> <a href="mailto:hello@hin.co.kr">hello@hin.co.kr</a></span></p>
+  <p><span><b>배송</b> 주문 후 2–3 영업일 이내 출고</span><i aria-hidden="true">·</i><span><b>보증</b> 구입일로부터 12개월 품질 보증</span><i aria-hidden="true">·</i><span><b>반품</b> 수령 후 14일 이내, 미개봉 기준</span><i aria-hidden="true">·</i><span><b>문의</b> <a href="mailto:contact@hin-design.com">contact@hin-design.com</a></span></p>
 </section>
 
 </div>
@@ -4152,7 +4152,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   const s14=document.getElementById('hx14');
   if(s14){
     if(!('IntersectionObserver' in window)||rm) s14.classList.add('is-in');
-    else new IntersectionObserver((es,o)=>es.forEach(e=>{ if(e.isIntersecting){ s14.classList.add('is-in'); o.disconnect(); } }),{threshold:.45}).observe(s14);
+    else new IntersectionObserver(es=>es.forEach(e=>{ if(e.intersectionRatio>=.45) s14.classList.add('is-in'); else if(!e.isIntersecting) s14.classList.remove('is-in'); }),{threshold:[0,.45]}).observe(s14); // replays every time it scrolls back into view
   }
 
   // 3) website 15: vertical photo rolling + product zoom on scroll
