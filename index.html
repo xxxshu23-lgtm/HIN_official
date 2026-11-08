@@ -2167,10 +2167,11 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 .hxf-lines .sq-k{fill:#000; stroke:#fff; stroke-width:1.2;}
 .hxf-lines .sq-w{fill:#fff;}
 .hxf-slide.on .hxf-lines rect{opacity:1;}
-.hxf-txt{position:absolute; left:calc(var(--x)/14.4*1cqw); top:calc(var(--y)/14.4*1cqw);}
+.hxf-txt{position:absolute; left:calc(var(--x)/14.4*1cqw); top:calc(var(--ly)/14.4*1cqw); --g:18;} /* top = the connector line; heading sits above it, body below, both --g design px from the line (ink to line) */
 .hxf-txt h3{margin:0; font:400 max(15px,calc(26/14.4*1cqw))/1.2 "HIN Typeer",var(--pixel); letter-spacing:.06em; color:#fff;}
-.hxf-txt p{position:absolute; left:0; top:calc(var(--dy)/14.4*1cqw); margin:0; white-space:nowrap; font:300 max(11px,calc(16/14.4*1cqw))/1.42 "Aeonik Hangul",var(--grotesk); color:#e6e6e6; letter-spacing:0;}
+.hxf-txt p{position:absolute; left:0; top:calc(var(--g)/14.4*1cqw - .354em); margin:0; white-space:nowrap; font:300 max(11px,calc(16/14.4*1cqw))/1.42 "Aeonik Hangul",var(--grotesk); color:#e6e6e6; letter-spacing:0;}
 .hxf-txt .hl{transition-delay:calc(.3s + var(--i,0)*140ms);}
+@media (min-width:681px){ .hxf-txt h3{margin-top:calc(-1.085em - var(--g)/14.4*1cqw);} }
 .hxf-txt.r{left:auto; right:calc((1440 - var(--rx))/14.4*1cqw); text-align:right;}
 .hxf-txt.r p{left:0; right:auto; text-align:left;}
 @media (max-width:680px){ .hxf-txt.r{text-align:left;} }
@@ -2481,7 +2482,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 
 /* 4) feature slider: type +18%, glowing yellow squares */
 .hxf-txt h3{font-size:max(17px,calc(30.7/14.4*1cqw)) !important;}
-.hxf-txt p{top:calc(var(--dy)*1.18/14.4*1cqw) !important; font-size:max(12.5px,calc(18.9/14.4*1cqw)) !important;}
+.hxf-txt p{top:calc(var(--g)/14.4*1cqw - .354em) !important; font-size:max(12.5px,calc(18.9/14.4*1cqw)) !important;}
 .hxf-lines .sq-y{filter:drop-shadow(0 0 4px rgba(255,251,186,.95)) drop-shadow(0 0 12px rgba(255,251,186,.45));}
 
 /* 5) pin captions: type +18% */
@@ -2973,21 +2974,21 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
         <div class="hx-stage hxf-stage">
           <img class="hxf-img f01" src="assets/f01-lightbar.webp?v=2" alt="세워진 HIN-001과 일체형 LED 라이트바" loading="lazy" decoding="async" draggable="false">
           <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H900L1280 477" pathLength="1"/><rect x="1274" y="471" width="12" height="12" class="sq-y"/></svg>
-          <div class="hxf-txt" style="--x:160;--y:128"><h3 class="hl" style="--i:0">01 LIGHT BAR</h3><p class="hl" style="--i:1;--dy:82">An integrated LED light bar provides soft, even illumination across your workspace, <br>helping create a more comfortable and focused environment for work.</p></div>
+          <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">01 LIGHT BAR</h3><p class="hl" style="--i:1">An integrated LED light bar provides soft, even illumination across your workspace, <br>helping create a more comfortable and focused environment for work.</p></div>
         </div>
       </article>
       <article class="hxf-slide" data-i="1" aria-label="2 / 3">
         <div class="hx-stage hxf-stage">
           <img class="hxf-img full" src="assets/f02-power.webp?v=2" alt="라이트 라인이 들어간 HIN-001 배터리 모듈" loading="lazy" decoding="async" draggable="false">
           <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M151 180H806L951 384" pathLength="1"/><rect x="945" y="378" width="12" height="12" class="sq-y"/></svg>
-          <div class="hxf-txt" style="--x:159;--y:127"><h3 class="hl" style="--i:0">02 POWER</h3><p class="hl" style="--i:1;--dy:76">65Wh built-in battery and USB-C connectivity, <br>an uninterrupted workflow wherever you go.</p></div>
+          <div class="hxf-txt" style="--x:159;--ly:180"><h3 class="hl" style="--i:0">02 POWER</h3><p class="hl" style="--i:1">65Wh built-in battery and USB-C connectivity, <br>an uninterrupted workflow wherever you go.</p></div>
         </div>
       </article>
       <article class="hxf-slide" data-i="2" aria-label="3 / 3">
         <div class="hx-stage hxf-stage">
           <img class="hxf-img full" src="assets/f03-mousepad.webp" alt="본체에서 분리된 HIN-001 마우스패드" loading="lazy" decoding="async" draggable="false">
           <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M881 128H576L492 357" pathLength="1"/><rect x="486" y="351" width="12" height="12" class="sq-y"/></svg>
-          <div class="hxf-txt r" style="--rx:881;--y:75"><h3 class="hl" style="--i:0">03 MOUSE PAD</h3><p class="hl" style="--i:1;--dy:64">A detachable mouse pad that adapts <br>to different spaces and working needs.</p></div>
+          <div class="hxf-txt r" style="--rx:881;--ly:128"><h3 class="hl" style="--i:0">03 MOUSE PAD</h3><p class="hl" style="--i:1">A detachable mouse pad that adapts <br>to different spaces and working needs.</p></div>
         </div>
       </article>
     </div>
