@@ -3157,11 +3157,10 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #hxLook .hxl-sw{display:flex; gap:10px; margin:16px 0 14px;}
 #hxLook .hxl-sw button{width:30px; height:30px; padding:0; border:0; cursor:pointer; background:var(--c); box-shadow:inset 0 0 0 1px rgba(255,255,255,.3); transition:box-shadow .25s ease;}
 #hxLook .hxl-sw button.on{box-shadow:0 0 0 2px #000, 0 0 0 3px #E4E6EA;}
-#hxLook .hxl-cl{position:relative; margin:0; min-height:3.2em; font:400 1em/1.6 "Aeonik Hangul",var(--grotesk); color:#9c9c9c;}
-@container (min-width:400px){ #hxLook .hxl-cl{min-height:1.6em;} }
-#hxLook .hxl-cl span{position:absolute; left:0; top:0; opacity:0; transition:opacity .35s ease;}
+#hxLook .hxl-cl{display:grid; margin:0; font:400 1em/1.6 "Aeonik Hangul",var(--grotesk); color:#9c9c9c;}
+#hxLook .hxl-cl span{grid-area:1/1; opacity:0; transition:opacity .35s ease;}
 #hxLook .hxl-cl span.on{opacity:1;}
-#hxLook .hxl-cl b{font:400 1em/1 "HIN Typeer",var(--pixel); letter-spacing:.06em; color:var(--dot); margin-right:.3em;}
+#hxLook .hxl-cl b{display:block; margin:0 0 .5em; font:400 1.15em/1 "HIN Typeer",var(--pixel); letter-spacing:.06em; color:var(--dot);}
 #hxLook .hxl-nav{position:absolute; left:0; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px; z-index:2;}
 #hxLook .hxl-nav button,#hxLook .hxl-x{width:46px; height:46px; display:grid; place-items:center; padding:0; border:0; background:#141414; color:#fff; cursor:pointer; box-shadow:inset 0 0 0 1px rgba(255,255,255,.18); transition:opacity .3s ease, box-shadow .3s ease;}
 #hxLook .hxl-nav button:hover,#hxLook .hxl-x:hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.6);}
