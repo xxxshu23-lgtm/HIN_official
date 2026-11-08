@@ -2172,7 +2172,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 .hxf-txt p{position:absolute; left:0; top:calc(var(--dy)/14.4*1cqw); margin:0; white-space:nowrap; font:300 max(11px,calc(16/14.4*1cqw))/1.42 "Aeonik Hangul",var(--grotesk); color:#e6e6e6; letter-spacing:0;}
 .hxf-txt .hl{transition-delay:calc(.3s + var(--i,0)*140ms);}
 .hxf-txt.r{left:auto; right:calc((1440 - var(--rx))/14.4*1cqw); text-align:right;}
-.hxf-txt.r p{left:auto; right:0;}
+.hxf-txt.r p{left:auto; right:0; text-align:left;}
 @media (max-width:680px){ .hxf-txt.r{text-align:left;} }
 .hxf-dots{position:absolute; left:50%; bottom:calc(36/1440*100vw); transform:translateX(-50%); display:flex; gap:14px; z-index:2;}
 #pdPage .hxf-dots button{width:9px; height:9px; padding:0; border:0; background:#5c5c5c; cursor:pointer; transition:background .3s ease, transform .3s ease;}
@@ -3110,6 +3110,78 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       <div class="hxs-row"><span class="hl n" style="--i:1">01</span><span class="hl k" style="--i:1">Product Name</span><span class="hl v" style="--i:1">HIN Portable Workspace</span></div><i class="hxs-rule" style="--i:1"></i><div class="hxs-row"><span class="hl n" style="--i:2">02</span><span class="hl k" style="--i:2">Dimensions</span><span class="hl v" style="--i:2">340 × 215 × 24 mm (folded)</span></div><i class="hxs-rule" style="--i:2"></i><div class="hxs-row"><span class="hl n" style="--i:3">03</span><span class="hl k" style="--i:3">Color</span><span class="hl v" style="--i:3">Gray / Black / Yellow</span></div><i class="hxs-rule" style="--i:3"></i><div class="hxs-row"><span class="hl n" style="--i:4">04</span><span class="hl k" style="--i:4">Compatibility</span><span class="hl v" style="--i:4">11–16″ Laptops</span></div><i class="hxs-rule" style="--i:4"></i>
     </div>
     <figure class="hxs-fig"><img src="assets/spec-colors.webp" alt="옐로우, 그레이, 블랙 세 가지 컬러의 HIN-001" loading="lazy" decoding="async"></figure>
+  </div>
+</section>
+
+<style id="update-2026-11-08-look">
+/* A CLOSER LOOK — Apple-style explorer (pills → cards, media swap) */
+.hxl{position:relative; background:#000; color:#fff; padding:clamp(56px,6vw,96px) var(--gut,calc(200*var(--u))) clamp(48px,5vw,80px);}
+.hxl-head{margin:0 0 clamp(20px,2.4vw,36px); font:400 max(22px,calc(40*var(--u)))/1.05 "HIN Typeer",var(--pixel); letter-spacing:.06em; text-transform:uppercase;}
+.hxl-stage{position:relative; height:clamp(560px,78vh,860px);}
+.hxl-media{position:absolute; inset:0 0 0 26%; pointer-events:none;}
+.hxl-m{position:absolute; inset:0; margin:0; opacity:0; transform:scale(1.015); transition:opacity .8s ease, transform 1.1s cubic-bezier(.22,1,.36,1);}
+.hxl-m.on{opacity:1; transform:none;}
+.hxl-m img{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center;}
+.hxl-stat{position:absolute; right:2%; top:8%; font:400 clamp(44px,6vw,108px)/1 "HIN Typeer",var(--pixel); letter-spacing:.02em; color:#8a8a8a;}
+.hxl-stat small{font-family:"Aeonik Hangul",var(--grotesk); font-weight:500; font-size:.42em; margin-left:.25em; letter-spacing:0;}
+.hxl-lw{position:absolute; left:calc(56px + 12px); top:0; bottom:0; width:min(440px,38%); overflow-y:auto; scrollbar-width:none; overscroll-behavior:auto; display:flex; flex-direction:column; justify-content:safe center;
+  -webkit-mask-image:linear-gradient(transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(transparent,#000 4%,#000 96%,transparent);}
+.hxl-lw::-webkit-scrollbar{display:none;}
+.hxl-list{list-style:none; margin:0; padding:16px 0; display:flex; flex-direction:column; align-items:flex-start; gap:12px;}
+.hxl-box{width:var(--w0,auto); max-width:100%; background:#141414; box-shadow:inset 0 0 0 1px rgba(255,255,255,.14); transition:width .55s cubic-bezier(.22,1,.36,1), background .3s ease, box-shadow .3s ease;}
+.hxl-item:not(.open) .hxl-box:hover{background:#1d1d1d; box-shadow:inset 0 0 0 1px rgba(255,255,255,.32);}
+.hxl-item.open .hxl-box{width:100%; background:#181818; box-shadow:inset 0 0 0 1px rgba(255,255,255,.5), 0 0 18px rgba(255,255,255,.06);}
+.hxl-pw,.hxl-bw{display:grid; transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1), opacity .35s ease;}
+.hxl-pw{grid-template-rows:1fr;} .hxl-item.open .hxl-pw{grid-template-rows:0fr; opacity:0;}
+.hxl-bw{grid-template-rows:0fr; opacity:0;} .hxl-item.open .hxl-bw{grid-template-rows:1fr; opacity:1; transition-delay:.12s;}
+.hxl-pw>*,.hxl-bw>*{min-height:0; overflow:hidden;}
+.hxl-pill{display:flex; align-items:center; gap:14px; width:max-content; padding:15px 26px 15px 18px; border:0; background:none; color:#fff; cursor:pointer; font:500 clamp(15px,1.15vw,18px)/1 "Aeonik Hangul",var(--grotesk); letter-spacing:-.005em; white-space:nowrap;}
+.hxl-pill:focus-visible,.hxl-nav button:focus-visible,.hxl-x:focus-visible,.hxl-sw button:focus-visible{outline:1px solid var(--dot); outline-offset:3px;}
+.hxl-ic{position:relative; flex:none; width:22px; height:22px;}
+.hxl-ic.plus{box-shadow:inset 0 0 0 1.5px #fff;}
+.hxl-ic.plus::before,.hxl-ic.plus::after{content:""; position:absolute; left:50%; top:50%; width:10px; height:1.5px; background:#fff; transform:translate(-50%,-50%);}
+.hxl-ic.plus::after{transform:translate(-50%,-50%) rotate(90deg);}
+.hxl-ic.dot{background:#8B8B87; box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);}
+.hxl-bi{padding:0 26px;}
+.hxl-bi>p{margin:24px 0; font:400 clamp(15px,1.2vw,19px)/1.55 "Aeonik Hangul",var(--kr); color:#cfcfcf; letter-spacing:-.005em; word-break:keep-all;}
+.hxl-bi>p b{font-weight:600; color:#fff;}
+.hxl-sw{display:flex; gap:10px; margin:-6px 0 14px;}
+.hxl-sw button{width:30px; height:30px; padding:0; border:0; cursor:pointer; background:var(--c); box-shadow:inset 0 0 0 1px rgba(255,255,255,.3); transition:box-shadow .25s ease;}
+.hxl-sw button.on{box-shadow:0 0 0 2px #000, 0 0 0 3px #E4E6EA;}
+.hxl-cl{position:relative; margin:0 0 24px; min-height:3em; font:400 clamp(13px,1vw,15px)/1.5 "Aeonik Hangul",var(--grotesk); color:#9c9c9c;}
+.hxl-cl span{position:absolute; left:0; top:0; opacity:0; transition:opacity .35s ease;}
+.hxl-cl span.on{opacity:1;}
+.hxl-cl b{font:400 1em/1 "HIN Typeer",var(--pixel); letter-spacing:.06em; color:var(--dot); margin-right:.3em;}
+.hxl-nav{position:absolute; left:0; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px; z-index:2;}
+.hxl-nav button,.hxl-x{width:46px; height:46px; display:grid; place-items:center; padding:0; border:0; background:#141414; color:#fff; cursor:pointer; box-shadow:inset 0 0 0 1px rgba(255,255,255,.18); transition:opacity .3s ease, box-shadow .3s ease;}
+.hxl-nav button:hover,.hxl-x:hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.6);}
+.hxl-nav button:disabled{opacity:.3; cursor:default; box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);}
+.hxl-nav svg,.hxl-x svg{width:18px; height:18px;}
+.hxl-x{position:absolute; right:0; top:0; z-index:3; opacity:0; pointer-events:none;}
+.hxl.is-open .hxl-x{opacity:1; pointer-events:auto;}
+@media (max-width:680px){
+  .hxl{padding:56px 16px 48px;}
+  .hxl-stage{height:auto;}
+  .hxl-media{position:relative; inset:auto; aspect-ratio:4/3;}
+  .hxl-stat{font-size:40px; top:4%;}
+  .hxl-nav{display:none;}
+  .hxl-lw{position:static; width:auto; overflow:visible; -webkit-mask-image:none; mask-image:none;}
+  .hxl-list{padding-top:20px;}
+  .hxl-item{width:100%;}
+}
+@media (prefers-reduced-motion:reduce){ .hxl-m,.hxl-box,.hxl-pw,.hxl-bw,.hxl-cl span{transition:none !important;} }
+</style>
+<section class="hxl" id="hxLook" aria-label="HIN-001 자세히 보기">
+  <h2 class="hxl-head">A closer look</h2>
+  <div class="hxl-stage">
+    <div class="hxl-media" aria-hidden="true">
+      <figure class="hxl-m on" data-k="intro"><img src="assets/d01-quick.webp?v=2" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="colors"><img src="assets/spec-colors.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="size"><img src="assets/s15-product.webp?v=2" alt="" loading="lazy" decoding="async"><span class="hxl-stat">1.2<small>kg</small></span></figure><figure class="hxl-m" data-k="quick"><img src="assets/d01-quick.webp?v=2" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="light"><img src="assets/f01-lightbar.webp?v=2" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="power"><img src="assets/f02-power.webp?v=2" alt="" loading="lazy" decoding="async"><span class="hxl-stat">65<small>Wh</small></span></figure><figure class="hxl-m" data-k="pad"><img src="assets/f03-mousepad.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="mark"><img src="assets/d02-mark.webp?v=2" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="stable"><img src="assets/d03-stable.webp?v=3" alt="" loading="lazy" decoding="async"><span class="hxl-stat">11–16<small>&Prime;</small></span></figure>
+    </div>
+    <div class="hxl-nav"><button type="button" class="hxl-up" aria-label="이전 항목" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 15l7-7 7 7"/></svg></button><button type="button" class="hxl-down" aria-label="다음 항목"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg></button></div>
+    <div class="hxl-lw"><ul class="hxl-list">
+      <li class="hxl-item" data-k="colors"><div class="hxl-box"><div class="hxl-pw"><button type="button" class="hxl-pill" aria-expanded="false" aria-controls="hxl-c-colors"><i class="hxl-ic dot" aria-hidden="true"></i><span>Colors</span></button></div><div class="hxl-bw" id="hxl-c-colors" role="region" aria-label="Colors"><div class="hxl-bi"><p><b>Colors.</b> 세 가지 컬러 중 작업 분위기에 맞는 톤을 고르세요.</p><div class="hxl-sw" role="group" aria-label="컬러"><button type="button" class="on" data-i="0" aria-pressed="true" aria-label="Gray" style="--c:#8B8B87"></button><button type="button" class="" data-i="1" aria-pressed="false" aria-label="Black" style="--c:#1E1D1B"></button><button type="button" class="" data-i="2" aria-pressed="false" aria-label="Yellow" style="--c:#FFFBBA"></button></div><p class="hxl-cl"><span class="on"><b>01 GRAY</b> FOCUS — A balanced palette for focused work.</span><span class=""><b>02 BLACK</b> NIGHT — A deep tone for focused nights.</span><span class=""><b>03 YELLOW</b> SIGNAL — A soft signal that brightens any desk.</span></p></div></div></div></li><li class="hxl-item" data-k="size"><div class="hxl-box"><div class="hxl-pw"><button type="button" class="hxl-pill" aria-expanded="false" aria-controls="hxl-c-size"><i class="hxl-ic plus" aria-hidden="true"></i><span>Size &amp; weight</span></button></div><div class="hxl-bw" id="hxl-c-size" role="region" aria-label="Size &amp; weight"><div class="hxl-bi"><p><b>Size &amp; weight.</b> 본체 무게 1.2kg, 필요한 곳으로 간편하게. 접으면 340 × 215 × 24 mm.</p></div></div></div></li><li class="hxl-item" data-k="quick"><div class="hxl-box"><div class="hxl-pw"><button type="button" class="hxl-pill" aria-expanded="false" aria-controls="hxl-c-quick"><i class="hxl-ic plus" aria-hidden="true"></i><span>Quick setting</span></button></div><div class="hxl-bw" id="hxl-c-quick" role="region" aria-label="Quick setting"><div class="hxl-bi"><p><b>Quick setting.</b> 도착한 순간부터 작업을 시작하기까지의 전환 시간을 줄이도록 설계했습니다.</p></div></div></div></li><li class="hxl-item" data-k="light"><div class="hxl-box"><div class="hxl-pw"><button type="button" class="hxl-pill" aria-expanded="false" aria-controls="hxl-c-light"><i class="hxl-ic plus" aria-hidden="true"></i><span>Light bar</span></button></div><div class="hxl-bw" id="hxl-c-light" role="region" aria-label="Light bar"><div class="hxl-bi"><p><b>Light bar.</b> 일체형 LED 라이트 바가 작업 공간을 부드럽고 고르게 밝혀, 더 편안하고 집중하기 좋은 환경을 만듭니다.</p></div></div></div></li><li class="hxl-item" data-k="power"><div class="hxl-box"><div class="hxl-pw"><button type="button" class="hxl-pill" aria-expanded="false" aria-controls="hxl-c-power"><i class="hxl-ic plus" aria-hidden="true"></i><span>Power</span></button></div><div class="hxl-bw" id="hxl-c-power" role="region" aria-label="Power"><div class="hxl-bi"><p><b>Power.</b> 65Wh 배터리와 USB-C로 작업의 흐름을 이어갑니다.</p></div></div></div></li><li class="hxl-item" data-k="pad"><div class="hxl-box"><div class="hxl-pw"><button type="button" class="hxl-pill" aria-expanded="false" aria-controls="hxl-c-pad"><i class="hxl-ic plus" aria-hidden="true"></i><span>Mouse pad</span></button></div><div class="hxl-bw" id="hxl-c-pad" role="region" aria-label="Mouse pad"><div class="hxl-bi"><p><b>Mouse pad.</b> 분리형 마우스패드가 공간과 작업 방식에 맞춰 달라집니다.</p></div></div></div></li><li class="hxl-item" data-k="mark"><div class="hxl-box"><div class="hxl-pw"><button type="button" class="hxl-pill" aria-expanded="false" aria-controls="hxl-c-mark"><i class="hxl-ic plus" aria-hidden="true"></i><span>HIN mark</span></button></div><div class="hxl-bw" id="hxl-c-mark" role="region" aria-label="HIN mark"><div class="hxl-bi"><p><b>HIN mark.</b> HIN의 정체성을 담은 마크가 상단 모듈에 새겨져 있습니다.</p></div></div></div></li><li class="hxl-item" data-k="stable"><div class="hxl-box"><div class="hxl-pw"><button type="button" class="hxl-pill" aria-expanded="false" aria-controls="hxl-c-stable"><i class="hxl-ic plus" aria-hidden="true"></i><span>Stable structure</span></button></div><div class="hxl-bw" id="hxl-c-stable" role="region" aria-label="Stable structure"><div class="hxl-bi"><p><b>Stable structure.</b> 고정된 작업 공간을 벗어나서도 안정적인 작업 환경을 제공합니다. 11–16인치 노트북과 호환됩니다.</p></div></div></div></li>
+    </ul></div>
+    <button type="button" class="hxl-x" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
 </section>
 
@@ -4266,6 +4338,28 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 <script>
 // 4) let :active work on touch screens for the dimension cards
 document.addEventListener('touchstart',()=>{},{passive:true});
+</script>
+<script>
+/* A CLOSER LOOK: pills open into cards, media + stat swap, up/down/close, Esc */
+(() => { const s=document.getElementById('hxLook'); if(!s) return;
+  const items=[...s.querySelectorAll('.hxl-item')], media=[...s.querySelectorAll('.hxl-m')], lw=s.querySelector('.hxl-lw');
+  const up=s.querySelector('.hxl-up'), down=s.querySelector('.hxl-down'), x=s.querySelector('.hxl-x'); let cur=-1, t=null;
+  const measure=()=>items.forEach(it=>{ const b=it.querySelector('.hxl-pill'); it.querySelector('.hxl-box').style.setProperty('--w0', Math.ceil(b.getBoundingClientRect().width)+'px'); });
+  const show=k=>media.forEach(m=>m.classList.toggle('on', m.dataset.k===k));
+  const scrollTo=()=>{ if(cur<0){ lw.scrollTo({top:0,behavior:'smooth'}); return; } const it=items[cur]; lw.scrollTo({top:Math.max(0,it.offsetTop-16),behavior:'smooth'}); };
+  const set=i=>{ cur=i; items.forEach((it,j)=>{ it.classList.toggle('open',j===i); it.querySelector('.hxl-pill').setAttribute('aria-expanded', j===i?'true':'false'); });
+    s.classList.toggle('is-open', i>=0); show(i>=0?items[i].dataset.k:'intro');
+    up.disabled=i<=0; down.disabled=i>=items.length-1;
+    if(!matchMedia('(max-width:680px)').matches){ scrollTo(); clearTimeout(t); t=setTimeout(scrollTo,600); } };
+  items.forEach((it,i)=>it.querySelector('.hxl-pill').addEventListener('click',()=>set(i)));
+  up.addEventListener('click',()=>set(Math.max(0,cur-1)));
+  down.addEventListener('click',()=>set(Math.min(items.length-1,cur+1)));
+  x.addEventListener('click',()=>{ const f=cur; set(-1); if(f>=0) items[f].querySelector('.hxl-pill').focus({preventScroll:true}); });
+  s.addEventListener('keydown',e=>{ if(e.key==='Escape'&&cur>=0){ x.click(); } else if((e.key==='ArrowDown'||e.key==='ArrowUp')&&cur>=0){ e.preventDefault(); (e.key==='ArrowDown'?down:up).click(); } });
+  const sw=[...s.querySelectorAll('.hxl-sw button')], cl=[...s.querySelectorAll('.hxl-cl span')], dot=s.querySelector('.hxl-ic.dot');
+  sw.forEach((b,i)=>b.addEventListener('click',()=>{ sw.forEach((o,j)=>{ o.classList.toggle('on',j===i); o.setAttribute('aria-pressed',j===i?'true':'false'); }); cl.forEach((o,j)=>o.classList.toggle('on',j===i)); if(dot) dot.style.background=getComputedStyle(b).getPropertyValue('--c'); }));
+  measure(); (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(measure); addEventListener('resize',measure);
+})();
 </script>
 </body>
 </html>
