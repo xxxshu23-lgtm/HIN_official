@@ -3001,12 +3001,12 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       <h2 class="hpd-h2 reveal">Work doesn't have one place.</h2>
     </div>
     <ol class="reveal">
-      <li><span data-words>Chapter 01</span><h3 data-words>무게를 줄이다</h3><p data-words>본체 무게 1.2kg, 손끝에서 가벼워진 작업</p></li>
-      <li><span data-words>Chapter 02</span><h3 data-words>접어서, 가볍게</h3><p data-words>한 번의 접힘으로 완성되는 이동 형태</p></li>
-      <li><span data-words>Chapter 03</span><h3 data-words>어디서든 펼치다</h3><p data-words>책상, 카페, 창가 — 장소를 가리지 않는 워크스페이스</p></li>
-      <li><span data-words>Chapter 04</span><h3 data-words>흩어진 것들을 하나로</h3><p data-words>케이블, 소품, 도구를 한 자리에 정리하는 구조</p></li>
-      <li><span data-words>Chapter 05</span><h3 data-words>손끝에서 완성되다</h3><p data-words>마감의 질감이 손에 먼저 닿는 디테일</p></li>
-      <li><span data-words>Chapter 06</span><h3 data-words>다시, 제자리로</h3><p data-words>하루의 끝, 접어서 제자리에 놓는 루틴</p></li>
+      <li><span data-words>Chapter 01</span><h3 data-words>가볍게 시작하다</h3><p data-words>본체 무게 1.2kg, 필요한 곳으로 간편하게.</p></li>
+      <li><span data-words>Chapter 02</span><h3 data-words>한 번에 펼치다</h3><p data-words>한 번의 동작으로 작업을 위한 형태를 완성합니다.</p></li>
+      <li><span data-words>Chapter 03</span><h3 data-words>어디서든 작업하다</h3><p data-words>책상 위에서도, 카페에서도. 장소에 얽매이지 않는 작업 공간.</p></li>
+      <li><span data-words>Chapter 04</span><h3 data-words>필요한 것을 연결하다</h3><p data-words>65Wh 배터리와 USB-C로 작업의 흐름을 이어갑니다.</p></li>
+      <li><span data-words>Chapter 05</span><h3 data-words>빛을 더하고, 공간을 넓히다</h3><p data-words>일체형 라이트 바와 분리형 마우스패드로 작업 환경을 완성합니다.</p></li>
+      <li><span data-words>Chapter 06</span><h3 data-words>다시, 가볍게 정리하다</h3><p data-words>작업이 끝나면 접어서 다음 장소로.</p></li>
     </ol>
   </div>
 </section>
@@ -3014,9 +3014,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   <div class="hxp-sticky">
     <div class="hx-stage hxp-stage">
       <div class="hxp-rise">
-        <div class="hxp-img on" data-i="0"><img class="cover" src="assets/d01-quick.webp" alt="펼쳐진 HIN-001 본체와 분리된 마우스패드, 라이트 모듈" loading="lazy" decoding="async"></div>
+        <div class="hxp-img on" data-i="0"><img class="cover" src="assets/d01-quick.webp?v=2" alt="펼쳐진 HIN-001 본체와 분리된 마우스패드, 라이트 모듈" loading="lazy" decoding="async"></div>
         <div class="hxp-img" data-i="1"><img class="cover" src="assets/d02-mark.webp?v=2" alt="HIN-001 상단 모듈에 각인된 HIN 마크" loading="lazy" decoding="async"></div>
-        <div class="hxp-img" data-i="2"><i class="hxp-glow" aria-hidden="true"></i><img class="d03" src="assets/d03-stable.webp" alt="노트북을 올린 HIN-001 정면" loading="lazy" decoding="async"></div>
+        <div class="hxp-img" data-i="2"><i class="hxp-glow" aria-hidden="true"></i><img class="d03" src="assets/d03-stable.webp?v=2" alt="노트북을 올린 HIN-001 정면" loading="lazy" decoding="async"></div>
       </div>
       <i class="hxp-fade" aria-hidden="true"></i>
       <div class="hxp-txt">
@@ -4262,6 +4262,29 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 <script>
 // 4) let :active work on touch screens for the dimension cards
 document.addEventListener('touchstart',()=>{},{passive:true});
+</script>
+<script>
+/* 03 MOUSE PAD: connector line follows the heading at every width.
+   At the 1440 design it lands at y=772 / x=1188 as drawn; when the heading hits its min font size
+   the line keeps the same gaps (centred between heading and body) and the same overhang past the heading. */
+(() => { const sl=document.querySelectorAll('#hxFeatures .hxf-slide')[2]; if(!sl) return;
+  const st=sl.querySelector('.hxf-stage'), path=sl.querySelector('.hxf-lines path'), t=sl.querySelector('.hxf-txt');
+  const h=t&&t.querySelector('h3'), p=t&&t.querySelector('p'); if(!st||!path||!h||!p) return;
+  const OVER=30.8/26, c=document.createElement('canvas').getContext('2d');
+  const fit=()=>{ const W=st.clientWidth; if(!W||!path.ownerSVGElement||getComputedStyle(path.ownerSVGElement).display==='none') return;
+    const k=1440/W, ch=getComputedStyle(h), cp=getComputedStyle(p);
+    c.font=`${ch.fontWeight} ${ch.fontSize} ${ch.fontFamily}`; const H=c.measureText(h.textContent);
+    c.font=`${cp.fontWeight} ${cp.fontSize} ${cp.fontFamily}`; const P=c.measureText(p.innerHTML.split(/<br\s*\/?>/i)[0].replace(/<[^>]+>/g,''));
+    if(!H.fontBoundingBoxAscent||!P.fontBoundingBoxAscent) return;
+    const hf=parseFloat(ch.fontSize), ls=parseFloat(ch.letterSpacing)||0, hl=parseFloat(ch.lineHeight), pl=parseFloat(cp.lineHeight);
+    const hInkBot=t.offsetTop+h.offsetTop+(hl-(H.fontBoundingBoxAscent+H.fontBoundingBoxDescent))/2+H.fontBoundingBoxAscent+H.actualBoundingBoxDescent;
+    const pInkTop=t.offsetTop+p.offsetTop+(pl-(P.fontBoundingBoxAscent+P.fontBoundingBoxDescent))/2+P.fontBoundingBoxAscent-P.actualBoundingBoxAscent;
+    const inkR=t.offsetLeft+h.offsetLeft+h.offsetWidth-ls+(H.actualBoundingBoxRight-H.width);
+    const y=(hInkBot+pInkTop)/2*k, x=(inkR+OVER*hf)*k;
+    if(isFinite(x)&&isFinite(y)) path.setAttribute('d','M466 513V'+y.toFixed(1)+'H'+x.toFixed(1)); };
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(fit);
+  if(window.ResizeObserver) new ResizeObserver(fit).observe(st); else addEventListener('resize',fit);
+  fit(); })();
 </script>
 </body>
 </html>
