@@ -2464,9 +2464,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 <style id="update-2026-11-07-a">
 /* 1) view toggle: square, white glow frame like ORDER */
 @media (min-width:681px){
-  .shop-colors .shop-mode{position:static !important; transform:none !important; left:auto !important; bottom:auto !important; margin-left:calc(12*var(--u)); padding:calc(4*var(--u)) !important; gap:calc(3*var(--u)) !important;}
-  .shop-colors .shop-mode button{width:calc(46*var(--u)) !important; height:calc(30*var(--u)) !important; min-height:22px;}
-  .shop-colors .shop-mode button svg{width:calc(18*var(--u)) !important; height:calc(18*var(--u)) !important;}
+  .shop .shop-mode{padding:calc(4*var(--u)) !important; gap:calc(3*var(--u)) !important;}
+  .shop .shop-mode button{width:calc(46*var(--u)) !important; height:calc(30*var(--u)) !important; min-height:22px;}
+  .shop .shop-mode button svg{width:calc(18*var(--u)) !important; height:calc(18*var(--u)) !important;}
 }
 .shop-mode{border-radius:0 !important; background:#000 !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; padding:calc(5*var(--u)) !important; gap:calc(4*var(--u)) !important;
   box-shadow:inset 0 0 0 calc(2*var(--u)) #fff, inset 0 0 calc(10*var(--u)) rgba(255,255,255,.45), 0 0 calc(14*var(--u)) rgba(255,255,255,.5) !important; border:0 !important;}
@@ -4262,13 +4262,6 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 <script>
 // 4) let :active work on touch screens for the dimension cards
 document.addEventListener('touchstart',()=>{},{passive:true});
-</script>
-<script>
-/* view toggle joins the colour row on desktop */
-(() => { const mode=document.getElementById('s_mode'), row=document.querySelector('.shop-colors'); if(!mode||!row) return;
-  const home=document.createComment('mode-home'); mode.before(home);
-  const mq=matchMedia('(min-width:681px)'); const place=()=>{ if(mq.matches){ if(mode.parentNode!==row) row.appendChild(mode); } else if(home.nextSibling!==mode) home.after(mode); };
-  mq.addEventListener ? mq.addEventListener('change',place) : mq.addListener(place); place(); })();
 </script>
 </body>
 </html>
