@@ -2365,6 +2365,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #pdPage .hpd-chap li h3{font-size:clamp(18px,2.08vw,32px) !important;}
 #pdPage .hpd-chap li p{font-size:clamp(12.5px,.9vw,14px) !important;}
 @media (max-width:680px){ #pdPage .hpd-chap li{grid-template-columns:1fr !important;} }
+@media (min-width:681px){ #pdPage .hpd-chap li span{grid-row:1 / span 2;} } /* title–description gap: label no longer stretches row 1 */
 
 /* 4) + 5) Fold it light: yellow squares, scroll word fill */
 #pdPage .hx-fold-cols > div{position:relative;}
