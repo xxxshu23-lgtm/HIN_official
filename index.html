@@ -2999,22 +2999,6 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     </div>
   </div>
 </section>
-<section class="hpd-blk hx-chapters" id="hpd-chapters">
-  <div class="hpd-chap">
-    <div>
-      
-      <h2 class="hpd-h2 reveal">Work doesn't have one place.</h2>
-    </div>
-    <ol class="reveal">
-      <li><span data-words>Chapter 01</span><h3 data-words>가볍게 시작하다</h3><p data-words>본체 무게 1.2kg, 필요한 곳으로 간편하게.</p></li>
-      <li><span data-words>Chapter 02</span><h3 data-words>한 번에 펼치다</h3><p data-words>한 번의 동작으로 작업을 위한 형태를 완성합니다.</p></li>
-      <li><span data-words>Chapter 03</span><h3 data-words>어디서든 작업하다</h3><p data-words>책상 위에서도, 카페에서도. 장소에 얽매이지 않는 작업 공간.</p></li>
-      <li><span data-words>Chapter 04</span><h3 data-words>필요한 것을 연결하다</h3><p data-words>65Wh 배터리와 USB-C로 작업의 흐름을 이어갑니다.</p></li>
-      <li><span data-words>Chapter 05</span><h3 data-words>빛을 더하고, 공간을 넓히다</h3><p data-words>일체형 라이트 바와 분리형 마우스패드로 작업 환경을 완성합니다.</p></li>
-      <li><span data-words>Chapter 06</span><h3 data-words>다시, 가볍게 정리하다</h3><p data-words>작업이 끝나면 접어서 다음 장소로.</p></li>
-    </ol>
-  </div>
-</section>
 <section class="hxp" id="hxPin" aria-label="HIN-001 디테일">
   <div class="hxp-sticky">
     <div class="hx-stage hxp-stage">
@@ -3965,7 +3949,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     const home=document.getElementById('viewHome'), prod=document.getElementById('viewProduct'), shopEl=document.getElementById('viewShop');
     const CH={
       home:[['#heroPinWrap','Arrival'],['#productRise','Manifesto'],['#hingeGallery','Workers'],['section.slider.second','People'],['#magStack','Issue 01'],['section.slider.first','Campaign'],['#aboutSection','Studio']],
-      shop:[['#s_viewWrap','Configure'],['#hpd-intro','Overview'],['#hpd-fold','Portable'],['#hxFeatures','Features'],['#hpd-chapters','Chapters'],['#hxPin','Details'],['#hpd-numbers','Dimensions'],['#hxColor','Colours'],['#hxSpec','Specifications'],['#shopAboutSlot','Studio']]
+      shop:[['#s_viewWrap','Configure'],['#hpd-intro','Overview'],['#hpd-fold','Portable'],['#hxFeatures','Features'],['#hxPin','Details'],['#hpd-numbers','Dimensions'],['#hxColor','Colours'],['#hxSpec','Specifications'],['#shopAboutSlot','Studio']]
     };
     const list=v=>(CH[v]||[]).map(([sel,name])=>[q(v==='home'?home:shopEl, sel), name]).filter(x=>x[0]);
     let cur=-1, curView='';
@@ -4250,7 +4234,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     const next=()=>{ const cur=imgs[i], n=imgs[(i+1)%imgs.length];
       n.classList.add('prep'); n.classList.remove('out','on'); void n.offsetWidth; n.classList.remove('prep');
       cur.classList.remove('on'); cur.classList.add('out'); n.classList.add('on'); i=(i+1)%imgs.length; };
-    const start=()=>{ if(!timer && !rm) timer=setInterval(next,2000); }, stop=()=>{ clearInterval(timer); timer=null; };
+    const start=()=>{ if(!timer && !rm) timer=setInterval(next,1200); }, stop=()=>{ clearInterval(timer); timer=null; };
     if('IntersectionObserver' in window) new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?start():stop()),{threshold:.2}).observe(s15); else start();
     const zoom=()=>{ const r=s15.getBoundingClientRect(); const p=clamp((innerHeight-r.top)/(innerHeight+r.height),0,1); prod.style.transform=`scale(${(.92+.33*p).toFixed(4)})`; };
     if(!rm){ addEventListener('scroll',zoom,{passive:true}); addEventListener('resize',zoom); zoom(); }
