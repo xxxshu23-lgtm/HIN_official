@@ -43,23 +43,21 @@ if (stage && !window.__hxuGL) {
 
   // display graphic — drawn in code (vector), so it stays sharp at full screen
   const scrCanvas = document.createElement('canvas'); scrCanvas.width = 4096; scrCanvas.height = Math.round(4096 * DH / DW);
-  (function drawScreen(c) {
+  (function drawScreen(c) {   // iridescent ribbons, drawn at 4096px
     const x = c.getContext('2d'), W = c.width, H = c.height; x.fillStyle = '#000'; x.fillRect(0, 0, W, H);
-    const bands = ['#3b1fd6', '#ff3d9a', '#ffd66b', '#c9b5ff', '#62c8ff', '#eafaff'];
+    const bands = [['#4a2bff', 1], ['#ff4fa3', .86], ['#ffd36b', .72], ['#c7b2ff', .58], ['#ff7fbf', .46], ['#7fd4ff', .34], ['#e8fbff', .2], ['#ffffff', .07]];
     const ribbon = (pts, w) => { const P = new Path2D(); P.moveTo(pts[0][0] * W, pts[0][1] * H);
       for (let i = 1; i < pts.length; i += 3) P.bezierCurveTo(pts[i][0] * W, pts[i][1] * H, pts[i + 1][0] * W, pts[i + 1][1] * H, pts[i + 2][0] * W, pts[i + 2][1] * H);
-      x.lineCap = 'round'; x.lineJoin = 'round'; x.shadowBlur = 0; x.strokeStyle = '#000'; x.lineWidth = w * 1.35; x.stroke(P);
-      bands.forEach((col, i) => { const k = 1 - i / bands.length; x.lineWidth = w * k; x.strokeStyle = col; x.shadowColor = col; x.shadowBlur = i === 0 ? w * 0.6 : w * 0.12; x.stroke(P);
-        if (i < bands.length - 1) { x.shadowBlur = 0; x.lineWidth = w * (k - 0.5 / bands.length); x.strokeStyle = 'rgba(0,0,0,.55)'; x.stroke(P); } });
-      x.shadowBlur = 0; x.lineWidth = w * 0.035; x.strokeStyle = '#fff'; x.stroke(P); };
-    const U = W * 0.05;
-    ribbon([[-.08, .05], [.12, .1], [.2, .55], [.32, 1.12]], U * 1.1);
-    ribbon([[.06, -.1], [.2, .3], [.05, .7], [.22, 1.12]], U * .8);
-    ribbon([[.4, -.1], [.36, .35], [.5, .45], [.46, 1.1]], U * .9);
-    ribbon([[.52, -.12], [.64, .2], [.42, .62], [.58, 1.1]], U * .7);
-    ribbon([[.47, .05], [.58, .35], [.66, .52], [.6, .95], [.56, 1.2], [.7, 1.15], [.74, 1.1]], U * .6);
-    ribbon([[1.1, .12], [.82, .2], [.74, .6], [.84, 1.12]], U * 1.0);
-    ribbon([[1.12, .4], [.94, .45], [.9, .8], [.98, 1.12]], U * .75);
+      x.lineCap = 'round'; x.lineJoin = 'round'; const s = w * .016;
+      x.shadowBlur = 0; x.strokeStyle = '#000'; x.lineWidth = w * 1.45; x.stroke(P);
+      bands.forEach(([col, k], i) => { x.lineWidth = w * k; x.strokeStyle = col; x.shadowColor = col; x.shadowBlur = i === 0 ? w * .4 : 0; x.stroke(P); x.shadowBlur = 0;
+        const nx = bands[i + 1]; if (nx) { x.lineWidth = w * nx[1] + 2 * s; x.strokeStyle = '#050208'; x.stroke(P); } }); };
+    const U = W * .1;
+    ribbon([[-.12, -.02], [.12, .1], [.16, .55], [.3, 1.2]], U * 1.15);
+    ribbon([[.42, -.12], [.32, .36], [.54, .46], [.46, 1.15]], U * .95);
+    ribbon([[.6, -.18], [.72, .22], [.42, .62], [.62, 1.15]], U * .7);
+    ribbon([[1.15, .08], [.82, .2], [.74, .62], [.88, 1.18]], U * 1.05);
+    ribbon([[-.1, .55], [.05, .62], [.1, .9], [.08, 1.2]], U * .6);
   })(scrCanvas);
   const scrTex = new THREE.CanvasTexture(scrCanvas); scrTex.colorSpace = THREE.SRGBColorSpace; scrTex.anisotropy = R.capabilities.getMaxAnisotropy();
   scrTex.generateMipmaps = true; scrTex.minFilter = THREE.LinearMipmapLinearFilter;
@@ -99,7 +97,7 @@ if (stage && !window.__hxuGL) {
     Ns.set(0, 0, 1).applyQuaternion(disp.getWorldQuaternion(new THREE.Quaternion())).normalize();
     up.set(0, 1, 0).applyQuaternion(disp.getWorldQuaternion(new THREE.Quaternion())).normalize(); geomReady = true; };
   const sph = (az, el) => new THREE.Vector3(Math.sin(az) * Math.cos(el), Math.sin(el), Math.cos(az) * Math.cos(el));
-  const P = { az: -0.62, el: 0.42, fit: 1.0, tx: 0, ty: 0 };   // start pose ≈ the angled KeyShot render
+  const P = { az: -0.8, el: 0.36, fit: 1.6 };   // start pose ≈ the angled KeyShot render
   const api = {
     P, cam, scene, R,
     draw(L) {   // L: {vw,vh,ax,ay,aw,ah,t1,t2,zs}
