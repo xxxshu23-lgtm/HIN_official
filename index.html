@@ -2515,16 +2515,34 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 /* WORK, UNFOLDED — Apple-style feature intro: centred copy, product rises and settles as you scroll */
 #pdPage .hxu{background:#000; color:#fff; text-align:center; padding:clamp(72px,9vw,150px) var(--gut,16px) clamp(40px,5vw,80px); overflow:hidden;}
 #pdPage .hxu-eb{margin:0 0 clamp(14px,1.4vw,22px); font:400 max(13px,calc(18*var(--u)))/1 "HIN Typeer",var(--pixel); letter-spacing:.09em; text-transform:uppercase; color:var(--dot);}
-#pdPage .hxu-h{margin:0; font:500 clamp(40px,6vw,96px)/1.02 "Aeonik Hangul",var(--grotesk); letter-spacing:-.035em; color:#fff;}
-#pdPage .hxu-p{max-width:min(980px,100%); margin:clamp(24px,2.4vw,40px) auto 0; font:400 clamp(16px,1.35vw,22px)/1.6 "Aeonik Hangul",var(--grotesk); letter-spacing:-.01em; color:var(--gray-500); word-break:keep-all; text-wrap:pretty;}
+#pdPage .hxu-h{margin:0; font:400 clamp(36px,5.6vw,92px)/1.05 "HIN Type",var(--pixel); letter-spacing:.04em; text-transform:uppercase; color:#fff;}
+#pdPage .hxu-p{max-width:min(900px,100%); margin:clamp(22px,2.2vw,36px) auto 0; font:400 clamp(14px,1.1vw,18px)/1.65 "Aeonik Hangul",var(--grotesk); letter-spacing:-.01em; color:var(--gray-500); word-break:keep-all; text-wrap:pretty;}
 #pdPage .hxu-link{display:inline-flex; align-items:center; gap:.55em; margin-top:clamp(28px,2.6vw,44px); color:var(--dot); text-decoration:none;
   font:400 max(13px,calc(18*var(--u)))/1 "HIN Typeer",var(--pixel); letter-spacing:.09em; text-transform:uppercase;}
 #pdPage .hxu-link svg{width:1em; height:1em; transition:transform .35s cubic-bezier(.22,1,.36,1);}
 #pdPage .hxu-link:hover svg{transform:translate(2px,-2px);}
 #pdPage .hxu-link:hover span{text-decoration:underline; text-underline-offset:.35em; text-decoration-thickness:1px;}
 #pdPage .hxu-link:focus-visible{outline:1px solid var(--dot); outline-offset:6px;}
-#pdPage .hxu-fig{position:relative; margin:clamp(48px,6vw,96px) auto 0; width:min(1180px,92%);}
-#pdPage .hxu-rise{position:relative; transform:translateY(var(--ty,60px)) scale(var(--sc,.84)); transform-origin:50% 100%; will-change:transform; transition:transform .12s linear;}
+#pdPage .hxu{padding-bottom:0;}
+#pdPage .hxu-seq{position:relative; height:520vh; margin-top:clamp(16px,2vw,32px); --aw:min(1180px,88vw,87vh);}
+#pdPage .hxu-sticky{position:sticky; top:0; height:100vh; overflow:hidden; perspective:1800px;}
+#pdPage .hxu-a{position:absolute; left:50%; top:50%; width:var(--aw); transform:translate(-50%,-50%) rotateY(var(--ra,0deg)); opacity:var(--oa,1); will-change:transform,opacity;}
+#pdPage .hxu-rise{position:relative; transform:translateY(var(--ty,60px)) scale(var(--sc,.84)); transform-origin:50% 100%; will-change:transform;}
+#pdPage .hxu-zoom{position:absolute; inset:0; transform-origin:0 0; transform:var(--zm,none); opacity:var(--ob,0); will-change:transform,opacity;}
+#pdPage .hxu-b{position:absolute; width:calc(var(--aw) * 1.6); left:calc(50% - var(--aw) * 1.6 * .609); top:calc(50% - var(--aw) * 1.6 / 1.4475 / 2); transform:perspective(1800px) rotateY(var(--rb,-38deg)); transform-origin:61% 50%;}
+#pdPage .hxu-b img{display:block; width:100%; height:auto;}
+/* the laptop display: graphic drawn per scroll frame, mapped onto the screen glass of the front render */
+#pdPage .hxu-scr{position:absolute; left:39.2%; top:13.78%; width:42.82%; height:38.51%; overflow:hidden; background:#000; border-radius:.9% .9% 0 0 / 1.4% 1.4% 0 0;}
+#pdPage .hxu-scr canvas{display:block; width:100%; height:100%;}
+#pdPage .hxu-black{position:absolute; inset:0; background:#000; opacity:var(--bk,0);}
+#pdPage .hxu-next{position:relative; z-index:3; margin-top:-100vh; background:transparent !important;}
+@media (max-width:680px){
+  #pdPage .hxu-seq{height:auto; --aw:100%;}
+  #pdPage .hxu-sticky{position:static; height:auto; overflow:visible; perspective:none;}
+  #pdPage .hxu-a{position:relative; left:auto; top:auto; transform:none; opacity:1; margin:32px auto 0;}
+  #pdPage .hxu-zoom{display:none;}
+  #pdPage .hxu-next{margin-top:0;}
+}
 #pdPage .hxu-img{position:relative; display:block; width:100%; height:auto; z-index:1;}
 /* screen spill: a blurred copy lights the black around the device, like the glow off a real display */
 #pdPage .hxu-glow{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; filter:blur(60px) saturate(1.6); opacity:var(--gl,.15); transform:scale(1.04); z-index:0; pointer-events:none;}
@@ -3111,13 +3129,61 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   <h2 class="hxu-h reveal d1" id="hxu-h">Work, unfolded.</h2>
   <p class="hxu-p reveal d2" data-words>HIN-001 brings a complete workspace into a single folded form. Weighing just 1.2&nbsp;kg and measuring 340&nbsp;×&nbsp;215&nbsp;×&nbsp;24&nbsp;mm when folded, it unfolds in one motion into a stable stand that holds 11–16&Prime; laptops at the height and angle you choose. An integrated LED light bar, a 65Wh built-in battery with USB-C, and a detachable mouse pad complete the setup — so the desk, the café table, or the window seat becomes your place to work.</p>
   <a class="hxu-link reveal d3" href="#hxSpec"><span>View HIN-001 Specifications</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 5.5H18.5V16"/><path d="M18 6L5.5 18.5"/></svg></a>
-  <figure class="hxu-fig" aria-hidden="false">
-    <div class="hxu-rise">
-      <img class="hxu-glow" src="assets/product/work-unfolded.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
-      <img class="hxu-img" src="assets/product/work-unfolded.webp" alt="HIN-001 스탠드에 거치된 노트북 — 라이트 바 모듈과 후면 서포트가 펼쳐진 모습" loading="lazy" decoding="async">
-      <span class="hxu-floor" aria-hidden="true"></span>
+  <div class="hxu-seq">
+    <div class="hxu-sticky">
+      <div class="hxu-a"><div class="hxu-rise">
+        <img class="hxu-glow" src="assets/product/work-unfolded.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <img class="hxu-img" src="assets/product/work-unfolded.webp" alt="HIN-001 스탠드에 거치된 노트북 — 라이트 바 모듈과 후면 서포트가 펼쳐진 모습" loading="lazy" decoding="async">
+        <span class="hxu-floor" aria-hidden="true"></span>
+      </div></div>
+      <div class="hxu-zoom" aria-hidden="true"><div class="hxu-b">
+        <img src="assets/d03-stable.webp?v=3" alt="" loading="lazy" decoding="async">
+        <div class="hxu-scr"><canvas></canvas><i class="hxu-black"></i></div>
+      </div></div>
     </div>
-  </figure>
+  </div>
+</section>
+<section class="hpd-blk hxu-next" id="hpd-numbers">
+  <div class="hpd-label reveal">Dimensions</div>
+  <h2 class="hpd-h2 reveal">Twenty-four millimetres.<span class="hpd-g">Folded, HIN-001 measures 340 × 215 × 24 mm — made to move with you.</span></h2>
+  <div class="hpd-nums">
+    <article class="hpd-num hpd-s6 reveal">
+      <div class="hpd-t"><div class="hpd-k">Height / Folded</div><div class="hpd-v">24<small>mm</small></div><span class="hpd-chip">Folded flat</span></div>
+      <svg class="hpd-dg" viewBox="0 0 470 150" role="img" aria-label="접은 상태의 측면 도면: 두께 24mm, 폭 340mm">
+        <rect class="hpd-slab" x="10" y="48" width="340" height="24" rx="3"/>
+        <line class="hpd-hair" x1="350" y1="48" x2="392" y2="48"/><line class="hpd-hair" x1="350" y1="72" x2="392" y2="72"/>
+        <line class="hpd-dim" x1="384" y1="48" x2="384" y2="72"/><line class="hpd-dim" x1="379" y1="48" x2="389" y2="48"/><line class="hpd-dim" x1="379" y1="72" x2="389" y2="72"/>
+        <text x="398" y="64">24 MM</text>
+        <line class="hpd-dim" x1="10" y1="108" x2="350" y2="108"/><line class="hpd-dim" x1="10" y1="103" x2="10" y2="113"/><line class="hpd-dim" x1="350" y1="103" x2="350" y2="113"/>
+        <text x="180" y="130" text-anchor="middle">340 MM</text>
+      </svg>
+    </article>
+    <article class="hpd-num hpd-s3 reveal">
+      <div class="hpd-t"><div class="hpd-k">Width</div><div class="hpd-v">340<small>mm</small></div><span class="hpd-chip">Folded</span></div>
+      <svg class="hpd-dg" viewBox="0 0 260 190" role="img" aria-label="평면 도면: 폭 340mm">
+        <rect class="hpd-slab" x="14" y="34" width="211" height="134" rx="4"/>
+        <line class="hpd-dim" x1="14" y1="20" x2="225" y2="20"/><line class="hpd-dim" x1="14" y1="15" x2="14" y2="25"/><line class="hpd-dim" x1="225" y1="15" x2="225" y2="25"/>
+        <text x="119" y="11" text-anchor="middle">340 MM</text>
+      </svg>
+    </article>
+    <article class="hpd-num hpd-s3 reveal d1">
+      <div class="hpd-t"><div class="hpd-k">Depth</div><div class="hpd-v">215<small>mm</small></div><span class="hpd-chip">Folded</span></div>
+      <svg class="hpd-dg" viewBox="0 0 300 190" role="img" aria-label="평면 도면: 깊이 215mm">
+        <rect class="hpd-slab" x="14" y="28" width="211" height="134" rx="4"/>
+        <line class="hpd-dim" x1="246" y1="28" x2="246" y2="162"/><line class="hpd-dim" x1="241" y1="28" x2="251" y2="28"/><line class="hpd-dim" x1="241" y1="162" x2="251" y2="162"/>
+        <text x="258" y="99">215 MM</text>
+      </svg>
+    </article>
+    <article class="hpd-num reveal">
+      <div class="hpd-t"><div class="hpd-k">Weight</div><div class="hpd-v">1.2<small>kg</small></div><span class="hpd-chip">Lighter to carry</span></div>
+    </article>
+    <article class="hpd-num reveal d1">
+      <div class="hpd-t"><div class="hpd-k">Battery</div><div class="hpd-v">65<small>Wh</small></div><span class="hpd-chip">Built-in</span></div>
+    </article>
+    <article class="hpd-num reveal d2">
+      <div class="hpd-t"><div class="hpd-k">Compatibility</div><div class="hpd-v">11&ndash;16<small>&Prime;</small></div><span class="hpd-chip">Laptops</span></div>
+    </article>
+  </div>
 </section>
 <section class="hxf" id="hxFeatures" aria-label="HIN-001 기능 소개">
  <div class="hxf-sticky">
@@ -3175,48 +3241,6 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 
 
 <!-- ================= NUMBERS ================= -->
-<section class="hpd-blk" id="hpd-numbers">
-  <div class="hpd-label reveal">Dimensions</div>
-  <h2 class="hpd-h2 reveal">Twenty-four millimetres.<span class="hpd-g">Folded, HIN-001 measures 340 × 215 × 24 mm — made to move with you.</span></h2>
-  <div class="hpd-nums">
-    <article class="hpd-num hpd-s6 reveal">
-      <div class="hpd-t"><div class="hpd-k">Height / Folded</div><div class="hpd-v">24<small>mm</small></div><span class="hpd-chip">Folded flat</span></div>
-      <svg class="hpd-dg" viewBox="0 0 470 150" role="img" aria-label="접은 상태의 측면 도면: 두께 24mm, 폭 340mm">
-        <rect class="hpd-slab" x="10" y="48" width="340" height="24" rx="3"/>
-        <line class="hpd-hair" x1="350" y1="48" x2="392" y2="48"/><line class="hpd-hair" x1="350" y1="72" x2="392" y2="72"/>
-        <line class="hpd-dim" x1="384" y1="48" x2="384" y2="72"/><line class="hpd-dim" x1="379" y1="48" x2="389" y2="48"/><line class="hpd-dim" x1="379" y1="72" x2="389" y2="72"/>
-        <text x="398" y="64">24 MM</text>
-        <line class="hpd-dim" x1="10" y1="108" x2="350" y2="108"/><line class="hpd-dim" x1="10" y1="103" x2="10" y2="113"/><line class="hpd-dim" x1="350" y1="103" x2="350" y2="113"/>
-        <text x="180" y="130" text-anchor="middle">340 MM</text>
-      </svg>
-    </article>
-    <article class="hpd-num hpd-s3 reveal">
-      <div class="hpd-t"><div class="hpd-k">Width</div><div class="hpd-v">340<small>mm</small></div><span class="hpd-chip">Folded</span></div>
-      <svg class="hpd-dg" viewBox="0 0 260 190" role="img" aria-label="평면 도면: 폭 340mm">
-        <rect class="hpd-slab" x="14" y="34" width="211" height="134" rx="4"/>
-        <line class="hpd-dim" x1="14" y1="20" x2="225" y2="20"/><line class="hpd-dim" x1="14" y1="15" x2="14" y2="25"/><line class="hpd-dim" x1="225" y1="15" x2="225" y2="25"/>
-        <text x="119" y="11" text-anchor="middle">340 MM</text>
-      </svg>
-    </article>
-    <article class="hpd-num hpd-s3 reveal d1">
-      <div class="hpd-t"><div class="hpd-k">Depth</div><div class="hpd-v">215<small>mm</small></div><span class="hpd-chip">Folded</span></div>
-      <svg class="hpd-dg" viewBox="0 0 300 190" role="img" aria-label="평면 도면: 깊이 215mm">
-        <rect class="hpd-slab" x="14" y="28" width="211" height="134" rx="4"/>
-        <line class="hpd-dim" x1="246" y1="28" x2="246" y2="162"/><line class="hpd-dim" x1="241" y1="28" x2="251" y2="28"/><line class="hpd-dim" x1="241" y1="162" x2="251" y2="162"/>
-        <text x="258" y="99">215 MM</text>
-      </svg>
-    </article>
-    <article class="hpd-num reveal">
-      <div class="hpd-t"><div class="hpd-k">Weight</div><div class="hpd-v">1.2<small>kg</small></div><span class="hpd-chip">Lighter to carry</span></div>
-    </article>
-    <article class="hpd-num reveal d1">
-      <div class="hpd-t"><div class="hpd-k">Battery</div><div class="hpd-v">65<small>Wh</small></div><span class="hpd-chip">Built-in</span></div>
-    </article>
-    <article class="hpd-num reveal d2">
-      <div class="hpd-t"><div class="hpd-k">Compatibility</div><div class="hpd-v">11&ndash;16<small>&Prime;</small></div><span class="hpd-chip">Laptops</span></div>
-    </article>
-  </div>
-</section>
 
 <!-- ================= DETAIL RAIL ================= -->
 
@@ -4003,7 +4027,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     const home=document.getElementById('viewHome'), prod=document.getElementById('viewProduct'), shopEl=document.getElementById('viewShop');
     const CH={
       home:[['#heroPinWrap','Arrival'],['#productRise','Manifesto'],['#hingeGallery','Workers'],['section.slider.second','People'],['#magStack','Issue 01'],['section.slider.first','Campaign'],['#aboutSection','Studio']],
-      shop:[['#s_viewWrap','Configure'],['#hpd-intro','Overview'],['#hpd-fold','Portable'],['#hxUnfold','Unfolded'],['#hxFeatures','Features'],['#hxPin','Details'],['#hpd-numbers','Dimensions'],['#hxSpec','Specifications'],['#shopAboutSlot','Studio']]
+      shop:[['#s_viewWrap','Configure'],['#hpd-intro','Overview'],['#hpd-fold','Portable'],['#hxUnfold','Unfolded'],['#hpd-numbers','Dimensions'],['#hxFeatures','Features'],['#hxPin','Details'],['#hxSpec','Specifications'],['#shopAboutSlot','Studio']]
     };
     const list=v=>(CH[v]||[]).map(([sel,name])=>[q(v==='home'?home:shopEl, sel), name]).filter(x=>x[0]);
     let cur=-1, curView='';
@@ -4424,16 +4448,52 @@ document.addEventListener('touchstart',()=>{},{passive:true});
     const o=document.getElementById('s_order'); if(o) setTimeout(()=>o.focus({preventScroll:true}),700); }); })();
 </script>
 <script>
-/* WORK, UNFOLDED: product rises from .84 to full size and its screen glow brightens as the section scrolls in */
-(() => { const sec=document.getElementById('hxUnfold'); if(!sec) return; const rise=sec.querySelector('.hxu-rise'); if(!rise) return;
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ rise.style.setProperty('--sc',1); rise.style.setProperty('--ty','0px'); rise.style.setProperty('--gl',.4); return; }
-  const ease=t=>1-Math.pow(1-t,3); let raf=0;
-  const paint=()=>{ raf=0; const r=rise.getBoundingClientRect(), vh=innerHeight; const p=Math.min(Math.max((vh - r.top)/(vh*.85),0),1), e=ease(p);
-    rise.style.setProperty('--sc',(.84+.16*e).toFixed(4)); rise.style.setProperty('--ty',((1-e)*60).toFixed(1)+'px');
-    rise.style.setProperty('--gl',(.12+.33*e).toFixed(3)); rise.style.setProperty('--fl',(.15+.5*e).toFixed(3)); };
+/* WORK, UNFOLDED — pinned scroll sequence (desktop)
+   0 → .18  angled shot turns away while the front shot turns in (screen faces you)
+   .12 → .72 the display draws HIN hinge lines that glow and drift with scroll
+   .40 → .65 camera pushes into the display until it fills the viewport
+   .64 → .74 display fades to black; DIMENSIONS then rises over it (last 100vh) */
+(() => { const sec=document.getElementById('hxUnfold'); if(!sec) return;
+  const seq=sec.querySelector('.hxu-seq'), rise=sec.querySelector('.hxu-rise'), A=sec.querySelector('.hxu-a'), Z=sec.querySelector('.hxu-zoom'), B=sec.querySelector('.hxu-b'), scr=sec.querySelector('.hxu-scr'), cv=scr&&scr.querySelector('canvas');
+  const link=sec.querySelector('.hxu-link'); if(link) link.addEventListener('click',e=>{ const t=document.getElementById('hxSpec'); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); } });
+  if(!seq||!cv) return;
+  const desk=matchMedia('(min-width:681px)'), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cl=(v,a=0,b=1)=>Math.min(Math.max(v,a),b), seg=(p,a,b)=>cl((p-a)/(b-a)), eo=t=>1-Math.pow(1-t,3), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  const ctx=cv.getContext('2d'); let cw=0, ch=0, lastG=-1, lastS=-1;
+  // HIN hinge paths — vertical stability, horizontal flow, unbroken connection (normalised to the display)
+  const P=[ [[.08,-.3],[.08,.70],[.52,.70],[.52,.34]], [[.27,-.3],[.27,.47],[.71,.47],[.71,1.3]], [[1.3,.17],[.42,.17],[.42,.31]], [[.89,-.3],[.89,.61],[1.3,.61]] ];
+  const size=sc=>{ const r=scr.offsetWidth, h=scr.offsetHeight; const k=Math.min(2600/r, Math.max(1,sc)*Math.min(devicePixelRatio||1,1.5)); const w=Math.round(r*k), hh=Math.round(h*k); if(w!==cw||hh!==ch){ cw=cv.width=w; ch=cv.height=hh; lastG=-1; } };
+  const draw=g=>{ if(Math.abs(g-lastG)<.0015) return; lastG=g; const W=cw, H=ch; ctx.setTransform(1,0,0,1,0,0); ctx.fillStyle='#000'; ctx.fillRect(0,0,W,H);
+    const lw=H*.12, rad=H*.10, dx=(-.06+.12*g)*W, dy=(.04-.08*g)*H;
+    ctx.save(); ctx.translate(dx,dy); ctx.lineJoin='round'; ctx.lineCap='butt';
+    P.forEach((pts,i)=>{ const q=pts.map(([x,y])=>[x*W,y*H]); let L=0; for(let k=1;k<q.length;k++) L+=Math.hypot(q[k][0]-q[k-1][0],q[k][1]-q[k-1][1]);
+      const rv=cl(g*1.7 - i*.16); if(rv<=0) return; const path=new Path2D(); path.moveTo(q[0][0],q[0][1]); for(let k=1;k<q.length-1;k++) path.arcTo(q[k][0],q[k][1],q[k+1][0],q[k+1][1],rad); path.lineTo(q[q.length-1][0],q[q.length-1][1]);
+      ctx.setLineDash([L*rv, L*2]); const gr=ctx.createLinearGradient(0,0,W,H); gr.addColorStop(0,'rgba(255,251,186,.95)'); gr.addColorStop(.5,'rgba(255,255,255,.9)'); gr.addColorStop(1,'rgba(232,242,0,.75)');
+      ctx.shadowColor='rgba(255,251,186,.55)'; ctx.shadowBlur=H*.05; ctx.strokeStyle=gr; ctx.lineWidth=lw; ctx.stroke(path);
+      ctx.shadowBlur=0; ctx.strokeStyle='#060606'; ctx.lineWidth=lw*.8; ctx.stroke(path); });
+    ctx.restore(); ctx.setLineDash([]);
+    const t=seg(g,.45,.7); if(t>0){ ctx.globalAlpha=t; ctx.fillStyle='#FFFBBA'; ctx.font=`${Math.round(H*.045)}px "HIN Typeer", monospace`; ctx.textBaseline='bottom'; ctx.fillText('HERE, I AM, NOW'.replace(/,/g,' /'), W*.05, H*.94); ctx.textAlign='right'; ctx.fillText('HIN-001', W*.95, H*.94); ctx.textAlign='left'; ctx.globalAlpha=1; } };
+  const zoom=k=>{ if(k<=0){ Z.style.setProperty('--zm','none'); return 1; }
+    // display rect in sticky-stage coordinates (layout offsets ignore transforms)
+    const ox=B.offsetLeft+scr.offsetLeft, oy=B.offsetTop+scr.offsetTop, ow=scr.offsetWidth, oh=scr.offsetHeight; const vw=Z.clientWidth, vh=Z.clientHeight;
+    const S=Math.max(vw/ow, vh/oh)*1.04, s=1+(S-1)*k, cx=ox+ow/2, cy=oy+oh/2, tx=cx+(vw/2-cx)*k, ty=cy+(vh/2-cy)*k;
+    Z.style.setProperty('--zm',`translate(${tx.toFixed(1)}px,${ty.toFixed(1)}px) scale(${s.toFixed(4)}) translate(${(-cx).toFixed(1)}px,${(-cy).toFixed(1)}px)`); return s; };
+  let raf=0;
+  const paint=()=>{ raf=0; const vh=innerHeight, r=seq.getBoundingClientRect();
+    // entry: the angled shot rises and settles before the sequence pins
+    const pe=eo(cl((vh - r.top)/(vh*.85))); rise.style.setProperty('--sc',(.84+.16*pe).toFixed(4)); rise.style.setProperty('--ty',((1-pe)*60).toFixed(1)+'px');
+    rise.style.setProperty('--gl',(.12+.33*pe).toFixed(3)); rise.style.setProperty('--fl',(.15+.5*pe).toFixed(3));
+    if(!desk.matches) return;
+    const total=seq.offsetHeight-vh, p=reduce?0:cl(-r.top/total);
+    const tA=eio(seg(p,.03,.16)), tB=eio(seg(p,.05,.18));
+    A.style.setProperty('--ra',(tA*42).toFixed(2)+'deg'); A.style.setProperty('--oa',(1-tA).toFixed(3));
+    Z.style.setProperty('--ob',tB.toFixed(3)); B.style.setProperty('--rb',((1-tB)*-38).toFixed(2)+'deg');
+    const s=zoom(eio(seg(p,.40,.65))); if(Math.abs(s-lastS)>.25||lastS<0){ lastS=s; size(s); }
+    draw(seg(p,.12,.72)); scr.style.setProperty('--bk',seg(p,.64,.74).toFixed(3)); };
   const on=()=>{ if(!raf) raf=requestAnimationFrame(paint); };
-  addEventListener('scroll',on,{passive:true}); addEventListener('resize',on); paint();
-  const l=sec.querySelector('.hxu-link'); if(l) l.addEventListener('click',e=>{ const t=document.getElementById('hxSpec'); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); } });
+  addEventListener('scroll',on,{passive:true}); addEventListener('resize',()=>{ lastS=-1; cw=0; on(); });
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>{ lastG=-1; on(); });
+  const bi=B.querySelector('img'); if(bi&&!bi.complete) bi.addEventListener('load',()=>{ lastS=-1; on(); }); paint();
 })();
 </script>
 </body>
