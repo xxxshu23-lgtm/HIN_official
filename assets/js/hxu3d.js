@@ -92,12 +92,12 @@ if (stage && !window.__hxuGL) {
   /* ---------- camera rig ---------- */
   const v3 = () => new THREE.Vector3();
   const box = new THREE.Box3(), Cb = v3(), Cs = v3(), Ns = v3(), up = v3(), tmp = v3(), dir = v3(), tgt = v3();
-  let geomReady = false, last = '';
+  let geomReady = false, last = '', fitKey = ''; const fit0 = { d: 1, ox: 0, oy: 0 };
   const measure = () => { box.setFromObject(scene); box.getCenter(Cb); disp.getWorldPosition(Cs);
     Ns.set(0, 0, 1).applyQuaternion(disp.getWorldQuaternion(new THREE.Quaternion())).normalize();
     up.set(0, 1, 0).applyQuaternion(disp.getWorldQuaternion(new THREE.Quaternion())).normalize(); geomReady = true; };
   const sph = (az, el) => new THREE.Vector3(Math.sin(az) * Math.cos(el), Math.sin(el), Math.cos(az) * Math.cos(el));
-  const P = { az: -0.8, el: 0.36, fit: 1.3 };   // start pose ≈ the angled KeyShot render
+  const P = { az: -0.8, el: 0.36, fit: 1 };   // start pose ≈ the angled KeyShot render
   const api = {
     P, cam, scene, R,
     draw(L) {   // L: {vw,vh,ax,ay,aw,ah,t1,t2,zs}
@@ -105,9 +105,18 @@ if (stage && !window.__hxuGL) {
       const key = [L.vw, L.vh, L.ax, L.ay, L.aw, L.ah, L.t1.toFixed(4), L.t2.toFixed(4), L.zs.toFixed(4), P.az, P.el, P.fit].join(); if (key === last) return; last = key;
       const dpr = Math.min(devicePixelRatio || 1, 2); if (cv.width !== Math.round(L.vw * dpr) || cv.height !== Math.round(L.vh * dpr)) { R.setPixelRatio(dpr); R.setSize(L.vw, L.vh, false); }
       cam.aspect = L.vw / L.vh; const th = Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
-      // start: whole product framed inside the image area under the copy
-      const rad = box.getSize(tmp).length() / 2, d0 = rad * P.fit / th * (L.vh / L.ah) * 0.62;
+      // start: fit the whole product (projected bbox) inside the image area under the copy, centred
       const dir0 = sph(P.az, P.el), dirF = Ns.clone();
+      const fk = [L.vw, L.vh, L.ay, L.ah, P.az, P.el, P.fit].join();
+      if (fk !== fitKey) { fitKey = fk; let d = 1; cam.clearViewOffset(); cam.up.set(0, 1, 0);
+        for (let it = 0; it < 4; it++) { cam.position.copy(Cb).addScaledVector(dir0, d); cam.lookAt(Cb); cam.updateMatrixWorld(); cam.updateProjectionMatrix();
+          let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+          for (let i = 0; i < 8; i++) { tmp.set(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z).project(cam);
+            x0 = Math.min(x0, tmp.x); x1 = Math.max(x1, tmp.x); y0 = Math.min(y0, tmp.y); y1 = Math.max(y1, tmp.y); }
+          const wpx = (x1 - x0) / 2 * L.vw, hpx = (y1 - y0) / 2 * L.vh;
+          if (it < 3) d *= Math.max(hpx / (L.ah * 0.9 * P.fit), wpx / (L.vw * 0.8 * P.fit));
+          else { fit0.d = d; fit0.ox = ((x0 + x1) / 2 + 1) / 2 * L.vw - L.vw / 2; fit0.oy = (1 - (y0 + y1) / 2) / 2 * L.vh - (L.ay + L.ah / 2); } } }
+      const d0 = fit0.d;
       const dF = (LW / 0.56) / (2 * th * cam.aspect), dFill = Math.min(DH / (2 * th), DW / (2 * th * cam.aspect)) * 0.965;
       const t1 = L.t1, t2 = L.t2;
       dir.copy(dir0).lerp(dirF, t1).normalize();
@@ -115,8 +124,7 @@ if (stage && !window.__hxuGL) {
       const dist = (d0 + (dF - d0) * t1) * Math.pow(dFill / dF, t2);
       cam.position.copy(tgt).addScaledVector(dir, dist);
       cam.up.set(0, 1, 0).lerp(up, t1).normalize(); cam.lookAt(tgt);
-      const oy = (L.vh / 2 - (L.ay + L.ah / 2)) * (1 - t1);   // shift the start framing into the image area
-      cam.setViewOffset(L.vw, L.vh, 0, oy, L.vw, L.vh); cam.updateProjectionMatrix();
+      cam.setViewOffset(L.vw, L.vh, fit0.ox * (1 - t1), fit0.oy * (1 - t1), L.vw, L.vh); cam.updateProjectionMatrix();
       const z = 1 / L.zs; scrTex.repeat.set(z, z); scrTex.offset.set((1 - z) / 2, (1 - z) * 0.5);
       R.render(scene, cam);
     }

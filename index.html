@@ -2560,6 +2560,31 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #pdPage .hxu.static .hxu-mark{top:auto; bottom:0;}
 @media (prefers-reduced-motion:reduce){ #pdPage .hxu-p .hpd-w{color:var(--gray-500);} }
 </style>
+<style id="update-2026-11-11-shoptype">
+/* SHOP — one type scale + one chapter rhythm (gap between chapters = 240u, same as the main page chapters) */
+#pdPage{--t-label:max(12px,calc(20*var(--u))); --t-display:max(26px,calc(48*var(--u))); --t-body:max(14px,calc(20*var(--u))); --ch-gap:calc(120*var(--u));}
+#pdPage .hxu-ln{display:inline;}
+@media (min-width:681px){
+  /* label (yellow HIN Type) — same as Overview / Portable / Dimensions */
+  #pdPage .hxu-eb{font:400 var(--t-label)/1 "HIN Type",var(--pixel); letter-spacing:.075em; margin-bottom:clamp(16px,1.6vw,24px);}
+  /* HIN display headlines */
+  #pdPage .hxu-h,#pdPage .hxl-head{font-size:var(--t-display) !important; line-height:1.1 !important; letter-spacing:.05em !important;}
+  /* body copy */
+  #pdPage .hpd-sub-kr,#pdPage .hx-fold-cols p,#pdPage .hxs-row .k,#pdPage .hxs-row .v,#pdPage .hxs-row .n,#pdPage .hxs-head .hl{font-size:var(--t-body) !important;}
+  #pdPage .hpd-sub-kr,#pdPage .hx-fold-cols p{line-height:1.6 !important;}
+  /* Work, unfolded: four set lines, sized so the longest line always fits */
+  #pdPage .hxu-copy{width:calc(100% - 2 * var(--gut,16px)) !important; max-width:1100px;}
+  #pdPage .hxu-p{font-size:min(var(--t-body), calc((100vw - 2 * var(--gut,16px) - 24px) / 53)); line-height:1.6; margin-top:clamp(14px,1.3vw,20px);}
+  #pdPage .hxu-ln{display:block; white-space:nowrap;}
+  #pdPage .hxu-link{margin-top:clamp(16px,1.5vw,24px); font-size:var(--t-label);}
+  /* chapter rhythm */
+  #pdPage #hpd-intro{padding-top:calc(240*var(--u)) !important; padding-bottom:var(--ch-gap) !important;}
+  #pdPage #hx15,#pdPage #hpd-fold,#pdPage #hxSpec{padding-top:var(--ch-gap) !important; padding-bottom:var(--ch-gap) !important;}
+  #pdPage #hxLook{padding-top:var(--ch-gap) !important; padding-bottom:0 !important;}
+  #pdPage .hx-buy{padding-bottom:var(--ch-gap) !important;}
+  #pdPage #hx14,#pdPage #hxUnfold,#pdPage #hxFeatures,#pdPage #hxPin{margin-top:var(--ch-gap) !important; margin-bottom:var(--ch-gap) !important;}
+}
+</style>
 </head>
 <body>
 
@@ -3137,7 +3162,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       <div class="hxu-copy">
       <p class="hxu-eb reveal">HIN-001 Portable Workspace</p>
       <h2 class="hxu-h reveal d1" id="hxu-h">Work, unfolded.</h2>
-      <p class="hxu-p reveal d2" data-words>HIN-001 brings a complete workspace into a single folded form. Weighing just 1.2&nbsp;kg and measuring 340&nbsp;×&nbsp;215&nbsp;×&nbsp;24&nbsp;mm when folded, it unfolds in one motion into a stable stand that holds 11–16&Prime; laptops at the height and angle you choose. An integrated LED light bar, a 65Wh built-in battery with USB-C, and a detachable mouse pad complete the setup — so the desk, the café table, or the window seat becomes your place to work.</p>
+      <p class="hxu-p reveal d2" data-words><span class="hxu-ln">HIN-001 brings a complete workspace into a single folded form. Weighing just 1.2&nbsp;kg and measuring 340&nbsp;×&nbsp;215&nbsp;×&nbsp;24&nbsp;mm</span> <span class="hxu-ln">when folded, it unfolds in one motion into a stable stand that holds 11–16&Prime; laptops at the height and angle you choose.</span> <span class="hxu-ln">An integrated LED light bar, a 65Wh built-in battery with USB-C, and a detachable mouse pad complete the setup —</span> <span class="hxu-ln">so the desk, the café table, or the window seat becomes your place to work.</span></p>
       <a class="hxu-link reveal d3" href="#hxSpec"><span>View HIN-001 Specifications</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 5.5H18.5V16"/><path d="M18 6L5.5 18.5"/></svg></a>
       </div>
       <div class="hxu-a"><img class="hxu-img" src="assets/product/work-unfolded.webp" alt="HIN-001 스탠드에 거치된 노트북 — 라이트 바 모듈과 후면 서포트가 펼쳐진 모습" decoding="async"></div>
@@ -4472,14 +4497,14 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   // real 3D stage (three.js + HIN glb) — loaded only when the section gets close, desktop only
   const useGL=()=>{ gl=!!window.__hxuGL; sec.classList.toggle('gl',gl); on(); };
   addEventListener('hxu-gl-ready',useGL);
-  if(!reduce && 'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting) && desk.matches){ io.disconnect(); import(new URL('assets/js/hxu3d.js?v=2',document.baseURI).href).catch(()=>{}); } },{rootMargin:'150% 0px'}); io.observe(sec); }
+  if(!reduce && 'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting) && desk.matches){ io.disconnect(); import(new URL('assets/js/hxu3d.js?v=3',document.baseURI).href).catch(()=>{}); } },{rootMargin:'150% 0px'}); io.observe(sec); }
   const mode=()=>{ const st=!desk.matches||reduce; if(st!==isStatic){ isStatic=st; sec.classList.toggle('static',st);
       if(st){ A.style.transform=S.style.transform=''; ['--co','--cy','--va','--vb','--zs'].forEach(k=>{ copy.style.removeProperty(k); VA.style.removeProperty(k); VB.style.removeProperty(k); SI.style.removeProperty(k); }); D.style.removeProperty('--do'); D.style.removeProperty('--dy'); rv.forEach(e=>e.classList.add('in')); } }
     if(st) mark.style.height=D.offsetHeight+'px'; else mark.style.height=''; sec.classList.add('ready'); };
   const paint=()=>{ raf=0; if(isStatic) return; const vw=stg.clientWidth, vh=stg.clientHeight, r=seq.getBoundingClientRect();
     const p=cl(-r.top/(seq.offsetHeight-vh));
     // base placement: render fits the space under the copy, so copy + render read as one screen
-    const top=copy.offsetTop+copy.offsetHeight+vh*.025, bot=vh*.975, ah=Math.max(bot-top,vh*.3);
+    const top=copy.offsetTop+copy.offsetHeight+vh*.03, bot=vh-Math.max(64,vh*.08), ah=Math.max(bot-top,vh*.3);
     const bw=Math.min(vw*.84, ah*AR, 1500), bh=bw/AR;
     const pe=eo(cl((vh-r.top)/(vh*.9))), se=.9+.1*pe, Bw=bw*se, Bh=bh*se, Bx=(vw-Bw)/2, By=top+(ah-bh)/2+(bh-Bh)+(1-pe)*50;
     const q0=NQ.map(([x,y])=>[Bx+x*Bw,By+y*Bh]);
