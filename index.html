@@ -4461,7 +4461,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   const cl=(v,a=0,b=1)=>Math.min(Math.max(v,a),b), seg=(p,a,b)=>cl((p-a)/(b-a)), eo=t=>1-Math.pow(1-t,3), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
   const ctx=cv.getContext('2d'); let cw=0, ch=0, lastG=-1, lastS=-1;
   // HIN hinge paths — vertical stability, horizontal flow, unbroken connection (normalised to the display)
-  const P=[ [[.08,-.3],[.08,.70],[.52,.70],[.52,.34]], [[.27,-.3],[.27,.47],[.71,.47],[.71,1.3]], [[1.3,.17],[.53,.17]], [[.89,-.3],[.89,.61],[1.3,.61]] ];
+  const P=[ [[.08,-.3],[.08,.70],[.52,.70],[.52,.17],[1.3,.17]], [[.27,-.3],[.27,.47],[.71,.47],[.71,1.3]], [[.89,-.3],[.89,.61],[1.3,.61]] ]; // every line enters and leaves off-screen: no open ends
   const size=sc=>{ const r=scr.offsetWidth, h=scr.offsetHeight; const k=Math.min(2600/r, Math.max(1,sc)*Math.min(devicePixelRatio||1,1.5)); const w=Math.round(r*k), hh=Math.round(h*k); if(w!==cw||hh!==ch){ cw=cv.width=w; ch=cv.height=hh; lastG=-1; } };
   const draw=g=>{ if(Math.abs(g-lastG)<.0015) return; lastG=g; const W=cw, H=ch; ctx.setTransform(1,0,0,1,0,0); ctx.fillStyle='#000'; ctx.fillRect(0,0,W,H);
     const lw=H*.12, rad=H*.10, dx=(-.06+.12*g)*W, dy=(.04-.08*g)*H;
@@ -4472,7 +4472,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
       ctx.shadowColor='rgba(255,251,186,.55)'; ctx.shadowBlur=H*.05; ctx.strokeStyle=gr; ctx.lineWidth=lw; ctx.stroke(path);
       ctx.shadowBlur=0; ctx.strokeStyle='#060606'; ctx.lineWidth=lw*.8; ctx.stroke(path); });
     ctx.restore(); ctx.setLineDash([]);
-    const t=seg(g,.45,.7); if(t>0){ ctx.globalAlpha=t; ctx.fillStyle='#FFFBBA'; ctx.font=`${Math.round(H*.045)}px "HIN Typeer", monospace`; ctx.textBaseline='bottom'; ctx.fillText('HERE, I AM, NOW'.replace(/,/g,' /'), W*.05, H*.94); ctx.textAlign='right'; ctx.fillText('HIN-001', W*.95, H*.94); ctx.textAlign='left'; ctx.globalAlpha=1; } };
+    const t=seg(g,.45,.7); if(t>0){ ctx.globalAlpha=t; ctx.fillStyle='#FFFBBA'; ctx.font=`${Math.round(H*.045)}px "HIN Typeer", monospace`; ctx.textBaseline='bottom'; ctx.fillText('HERE, I AM, NOW'.replace(/,/g,' /'), W*.14, H*.92); ctx.textAlign='right'; ctx.fillText('HIN-001', W*.86, H*.92); ctx.textAlign='left'; ctx.globalAlpha=1; } };
   const zoom=k=>{ if(k<=0){ Z.style.setProperty('--zm','none'); return 1; }
     // display rect in sticky-stage coordinates (layout offsets ignore transforms)
     const ox=B.offsetLeft+scr.offsetLeft, oy=B.offsetTop+scr.offsetTop, ow=scr.offsetWidth, oh=scr.offsetHeight; const vw=Z.clientWidth, vh=Z.clientHeight;
