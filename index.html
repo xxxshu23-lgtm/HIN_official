@@ -2512,46 +2512,49 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #pdPage .hx-buynow:focus-visible{outline:1px solid var(--dot); outline-offset:4px;}
 </style>
 <style id="update-2026-11-11-unfold">
-/* WORK, UNFOLDED — Apple-style feature intro: centred copy, product rises and settles as you scroll */
-#pdPage .hxu{background:#000; color:#fff; text-align:center; padding:clamp(72px,9vw,150px) var(--gut,16px) clamp(40px,5vw,80px); overflow-x:clip;}
-#pdPage .hxu-eb{margin:0 0 clamp(14px,1.4vw,22px); font:400 max(13px,calc(18*var(--u)))/1 "HIN Typeer",var(--pixel); letter-spacing:.09em; text-transform:uppercase; color:var(--dot);}
-#pdPage .hxu-h{margin:0; font:400 clamp(36px,5.6vw,92px)/1.05 "HIN Type",var(--pixel); letter-spacing:.04em; text-transform:uppercase; color:#fff;}
-#pdPage .hxu-p{max-width:min(900px,100%); margin:clamp(22px,2.2vw,36px) auto 0; font:400 clamp(14px,1.1vw,18px)/1.65 "Aeonik Hangul",var(--grotesk); letter-spacing:-.01em; color:var(--gray-500); word-break:keep-all; text-wrap:pretty;}
-#pdPage .hxu-link{display:inline-flex; align-items:center; gap:.55em; margin-top:clamp(28px,2.6vw,44px); color:var(--dot); text-decoration:none;
-  font:400 max(13px,calc(18*var(--u)))/1 "HIN Typeer",var(--pixel); letter-spacing:.09em; text-transform:uppercase;}
+/* WORK, UNFOLDED — one pinned page: copy + render share the first screen; the render turns in 3D until the display faces you,
+   the display graphic zooms to full screen, then DIMENSIONS appears inside the same pinned scroll */
+#pdPage .hxu{background:#000; color:#fff; text-align:center; padding:0; overflow-x:clip;}
+#pdPage .hxu-seq{position:relative; height:560vh;}
+#pdPage .hxu-sticky{position:sticky; top:0; height:100vh; overflow:hidden; background:#000;}
+#pdPage .hxu-copy{position:absolute; left:50%; top:clamp(64px,10vh,120px); width:min(720px,calc(100% - 2 * var(--gut,16px))); z-index:5; transform:translate(-50%,var(--cy,0px)); opacity:var(--co,1);}
+#pdPage .hxu-eb{margin:0 0 clamp(10px,1vw,14px); font:400 max(12px,calc(15*var(--u)))/1 "HIN Typeer",var(--pixel); letter-spacing:.09em; text-transform:uppercase; color:var(--dot);}
+#pdPage .hxu-h{margin:0; font:400 clamp(24px,2.5vw,40px)/1.1 "HIN Type",var(--pixel); letter-spacing:.05em; text-transform:uppercase; color:#fff;}
+#pdPage .hxu-p{margin:clamp(12px,1.1vw,18px) auto 0; font:400 clamp(13px,.9vw,15px)/1.6 "Aeonik Hangul",var(--grotesk); letter-spacing:-.01em; color:var(--gray-500); word-break:keep-all; text-wrap:pretty;}
+#pdPage .hxu-link{display:inline-flex; align-items:center; gap:.55em; margin-top:clamp(12px,1.1vw,18px); color:var(--dot); text-decoration:none;
+  font:400 max(12px,calc(14*var(--u)))/1 "HIN Typeer",var(--pixel); letter-spacing:.09em; text-transform:uppercase;}
 #pdPage .hxu-link svg{width:1em; height:1em; transition:transform .35s cubic-bezier(.22,1,.36,1);}
 #pdPage .hxu-link:hover svg{transform:translate(2px,-2px);}
 #pdPage .hxu-link:hover span{text-decoration:underline; text-underline-offset:.35em; text-decoration-thickness:1px;}
 #pdPage .hxu-link:focus-visible{outline:1px solid var(--dot); outline-offset:6px;}
-#pdPage .hxu{padding-bottom:0;}
-#pdPage .hxu-seq{position:relative; height:520vh; margin:clamp(16px,2vw,32px) calc(-1 * var(--gut,16px)) 0; --aw:min(1180px,88vw,87vh);} /* full-bleed so the display can fill the whole viewport */
-#pdPage .hxu-sticky{position:sticky; top:0; height:100vh; overflow:hidden; perspective:1800px;}
-#pdPage .hxu-a{position:absolute; left:50%; top:50%; width:var(--aw); transform:translate(-50%,-50%) rotateY(var(--ra,0deg)); opacity:var(--oa,1); will-change:transform,opacity;}
-#pdPage .hxu-rise{position:relative; transform:translateY(var(--ty,60px)) scale(var(--sc,.84)); transform-origin:50% 100%; will-change:transform;}
-#pdPage .hxu-zoom{position:absolute; inset:0; transform-origin:0 0; transform:var(--zm,none); opacity:var(--ob,0); will-change:transform,opacity;}
-#pdPage .hxu-b{position:absolute; width:calc(var(--aw) * 1.6); left:calc(50% - var(--aw) * 1.6 * .609); top:calc(50% - var(--aw) * 1.6 / 1.4475 / 2); transform:perspective(1800px) rotateY(var(--rb,-38deg)); transform-origin:61% 50%;}
-#pdPage .hxu-b img{display:block; width:100%; height:auto;}
-/* the laptop display: graphic drawn per scroll frame, mapped onto the screen glass of the front render */
-#pdPage .hxu-scr{position:absolute; left:39.2%; top:13.78%; width:42.82%; height:39.4%; overflow:hidden; background:#000; border-radius:.9% .9% 0 0 / 1.4% 1.4% 0 0;}
-#pdPage .hxu-scr canvas{display:block; width:100%; height:100%;}
-#pdPage .hxu-black{position:absolute; inset:0; background:#000; opacity:var(--bk,0);}
-#pdPage .hxu-next{position:relative; z-index:3; margin-top:-100vh; background:transparent !important;}
-@media (max-width:680px){
-  #pdPage .hxu-seq{height:auto; --aw:100%; margin-left:0; margin-right:0;}
-  #pdPage .hxu-sticky{position:static; height:auto; overflow:visible; perspective:none;}
-  #pdPage .hxu-a{position:relative; left:auto; top:auto; transform:none; opacity:1; margin:32px auto 0;}
-  #pdPage .hxu-zoom{display:none;}
-  #pdPage .hxu-next{margin-top:0;}
-}
-#pdPage .hxu-img{position:relative; display:block; width:100%; height:auto; z-index:1;}
-/* screen spill: a blurred copy lights the black around the device, like the glow off a real display */
-#pdPage .hxu-glow{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; filter:blur(60px) saturate(1.6); opacity:var(--gl,.15); transform:scale(1.04); z-index:0; pointer-events:none;}
-#pdPage .hxu-floor{position:absolute; left:8%; right:8%; bottom:-4%; height:12%; z-index:0; background:radial-gradient(50% 50% at 50% 50%,rgba(255,255,255,.14),transparent 70%); filter:blur(18px); opacity:var(--fl,.3);}
 #pdPage .hxu-p .hpd-w{color:#4e4e51; transition:color .35s ease;}
 #pdPage .hxu-p .hpd-w.on{color:var(--gray-500);}
+/* render + display graphic: both mapped with the same projective transform (matrix3d) so the display plane turns to face you */
+#pdPage .hxu-a,#pdPage .hxu-scr{position:absolute; left:0; top:0; transform-origin:0 0; visibility:hidden;}
+#pdPage .hxu.ready .hxu-a,#pdPage .hxu.ready .hxu-scr{visibility:visible;}
+#pdPage .hxu-a{width:1600px; height:1319.3px; z-index:1;}
+#pdPage .hxu-a img{display:block; width:100%; height:100%;}
+#pdPage .hxu-scr{width:1600px; height:1032px; z-index:3; overflow:hidden; background:#000; border-radius:12px 12px 0 0;}
+#pdPage .hxu-scr img{display:block; width:100%; height:100%; transform:scale(var(--zs,1)); transform-origin:50% 46%;}
+#pdPage .hxu-veil{position:absolute; inset:0; background:#000; pointer-events:none;}
+#pdPage .hxu-va{z-index:2; opacity:var(--va,0);}
+#pdPage .hxu-vb{z-index:4; opacity:var(--vb,0);}
+#pdPage .hxu-dims{position:absolute; inset:0; z-index:6; margin:0; text-align:left; box-sizing:border-box; background:transparent !important; opacity:var(--do,0); transform:translateY(var(--dy,40px)); pointer-events:none;}
+#pdPage .hxu-dims.live{pointer-events:auto;}
+#pdPage .hxu-dims .hxr{opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s cubic-bezier(.22,1,.36,1);}
+#pdPage .hxu-dims .hxr.in{opacity:1; transform:none;}
+#pdPage .hxu-mark{position:absolute; left:0; width:1px; height:1px; top:calc((100% - 100vh) * .66 + 50vh); pointer-events:none;}
+/* static fallback (mobile / reduced motion): plain stacked flow */
+#pdPage .hxu.static .hxu-seq{height:auto;}
+#pdPage .hxu.static .hxu-sticky{position:static; height:auto; overflow:visible;}
+#pdPage .hxu.static .hxu-copy{position:relative; left:auto; top:auto; width:auto; max-width:720px; margin:0 auto; padding:clamp(64px,9vw,120px) var(--gut,16px) 0; transform:none; opacity:1;}
+#pdPage .hxu.static .hxu-a{position:relative; width:min(100%,900px); height:auto; margin:28px auto 0; transform:none !important; visibility:visible;}
+#pdPage .hxu.static .hxu-a img{height:auto;}
+#pdPage .hxu.static .hxu-scr,#pdPage .hxu.static .hxu-veil{display:none;}
+#pdPage .hxu.static .hxu-dims{position:relative; inset:auto; opacity:1; transform:none; pointer-events:auto;}
+#pdPage .hxu.static .hxu-dims .hxr{opacity:1; transform:none;}
+#pdPage .hxu.static .hxu-mark{top:auto; bottom:0;}
 @media (prefers-reduced-motion:reduce){ #pdPage .hxu-p .hpd-w{color:var(--gray-500);} }
-@media (max-width:680px){ #pdPage .hxu-fig{width:100%;} }
-@media (prefers-reduced-motion:reduce){ #pdPage .hxu-rise{transform:none !important; transition:none;} }
 </style>
 </head>
 <body>
@@ -3125,64 +3128,62 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 </section>
 <div class="hx-buy"><button type="button" class="hx-buynow" id="hxlBuy">Buy now</button></div>
 <section class="hxu" id="hxUnfold" aria-labelledby="hxu-h">
-  <p class="hxu-eb reveal">HIN-001 Portable Workspace</p>
-  <h2 class="hxu-h reveal d1" id="hxu-h">Work, unfolded.</h2>
-  <p class="hxu-p reveal d2" data-words>HIN-001 brings a complete workspace into a single folded form. Weighing just 1.2&nbsp;kg and measuring 340&nbsp;×&nbsp;215&nbsp;×&nbsp;24&nbsp;mm when folded, it unfolds in one motion into a stable stand that holds 11–16&Prime; laptops at the height and angle you choose. An integrated LED light bar, a 65Wh built-in battery with USB-C, and a detachable mouse pad complete the setup — so the desk, the café table, or the window seat becomes your place to work.</p>
-  <a class="hxu-link reveal d3" href="#hxSpec"><span>View HIN-001 Specifications</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 5.5H18.5V16"/><path d="M18 6L5.5 18.5"/></svg></a>
   <div class="hxu-seq">
     <div class="hxu-sticky">
-      <div class="hxu-a"><div class="hxu-rise">
-        <img class="hxu-glow" src="assets/product/work-unfolded.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
-        <img class="hxu-img" src="assets/product/work-unfolded.webp" alt="HIN-001 스탠드에 거치된 노트북 — 라이트 바 모듈과 후면 서포트가 펼쳐진 모습" loading="lazy" decoding="async">
-        <span class="hxu-floor" aria-hidden="true"></span>
-      </div></div>
-      <div class="hxu-zoom" aria-hidden="true"><div class="hxu-b">
-        <img src="assets/d03-stable.webp?v=3" alt="" loading="lazy" decoding="async">
-        <div class="hxu-scr"><canvas></canvas><i class="hxu-black"></i></div>
-      </div></div>
+      <div class="hxu-copy">
+      <p class="hxu-eb reveal">HIN-001 Portable Workspace</p>
+      <h2 class="hxu-h reveal d1" id="hxu-h">Work, unfolded.</h2>
+      <p class="hxu-p reveal d2" data-words>HIN-001 brings a complete workspace into a single folded form. Weighing just 1.2&nbsp;kg and measuring 340&nbsp;×&nbsp;215&nbsp;×&nbsp;24&nbsp;mm when folded, it unfolds in one motion into a stable stand that holds 11–16&Prime; laptops at the height and angle you choose. An integrated LED light bar, a 65Wh built-in battery with USB-C, and a detachable mouse pad complete the setup — so the desk, the café table, or the window seat becomes your place to work.</p>
+      <a class="hxu-link reveal d3" href="#hxSpec"><span>View HIN-001 Specifications</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 5.5H18.5V16"/><path d="M18 6L5.5 18.5"/></svg></a>
+      </div>
+      <div class="hxu-a"><img class="hxu-img" src="assets/product/work-unfolded.webp" alt="HIN-001 스탠드에 거치된 노트북 — 라이트 바 모듈과 후면 서포트가 펼쳐진 모습" decoding="async"></div>
+      <i class="hxu-veil hxu-va" aria-hidden="true"></i>
+      <div class="hxu-scr" aria-hidden="true"><img src="assets/product/work-unfolded-screen.webp" alt="" decoding="async"></div>
+      <i class="hxu-veil hxu-vb" aria-hidden="true"></i>
+      <section class="hpd-blk hxu-dims" id="hpd-numbers" aria-label="Dimensions">
+        <div class="hpd-label hxr">Dimensions</div>
+        <h2 class="hpd-h2 hxr">Twenty-four millimetres.<span class="hpd-g">Folded, HIN-001 measures 340 × 215 × 24 mm — made to move with you.</span></h2>
+        <div class="hpd-nums">
+          <article class="hpd-num hpd-s6 hxr">
+            <div class="hpd-t"><div class="hpd-k">Height / Folded</div><div class="hpd-v">24<small>mm</small></div><span class="hpd-chip">Folded flat</span></div>
+            <svg class="hpd-dg" viewBox="0 0 470 150" role="img" aria-label="접은 상태의 측면 도면: 두께 24mm, 폭 340mm">
+              <rect class="hpd-slab" x="10" y="48" width="340" height="24" rx="3"/>
+              <line class="hpd-hair" x1="350" y1="48" x2="392" y2="48"/><line class="hpd-hair" x1="350" y1="72" x2="392" y2="72"/>
+              <line class="hpd-dim" x1="384" y1="48" x2="384" y2="72"/><line class="hpd-dim" x1="379" y1="48" x2="389" y2="48"/><line class="hpd-dim" x1="379" y1="72" x2="389" y2="72"/>
+              <text x="398" y="64">24 MM</text>
+              <line class="hpd-dim" x1="10" y1="108" x2="350" y2="108"/><line class="hpd-dim" x1="10" y1="103" x2="10" y2="113"/><line class="hpd-dim" x1="350" y1="103" x2="350" y2="113"/>
+              <text x="180" y="130" text-anchor="middle">340 MM</text>
+            </svg>
+          </article>
+          <article class="hpd-num hpd-s3 hxr">
+            <div class="hpd-t"><div class="hpd-k">Width</div><div class="hpd-v">340<small>mm</small></div><span class="hpd-chip">Folded</span></div>
+            <svg class="hpd-dg" viewBox="0 0 260 190" role="img" aria-label="평면 도면: 폭 340mm">
+              <rect class="hpd-slab" x="14" y="34" width="211" height="134" rx="4"/>
+              <line class="hpd-dim" x1="14" y1="20" x2="225" y2="20"/><line class="hpd-dim" x1="14" y1="15" x2="14" y2="25"/><line class="hpd-dim" x1="225" y1="15" x2="225" y2="25"/>
+              <text x="119" y="11" text-anchor="middle">340 MM</text>
+            </svg>
+          </article>
+          <article class="hpd-num hpd-s3 hxr d1">
+            <div class="hpd-t"><div class="hpd-k">Depth</div><div class="hpd-v">215<small>mm</small></div><span class="hpd-chip">Folded</span></div>
+            <svg class="hpd-dg" viewBox="0 0 300 190" role="img" aria-label="평면 도면: 깊이 215mm">
+              <rect class="hpd-slab" x="14" y="28" width="211" height="134" rx="4"/>
+              <line class="hpd-dim" x1="246" y1="28" x2="246" y2="162"/><line class="hpd-dim" x1="241" y1="28" x2="251" y2="28"/><line class="hpd-dim" x1="241" y1="162" x2="251" y2="162"/>
+              <text x="258" y="99">215 MM</text>
+            </svg>
+          </article>
+          <article class="hpd-num hxr">
+            <div class="hpd-t"><div class="hpd-k">Weight</div><div class="hpd-v">1.2<small>kg</small></div><span class="hpd-chip">Lighter to carry</span></div>
+          </article>
+          <article class="hpd-num hxr d1">
+            <div class="hpd-t"><div class="hpd-k">Battery</div><div class="hpd-v">65<small>Wh</small></div><span class="hpd-chip">Built-in</span></div>
+          </article>
+          <article class="hpd-num hxr d2">
+            <div class="hpd-t"><div class="hpd-k">Compatibility</div><div class="hpd-v">11&ndash;16<small>&Prime;</small></div><span class="hpd-chip">Laptops</span></div>
+          </article>
+        </div>
+      </section>
     </div>
-  </div>
-</section>
-<section class="hpd-blk hxu-next" id="hpd-numbers">
-  <div class="hpd-label reveal">Dimensions</div>
-  <h2 class="hpd-h2 reveal">Twenty-four millimetres.<span class="hpd-g">Folded, HIN-001 measures 340 × 215 × 24 mm — made to move with you.</span></h2>
-  <div class="hpd-nums">
-    <article class="hpd-num hpd-s6 reveal">
-      <div class="hpd-t"><div class="hpd-k">Height / Folded</div><div class="hpd-v">24<small>mm</small></div><span class="hpd-chip">Folded flat</span></div>
-      <svg class="hpd-dg" viewBox="0 0 470 150" role="img" aria-label="접은 상태의 측면 도면: 두께 24mm, 폭 340mm">
-        <rect class="hpd-slab" x="10" y="48" width="340" height="24" rx="3"/>
-        <line class="hpd-hair" x1="350" y1="48" x2="392" y2="48"/><line class="hpd-hair" x1="350" y1="72" x2="392" y2="72"/>
-        <line class="hpd-dim" x1="384" y1="48" x2="384" y2="72"/><line class="hpd-dim" x1="379" y1="48" x2="389" y2="48"/><line class="hpd-dim" x1="379" y1="72" x2="389" y2="72"/>
-        <text x="398" y="64">24 MM</text>
-        <line class="hpd-dim" x1="10" y1="108" x2="350" y2="108"/><line class="hpd-dim" x1="10" y1="103" x2="10" y2="113"/><line class="hpd-dim" x1="350" y1="103" x2="350" y2="113"/>
-        <text x="180" y="130" text-anchor="middle">340 MM</text>
-      </svg>
-    </article>
-    <article class="hpd-num hpd-s3 reveal">
-      <div class="hpd-t"><div class="hpd-k">Width</div><div class="hpd-v">340<small>mm</small></div><span class="hpd-chip">Folded</span></div>
-      <svg class="hpd-dg" viewBox="0 0 260 190" role="img" aria-label="평면 도면: 폭 340mm">
-        <rect class="hpd-slab" x="14" y="34" width="211" height="134" rx="4"/>
-        <line class="hpd-dim" x1="14" y1="20" x2="225" y2="20"/><line class="hpd-dim" x1="14" y1="15" x2="14" y2="25"/><line class="hpd-dim" x1="225" y1="15" x2="225" y2="25"/>
-        <text x="119" y="11" text-anchor="middle">340 MM</text>
-      </svg>
-    </article>
-    <article class="hpd-num hpd-s3 reveal d1">
-      <div class="hpd-t"><div class="hpd-k">Depth</div><div class="hpd-v">215<small>mm</small></div><span class="hpd-chip">Folded</span></div>
-      <svg class="hpd-dg" viewBox="0 0 300 190" role="img" aria-label="평면 도면: 깊이 215mm">
-        <rect class="hpd-slab" x="14" y="28" width="211" height="134" rx="4"/>
-        <line class="hpd-dim" x1="246" y1="28" x2="246" y2="162"/><line class="hpd-dim" x1="241" y1="28" x2="251" y2="28"/><line class="hpd-dim" x1="241" y1="162" x2="251" y2="162"/>
-        <text x="258" y="99">215 MM</text>
-      </svg>
-    </article>
-    <article class="hpd-num reveal">
-      <div class="hpd-t"><div class="hpd-k">Weight</div><div class="hpd-v">1.2<small>kg</small></div><span class="hpd-chip">Lighter to carry</span></div>
-    </article>
-    <article class="hpd-num reveal d1">
-      <div class="hpd-t"><div class="hpd-k">Battery</div><div class="hpd-v">65<small>Wh</small></div><span class="hpd-chip">Built-in</span></div>
-    </article>
-    <article class="hpd-num reveal d2">
-      <div class="hpd-t"><div class="hpd-k">Compatibility</div><div class="hpd-v">11&ndash;16<small>&Prime;</small></div><span class="hpd-chip">Laptops</span></div>
-    </article>
+    <i class="hxu-mark" id="hxuDimMark" aria-hidden="true"></i>
   </div>
 </section>
 <section class="hxf" id="hxFeatures" aria-label="HIN-001 기능 소개">
@@ -4027,7 +4028,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     const home=document.getElementById('viewHome'), prod=document.getElementById('viewProduct'), shopEl=document.getElementById('viewShop');
     const CH={
       home:[['#heroPinWrap','Arrival'],['#productRise','Manifesto'],['#hingeGallery','Workers'],['section.slider.second','People'],['#magStack','Issue 01'],['section.slider.first','Campaign'],['#aboutSection','Studio']],
-      shop:[['#s_viewWrap','Configure'],['#hpd-intro','Overview'],['#hpd-fold','Portable'],['#hxUnfold','Unfolded'],['#hpd-numbers','Dimensions'],['#hxFeatures','Features'],['#hxPin','Details'],['#hxSpec','Specifications'],['#shopAboutSlot','Studio']]
+      shop:[['#s_viewWrap','Configure'],['#hpd-intro','Overview'],['#hpd-fold','Portable'],['#hxUnfold','Unfolded'],['#hxuDimMark','Dimensions'],['#hxFeatures','Features'],['#hxPin','Details'],['#hxSpec','Specifications'],['#shopAboutSlot','Studio']]
     };
     const list=v=>(CH[v]||[]).map(([sel,name])=>[q(v==='home'?home:shopEl, sel), name]).filter(x=>x[0]);
     let cur=-1, curView='';
@@ -4448,52 +4449,46 @@ document.addEventListener('touchstart',()=>{},{passive:true});
     const o=document.getElementById('s_order'); if(o) setTimeout(()=>o.focus({preventScroll:true}),700); }); })();
 </script>
 <script>
-/* WORK, UNFOLDED — pinned scroll sequence (desktop)
-   0 → .18  angled shot turns away while the front shot turns in (screen faces you)
-   .12 → .72 the display draws HIN hinge lines that glow and drift with scroll
-   .40 → .65 camera pushes into the display until it fills the viewport
-   .64 → .74 display fades to black; DIMENSIONS then rises over it (last 100vh) */
+/* WORK, UNFOLDED — pinned 3D turn → full-screen display → DIMENSIONS, all inside one sticky stage (desktop) */
 (() => { const sec=document.getElementById('hxUnfold'); if(!sec) return;
-  const seq=sec.querySelector('.hxu-seq'), rise=sec.querySelector('.hxu-rise'), A=sec.querySelector('.hxu-a'), Z=sec.querySelector('.hxu-zoom'), B=sec.querySelector('.hxu-b'), scr=sec.querySelector('.hxu-scr'), cv=scr&&scr.querySelector('canvas');
+  const seq=sec.querySelector('.hxu-seq'), stg=sec.querySelector('.hxu-sticky'), copy=sec.querySelector('.hxu-copy'), A=sec.querySelector('.hxu-a'), S=sec.querySelector('.hxu-scr'), SI=S.querySelector('img'),
+        VA=sec.querySelector('.hxu-va'), VB=sec.querySelector('.hxu-vb'), D=sec.querySelector('.hxu-dims'), mark=sec.querySelector('.hxu-mark'), rv=[...D.querySelectorAll('.hxr')];
   const link=sec.querySelector('.hxu-link'); if(link) link.addEventListener('click',e=>{ const t=document.getElementById('hxSpec'); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); } });
-  if(!seq||!cv) return;
   const desk=matchMedia('(min-width:681px)'), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cl=(v,a=0,b=1)=>Math.min(Math.max(v,a),b), seg=(p,a,b)=>cl((p-a)/(b-a)), eo=t=>1-Math.pow(1-t,3), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-  const ctx=cv.getContext('2d'); let cw=0, ch=0, lastG=-1, lastS=-1;
-  // HIN hinge paths — vertical stability, horizontal flow, unbroken connection (normalised to the display)
-  const P=[ [[.08,-.3],[.08,.70],[.52,.70],[.52,.17],[1.3,.17]], [[.27,-.3],[.27,.47],[.71,.47],[.71,1.3]], [[.89,-.3],[.89,.61],[1.3,.61]] ]; // every line enters and leaves off-screen: no open ends
-  const size=sc=>{ const r=scr.offsetWidth, h=scr.offsetHeight; const k=Math.min(2600/r, Math.max(1,sc)*Math.min(devicePixelRatio||1,1.5)); const w=Math.round(r*k), hh=Math.round(h*k); if(w!==cw||hh!==ch){ cw=cv.width=w; ch=cv.height=hh; lastG=-1; } };
-  const draw=g=>{ if(Math.abs(g-lastG)<.0015) return; lastG=g; const W=cw, H=ch; ctx.setTransform(1,0,0,1,0,0); ctx.fillStyle='#000'; ctx.fillRect(0,0,W,H);
-    const lw=H*.12, rad=H*.10, dx=(-.06+.12*g)*W, dy=(.04-.08*g)*H;
-    ctx.save(); ctx.translate(dx,dy); ctx.lineJoin='round'; ctx.lineCap='butt';
-    P.forEach((pts,i)=>{ const q=pts.map(([x,y])=>[x*W,y*H]); let L=0; for(let k=1;k<q.length;k++) L+=Math.hypot(q[k][0]-q[k-1][0],q[k][1]-q[k-1][1]);
-      const rv=cl(g*1.7 - i*.16); if(rv<=0) return; const path=new Path2D(); path.moveTo(q[0][0],q[0][1]); for(let k=1;k<q.length-1;k++) path.arcTo(q[k][0],q[k][1],q[k+1][0],q[k+1][1],rad); path.lineTo(q[q.length-1][0],q[q.length-1][1]);
-      ctx.setLineDash([L*rv, L*2]); const gr=ctx.createLinearGradient(0,0,W,H); gr.addColorStop(0,'rgba(255,251,186,.95)'); gr.addColorStop(.5,'rgba(255,255,255,.9)'); gr.addColorStop(1,'rgba(232,242,0,.75)');
-      ctx.shadowColor='rgba(255,251,186,.55)'; ctx.shadowBlur=H*.05; ctx.strokeStyle=gr; ctx.lineWidth=lw; ctx.stroke(path);
-      ctx.shadowBlur=0; ctx.strokeStyle='#060606'; ctx.lineWidth=lw*.8; ctx.stroke(path); });
-    ctx.restore(); ctx.setLineDash([]);
-    const t=seg(g,.45,.7); if(t>0){ ctx.globalAlpha=t; ctx.fillStyle='#FFFBBA'; ctx.font=`${Math.round(H*.045)}px "HIN Typeer", monospace`; ctx.textBaseline='bottom'; ctx.fillText('HERE, I AM, NOW'.replace(/,/g,' /'), W*.14, H*.92); ctx.textAlign='right'; ctx.fillText('HIN-001', W*.86, H*.92); ctx.textAlign='left'; ctx.globalAlpha=1; } };
-  const zoom=k=>{ if(k<=0){ Z.style.setProperty('--zm','none'); return 1; }
-    // display rect in sticky-stage coordinates (layout offsets ignore transforms)
-    const ox=B.offsetLeft+scr.offsetLeft, oy=B.offsetTop+scr.offsetTop, ow=scr.offsetWidth, oh=scr.offsetHeight; const vw=Z.clientWidth, vh=Z.clientHeight;
-    const S=Math.max(vw/ow, vh/oh)*1.04, s=1+(S-1)*k, cx=ox+ow/2, cy=oy+oh/2, tx=cx+(vw/2-cx)*k, ty=cy+(vh/2-cy)*k;
-    Z.style.setProperty('--zm',`translate(${tx.toFixed(1)}px,${ty.toFixed(1)}px) scale(${s.toFixed(4)}) translate(${(-cx).toFixed(1)}px,${(-cy).toFixed(1)}px)`); return s; };
-  let raf=0;
-  const paint=()=>{ raf=0; const vh=innerHeight, r=seq.getBoundingClientRect();
-    // entry: the angled shot rises and settles before the sequence pins
-    const pe=eo(cl((vh - r.top)/(vh*.85))); rise.style.setProperty('--sc',(.84+.16*pe).toFixed(4)); rise.style.setProperty('--ty',((1-pe)*60).toFixed(1)+'px');
-    rise.style.setProperty('--gl',(.12+.33*pe).toFixed(3)); rise.style.setProperty('--fl',(.15+.5*pe).toFixed(3));
-    if(!desk.matches) return;
-    const total=seq.offsetHeight-vh, p=reduce?0:cl(-r.top/total);
-    const tA=eio(seg(p,.03,.16)), tB=eio(seg(p,.05,.18));
-    A.style.setProperty('--ra',(tA*42).toFixed(2)+'deg'); A.style.setProperty('--oa',(1-tA).toFixed(3));
-    Z.style.setProperty('--ob',tB.toFixed(3)); B.style.setProperty('--rb',((1-tB)*-38).toFixed(2)+'deg');
-    const s=zoom(eio(seg(p,.40,.65))); if(Math.abs(s-lastS)>.25||lastS<0){ lastS=s; size(s); }
-    draw(seg(p,.12,.72)); scr.style.setProperty('--bk',seg(p,.64,.74).toFixed(3)); };
+  const AR=2400/1979, SR=2400/1548, LW=1600, LH=LW/AR, SW=1600, SH=SW/SR;
+  const NQ=[[.22292,.04295],[.69208,.02021],[.66458,.44972],[.21042,.51289]];   // display corners in the render (TL,TR,BR,BL)
+  const LQ=NQ.map(([x,y])=>[x*LW,y*LH]), SQ=[[0,0],[SW,0],[SW,SH],[0,SH]];
+  const rectQ=(x,y,w,h)=>[[x,y],[x+w,y],[x+w,y+h],[x,y+h]], lerpQ=(a,b,t)=>a.map((p,i)=>[p[0]+(b[i][0]-p[0])*t,p[1]+(b[i][1]-p[1])*t]);
+  const homo=(src,dst)=>{ const M=[],v=[]; for(let i=0;i<4;i++){ const [x,y]=src[i],[u,w]=dst[i]; M.push([x,y,1,0,0,0,-u*x,-u*y]); v.push(u); M.push([0,0,0,x,y,1,-w*x,-w*y]); v.push(w); }
+    for(let c=0;c<8;c++){ let p=c; for(let r=c+1;r<8;r++) if(Math.abs(M[r][c])>Math.abs(M[p][c])) p=r; [M[c],M[p]]=[M[p],M[c]]; [v[c],v[p]]=[v[p],v[c]];
+      for(let r=0;r<8;r++){ if(r===c) continue; const f=M[r][c]/M[c][c]; if(!f) continue; for(let k=c;k<8;k++) M[r][k]-=f*M[c][k]; v[r]-=f*v[c]; } }
+    const h=v.map((x,i)=>x/M[i][i]); return `matrix3d(${h[0]},${h[3]},0,${h[6]},${h[1]},${h[4]},0,${h[7]},0,0,1,0,${h[2]},${h[5]},0,1)`; };
+  let isStatic=null, raf=0;
+  const mode=()=>{ const st=!desk.matches||reduce; if(st!==isStatic){ isStatic=st; sec.classList.toggle('static',st);
+      if(st){ A.style.transform=S.style.transform=''; ['--co','--cy','--va','--vb','--zs'].forEach(k=>{ copy.style.removeProperty(k); VA.style.removeProperty(k); VB.style.removeProperty(k); SI.style.removeProperty(k); }); D.style.removeProperty('--do'); D.style.removeProperty('--dy'); rv.forEach(e=>e.classList.add('in')); } }
+    if(st) mark.style.height=D.offsetHeight+'px'; else mark.style.height=''; sec.classList.add('ready'); };
+  const paint=()=>{ raf=0; if(isStatic) return; const vw=stg.clientWidth, vh=stg.clientHeight, r=seq.getBoundingClientRect();
+    const p=cl(-r.top/(seq.offsetHeight-vh));
+    // base placement: render fits the space under the copy, so copy + render read as one screen
+    const top=copy.offsetTop+copy.offsetHeight+vh*.025, bot=vh*.975, ah=Math.max(bot-top,vh*.3);
+    const bw=Math.min(vw*.84, ah*AR, 1500), bh=bw/AR;
+    const pe=eo(cl((vh-r.top)/(vh*.9))), se=.9+.1*pe, Bw=bw*se, Bh=bh*se, Bx=(vw-Bw)/2, By=top+(ah-bh)/2+(bh-Bh)+(1-pe)*50;
+    const q0=NQ.map(([x,y])=>[Bx+x*Bw,By+y*Bh]);
+    const wR=Math.min(vw*.6, vh*.62*SR), hR=wR/SR, R1=rectQ((vw-wR)/2,(vh-hR)/2,wR,hR);
+    const k=Math.max(vw/wR,vh/hR)*1.02, wF=wR*k, hF=hR*k, RF=rectQ((vw-wF)/2,(vh-hF)/2,wF,hF);
+    const t1=eio(seg(p,.06,.34)), t2=eio(seg(p,.34,.60)), Q=lerpQ(lerpQ(q0,R1,t1),RF,t2);
+    A.style.transform=homo(LQ,Q); S.style.transform=homo(SQ,Q);
+    SI.style.setProperty('--zs',(1+.16*eio(seg(p,.28,.74))).toFixed(4));
+    const c=seg(p,.02,.12); copy.style.setProperty('--co',(1-c).toFixed(3)); copy.style.setProperty('--cy',(-36*eo(c)).toFixed(1)+'px'); copy.style.pointerEvents=c>.5?'none':'';
+    VA.style.setProperty('--va',(.5*seg(p,.08,.34)+.5*seg(p,.34,.56)).toFixed(3));
+    VB.style.setProperty('--vb',(.86*seg(p,.62,.74)).toFixed(3));
+    const d=seg(p,.64,.76); D.style.setProperty('--do',d.toFixed(3)); D.style.setProperty('--dy',((1-eo(d))*40).toFixed(1)+'px'); D.classList.toggle('live',d>.6);
+    rv.forEach((e,i)=>e.classList.toggle('in',p>.66+i*.018)); };
   const on=()=>{ if(!raf) raf=requestAnimationFrame(paint); };
-  addEventListener('scroll',on,{passive:true}); addEventListener('resize',()=>{ lastS=-1; cw=0; on(); });
-  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>{ lastG=-1; on(); });
-  const bi=B.querySelector('img'); if(bi&&!bi.complete) bi.addEventListener('load',()=>{ lastS=-1; on(); }); paint();
+  addEventListener('scroll',on,{passive:true}); addEventListener('resize',()=>{ mode(); on(); });
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>{ mode(); on(); });
+  mode(); paint();
 })();
 </script>
 </body>
