@@ -2524,7 +2524,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #pdPage .hxu-link:hover span{text-decoration:underline; text-underline-offset:.35em; text-decoration-thickness:1px;}
 #pdPage .hxu-link:focus-visible{outline:1px solid var(--dot); outline-offset:6px;}
 #pdPage .hxu{padding-bottom:0;}
-#pdPage .hxu-seq{position:relative; height:520vh; margin-top:clamp(16px,2vw,32px); --aw:min(1180px,88vw,87vh);}
+#pdPage .hxu-seq{position:relative; height:520vh; margin:clamp(16px,2vw,32px) calc(-1 * var(--gut,16px)) 0; --aw:min(1180px,88vw,87vh);} /* full-bleed so the display can fill the whole viewport */
 #pdPage .hxu-sticky{position:sticky; top:0; height:100vh; overflow:hidden; perspective:1800px;}
 #pdPage .hxu-a{position:absolute; left:50%; top:50%; width:var(--aw); transform:translate(-50%,-50%) rotateY(var(--ra,0deg)); opacity:var(--oa,1); will-change:transform,opacity;}
 #pdPage .hxu-rise{position:relative; transform:translateY(var(--ty,60px)) scale(var(--sc,.84)); transform-origin:50% 100%; will-change:transform;}
@@ -2532,12 +2532,12 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #pdPage .hxu-b{position:absolute; width:calc(var(--aw) * 1.6); left:calc(50% - var(--aw) * 1.6 * .609); top:calc(50% - var(--aw) * 1.6 / 1.4475 / 2); transform:perspective(1800px) rotateY(var(--rb,-38deg)); transform-origin:61% 50%;}
 #pdPage .hxu-b img{display:block; width:100%; height:auto;}
 /* the laptop display: graphic drawn per scroll frame, mapped onto the screen glass of the front render */
-#pdPage .hxu-scr{position:absolute; left:39.2%; top:13.78%; width:42.82%; height:38.51%; overflow:hidden; background:#000; border-radius:.9% .9% 0 0 / 1.4% 1.4% 0 0;}
+#pdPage .hxu-scr{position:absolute; left:39.2%; top:13.78%; width:42.82%; height:39.4%; overflow:hidden; background:#000; border-radius:.9% .9% 0 0 / 1.4% 1.4% 0 0;}
 #pdPage .hxu-scr canvas{display:block; width:100%; height:100%;}
 #pdPage .hxu-black{position:absolute; inset:0; background:#000; opacity:var(--bk,0);}
 #pdPage .hxu-next{position:relative; z-index:3; margin-top:-100vh; background:transparent !important;}
 @media (max-width:680px){
-  #pdPage .hxu-seq{height:auto; --aw:100%;}
+  #pdPage .hxu-seq{height:auto; --aw:100%; margin-left:0; margin-right:0;}
   #pdPage .hxu-sticky{position:static; height:auto; overflow:visible; perspective:none;}
   #pdPage .hxu-a{position:relative; left:auto; top:auto; transform:none; opacity:1; margin:32px auto 0;}
   #pdPage .hxu-zoom{display:none;}
@@ -4461,7 +4461,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   const cl=(v,a=0,b=1)=>Math.min(Math.max(v,a),b), seg=(p,a,b)=>cl((p-a)/(b-a)), eo=t=>1-Math.pow(1-t,3), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
   const ctx=cv.getContext('2d'); let cw=0, ch=0, lastG=-1, lastS=-1;
   // HIN hinge paths — vertical stability, horizontal flow, unbroken connection (normalised to the display)
-  const P=[ [[.08,-.3],[.08,.70],[.52,.70],[.52,.34]], [[.27,-.3],[.27,.47],[.71,.47],[.71,1.3]], [[1.3,.17],[.42,.17],[.42,.31]], [[.89,-.3],[.89,.61],[1.3,.61]] ];
+  const P=[ [[.08,-.3],[.08,.70],[.52,.70],[.52,.34]], [[.27,-.3],[.27,.47],[.71,.47],[.71,1.3]], [[1.3,.17],[.53,.17]], [[.89,-.3],[.89,.61],[1.3,.61]] ];
   const size=sc=>{ const r=scr.offsetWidth, h=scr.offsetHeight; const k=Math.min(2600/r, Math.max(1,sc)*Math.min(devicePixelRatio||1,1.5)); const w=Math.round(r*k), hh=Math.round(h*k); if(w!==cw||hh!==ch){ cw=cv.width=w; ch=cv.height=hh; lastG=-1; } };
   const draw=g=>{ if(Math.abs(g-lastG)<.0015) return; lastG=g; const W=cw, H=ch; ctx.setTransform(1,0,0,1,0,0); ctx.fillStyle='#000'; ctx.fillRect(0,0,W,H);
     const lw=H*.12, rad=H*.10, dx=(-.06+.12*g)*W, dy=(.04-.08*g)*H;
