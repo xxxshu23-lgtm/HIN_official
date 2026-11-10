@@ -2984,14 +2984,18 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #hxLook{position:relative; background:#000; color:#fff; padding:clamp(56px,6vw,96px) var(--gut,calc(200*var(--u))) clamp(48px,5vw,80px);}
 #hxLook .hxl-head{margin:0 0 clamp(20px,2.4vw,36px); font:400 max(22px,calc(40*var(--u)))/1.05 "HIN Typeer",var(--pixel); letter-spacing:.06em; text-transform:uppercase;}
 #hxLook .hxl-stage{position:relative; height:clamp(560px,78vh,860px);}
-#hxLook .hxl-media{position:absolute; inset:0 0 0 26%; pointer-events:none;}
-#hxLook .hxl-m{position:absolute; inset:0; margin:0; display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(1.015); transition:opacity .8s ease, transform 1.1s cubic-bezier(.22,1,.36,1);}
-#hxLook .hxl-m.on{opacity:1; transform:none;}
+#hxLook .hxl-media{position:absolute; inset:0 calc(-1 * var(--gut,0px)); pointer-events:none; overflow:hidden;}
+#hxLook .hxl-media::after{content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(90deg,#000 0%,rgba(0,0,0,.72) 24%,rgba(0,0,0,0) 52%);}
+#hxLook .hxl-m{position:absolute; inset:0; margin:0; display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(1.12); filter:blur(14px); transition:opacity .75s ease, transform 1.4s cubic-bezier(.16,1,.3,1), filter .9s ease;}
+#hxLook .hxl-m.on{opacity:1; transform:none; filter:none;}
+#hxLook .hxl-m.out{opacity:0; transform:scale(.94); filter:blur(8px); transition:opacity .55s ease, transform .9s cubic-bezier(.4,0,.2,1), filter .6s ease;}
 #hxLook .hxl-m img{display:block; width:auto; height:auto; max-width:100%; max-height:100%;
   /* fade the outer edge into the page black (opacity falls off toward the rim) so photos never read as pasted rectangles */
   -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 58%,rgba(0,0,0,.55) 78%,transparent 100%);
   mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 58%,rgba(0,0,0,.55) 78%,transparent 100%);}
-#hxLook .hxl-m[data-k="size"] img{transform:translateX(6%) scale(1.25);}
+#hxLook .hxl-m.fill img{width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; object-position:62% 50%;}
+#hxLook .hxl-m.fill img{-webkit-mask-image:radial-gradient(ellipse 62% 66% at 60% 50%,#000 55%,rgba(0,0,0,.5) 80%,transparent 100%); mask-image:radial-gradient(ellipse 62% 66% at 60% 50%,#000 55%,rgba(0,0,0,.5) 80%,transparent 100%);}
+@media (prefers-reduced-motion:reduce){ #hxLook .hxl-m, #hxLook .hxl-m.out{transform:none !important; filter:none !important;} }
 #hxLook .hxl-m[data-k="colors"] img{-webkit-mask-image:none; mask-image:none; max-width:78%; max-height:72%; transition:opacity .35s ease;} /* transparent cut-out: no edge fade */
 #hxLook .hxl-stat{position:absolute; right:2%; top:8%; font:400 clamp(44px,6vw,108px)/1 "HIN Typeer",var(--pixel); letter-spacing:.02em; color:#8a8a8a;}
 #hxLook .hxl-stat small{font-family:"Aeonik Hangul",var(--grotesk); font-weight:500; font-size:.42em; margin-left:.25em; letter-spacing:0;}
@@ -2999,7 +3003,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   -webkit-mask-image:linear-gradient(transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(transparent,#000 4%,#000 96%,transparent);}
 #hxLook .hxl-lw::-webkit-scrollbar{display:none;}
 #hxLook .hxl-list{list-style:none; margin:0; padding:16px 0; display:flex; flex-direction:column; align-items:flex-start; gap:12px;}
-#hxLook .hxl-box{width:var(--w0,auto); max-width:100%; background:#141414; box-shadow:inset 0 0 0 1px rgba(255,255,255,.14); transition:width .55s cubic-bezier(.22,1,.36,1), background .3s ease, box-shadow .3s ease;}
+#hxLook .hxl-box{width:var(--w0,auto); max-width:100%; background:#141414; box-shadow:inset 0 0 0 1px rgba(255,255,255,.14); transition:width .62s cubic-bezier(.34,1.42,.5,1), background .3s ease, box-shadow .3s ease;}
 #hxLook .hxl-item:not(.open) .hxl-box:hover{background:#1d1d1d; box-shadow:inset 0 0 0 1px rgba(255,255,255,.32);}
 #hxLook .hxl-item.open .hxl-box{width:100%; background:#181818; box-shadow:inset 0 0 0 1px rgba(255,255,255,.5), 0 0 18px rgba(255,255,255,.06);}
 #hxLook .hxl-pw,#hxLook .hxl-bw{display:grid; transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1), opacity .35s ease;}
@@ -3029,7 +3033,8 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #hxLook .hxl-cl span{grid-area:1/1; opacity:0; transition:opacity .35s ease;}
 #hxLook .hxl-cl span.on{opacity:1;}
 #hxLook .hxl-cl b{display:block; margin:0 0 .5em; font:400 1.15em/1 "HIN Typeer",var(--pixel); letter-spacing:.06em; color:var(--dot);}
-#hxLook .hxl-nav{position:absolute; left:0; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px; z-index:2;}
+#hxLook .hxl-nav{position:absolute; left:0; top:50%; transform:translateY(-50%) translateX(-8px); display:flex; flex-direction:column; gap:10px; z-index:2; opacity:0; pointer-events:none; transition:opacity .35s ease, transform .5s cubic-bezier(.22,1,.36,1);}
+#hxLook.is-open .hxl-nav{opacity:1; pointer-events:auto; transform:translateY(-50%);}
 #hxLook .hxl-nav button,#hxLook .hxl-x{width:46px; height:46px; display:grid; place-items:center; padding:0; border:0; background:#141414; color:#fff; cursor:pointer; box-shadow:inset 0 0 0 1px rgba(255,255,255,.18); transition:opacity .3s ease, box-shadow .3s ease;}
 #hxLook .hxl-nav button:hover,#hxLook .hxl-x:hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.6);}
 #hxLook .hxl-nav button:disabled{opacity:.3; cursor:default; box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);}
@@ -3041,6 +3046,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   #hxLook{padding:56px 16px 48px;}
   #hxLook .hxl-stage{height:auto;}
   #hxLook .hxl-media{position:relative; inset:auto; aspect-ratio:4/3;}
+  #hxLook .hxl-media::after{display:none;}
   #hxLook .hxl-stat{font-size:40px; top:4%;}
   #hxLook .hxl-nav{display:none;}
   #hxLook .hxl-lw{position:static; width:auto; overflow:visible; -webkit-mask-image:none; mask-image:none;}
@@ -3060,7 +3066,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   <h2 class="hxl-head">A closer look</h2>
   <div class="hxl-stage">
     <div class="hxl-media" aria-hidden="true">
-      <figure class="hxl-m on" data-k="intro"><img src="assets/product/u65.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="colors"><img src="assets/product/color-gray.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="size"><img src="assets/product/hin2.webp" alt="" loading="lazy" decoding="async"><span class="hxl-stat">1.2<small>kg</small></span></figure><figure class="hxl-m" data-k="quick"><img src="assets/product/hin2-85.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="light"><img src="assets/product/r101.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="power"><img src="assets/product/r99.webp" alt="" loading="lazy" decoding="async"><span class="hxl-stat">65<small>Wh</small></span></figure><figure class="hxl-m" data-k="pad"><img src="assets/product/r28.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="mark"><img src="assets/product/r87.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="stable"><img src="assets/d03-stable.webp?v=3" alt="" loading="lazy" decoding="async"><span class="hxl-stat">11–16<small>&Prime;</small></span></figure>
+      <figure class="hxl-m fill on" data-k="intro"><img src="assets/product/u65.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="colors"><img src="assets/product/color-gray.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m fill" data-k="size"><img src="assets/product/hin2.webp" alt="" loading="lazy" decoding="async"><span class="hxl-stat">1.2<small>kg</small></span></figure><figure class="hxl-m fill" data-k="quick"><img src="assets/product/hin2-85.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="light"><img src="assets/product/r101.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m" data-k="power"><img src="assets/product/r99.webp" alt="" loading="lazy" decoding="async"><span class="hxl-stat">65<small>Wh</small></span></figure><figure class="hxl-m fill" data-k="pad"><img src="assets/product/r28.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m fill" data-k="mark"><img src="assets/product/r87.webp" alt="" loading="lazy" decoding="async"></figure><figure class="hxl-m fill" data-k="stable"><img src="assets/d03-stable.webp?v=3" alt="" loading="lazy" decoding="async"><span class="hxl-stat">11–16<small>&Prime;</small></span></figure>
     </div>
     <div class="hxl-nav"><button type="button" class="hxl-up" aria-label="이전 항목" disabled><svg class="up" viewBox="0 0 69 69" fill="none" aria-hidden="true"><path d="M19.182 56.5508L26.8021 56.5508L45.701 37.6548L45.701 31.2486L26.8021 12.3497L19.182 12.3497L19.182 8.32937L28.4674 8.33217L49.6652 29.53L49.7185 29.53L49.7185 39.3173L28.4674 60.5712L19.182 60.5712L19.182 56.5508Z" fill="currentColor"/></svg></button><button type="button" class="hxl-down" aria-label="다음 항목"><svg class="dn" viewBox="0 0 69 69" fill="none" aria-hidden="true"><path d="M19.182 56.5508L26.8021 56.5508L45.701 37.6548L45.701 31.2486L26.8021 12.3497L19.182 12.3497L19.182 8.32937L28.4674 8.33217L49.6652 29.53L49.7185 29.53L49.7185 39.3173L28.4674 60.5712L19.182 60.5712L19.182 56.5508Z" fill="currentColor"/></svg></button></div>
     <div class="hxl-lw"><ul class="hxl-list">
@@ -4351,7 +4357,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   const items=[...s.querySelectorAll('.hxl-item')], media=[...s.querySelectorAll('.hxl-m')], lw=s.querySelector('.hxl-lw');
   const up=s.querySelector('.hxl-up'), down=s.querySelector('.hxl-down'), x=s.querySelector('.hxl-x'); let cur=-1, t=null;
   const measure=()=>items.forEach(it=>{ const b=it.querySelector('.hxl-pill'); it.querySelector('.hxl-box').style.setProperty('--w0', Math.ceil(b.getBoundingClientRect().width)+'px'); });
-  const show=k=>media.forEach(m=>m.classList.toggle('on', m.dataset.k===k));
+  const show=k=>media.forEach(m=>{ const on=m.dataset.k===k; if(m.classList.contains('on')&&!on){ m.classList.add('out'); clearTimeout(m._t); m._t=setTimeout(()=>m.classList.remove('out'),900); } if(on){ clearTimeout(m._t); m.classList.remove('out'); } m.classList.toggle('on',on); });
   const scrollTo=()=>{ if(cur<0){ lw.scrollTo({top:0,behavior:'smooth'}); return; } const it=items[cur]; lw.scrollTo({top:Math.max(0,it.offsetTop-16),behavior:'smooth'}); };
   const set=i=>{ cur=i; items.forEach((it,j)=>{ it.classList.toggle('open',j===i); it.querySelector('.hxl-pill').setAttribute('aria-expanded', j===i?'true':'false'); });
     s.classList.toggle('is-open', i>=0); show(i>=0?items[i].dataset.k:'intro');
