@@ -97,7 +97,7 @@ if (stage && !window.__hxuGL) {
     Ns.set(0, 0, 1).applyQuaternion(disp.getWorldQuaternion(new THREE.Quaternion())).normalize();
     up.set(0, 1, 0).applyQuaternion(disp.getWorldQuaternion(new THREE.Quaternion())).normalize(); geomReady = true; };
   const sph = (az, el) => new THREE.Vector3(Math.sin(az) * Math.cos(el), Math.sin(el), Math.cos(az) * Math.cos(el));
-  const P = { az: -0.8, el: 0.36, fit: 1 };   // start pose ≈ the angled KeyShot render
+  const P = { az: -0.8, el: 0.36, fit: 1.14 };   // start pose ≈ the angled KeyShot render
   const api = {
     P, cam, scene, R,
     draw(L) {   // L: {vw,vh,ax,ay,aw,ah,t1,t2,zs}
@@ -114,7 +114,7 @@ if (stage && !window.__hxuGL) {
           for (let i = 0; i < 8; i++) { tmp.set(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z).project(cam);
             x0 = Math.min(x0, tmp.x); x1 = Math.max(x1, tmp.x); y0 = Math.min(y0, tmp.y); y1 = Math.max(y1, tmp.y); }
           const wpx = (x1 - x0) / 2 * L.vw, hpx = (y1 - y0) / 2 * L.vh;
-          if (it < 3) d *= Math.max(hpx / (L.ah * 0.9 * P.fit), wpx / (L.vw * 0.8 * P.fit));
+          if (it < 3) d *= Math.max(hpx / (L.ah * 0.9 * P.fit), wpx / (L.vw * 0.86 * P.fit));
           else { fit0.d = d; fit0.ox = ((x0 + x1) / 2 + 1) / 2 * L.vw - L.vw / 2; fit0.oy = (1 - (y0 + y1) / 2) / 2 * L.vh - (L.ay + L.ah / 2); } } }
       const d0 = fit0.d;
       const dF = (LW / 0.56) / (2 * th * cam.aspect), dFill = Math.min(DH / (2 * th), DW / (2 * th * cam.aspect)) * 0.965;

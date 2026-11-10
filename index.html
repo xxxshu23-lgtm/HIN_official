@@ -2585,6 +2585,28 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   #pdPage #hx14,#pdPage #hxUnfold,#pdPage #hxFeatures,#pdPage #hxPin{margin-top:var(--ch-gap) !important; margin-bottom:var(--ch-gap) !important;}
 }
 </style>
+<style id="update-2026-11-11-chapters">
+/* 02 OVERVIEW + 05 DIMENSIONS share the Work, unfolded heading block: yellow label → HIN display headline → body, centred */
+#pdPage .hx-ap{display:inline-block; width:.1em; height:.26em; background:currentColor; vertical-align:.46em; margin:0 .04em;}
+#pdPage .hx-hy{display:inline-block; width:.42em; height:.1em; background:currentColor; vertical-align:.32em; margin:0 .06em;}
+#pdPage #hpd-intro,#pdPage #hpd-numbers{text-align:center;}
+#pdPage #hpd-intro .hpd-wordmark{margin-left:auto; margin-right:auto;}
+#pdPage #hpd-intro .hpd-label,#pdPage #hpd-numbers .hpd-label{justify-content:center; font:400 var(--t-label,15px)/1 "HIN Type",var(--pixel) !important; letter-spacing:.075em !important; margin:0 0 clamp(16px,1.6vw,24px) !important;}
+#pdPage .hpd-lead-h,#pdPage #hpd-numbers .hpd-h2{margin:0 auto !important; max-width:none !important; font:400 var(--t-display,36px)/1.1 "HIN Type",var(--pixel) !important; letter-spacing:.05em !important; text-transform:uppercase; color:#fff;}
+#pdPage .hpd-lead-p,#pdPage #hpd-numbers .hpd-g,#pdPage #hpd-intro .hpd-sub-kr{display:block; max-width:none !important; margin:clamp(14px,1.3vw,20px) auto 0 !important; font:400 var(--t-body,15px)/1.6 "Aeonik Hangul",var(--grotesk) !important; letter-spacing:-.01em !important; color:var(--gray-500); word-break:keep-all;}
+#pdPage #hpd-intro .hpd-sub{margin:0 auto; max-width:none;}
+#pdPage #hpd-intro .hpd-sub-kr{margin-top:6px !important;}
+#pdPage .hpd-lead-p .hpd-w{color:#4e4e51; transition:color .35s ease;}
+#pdPage .hpd-lead-p .hpd-w.on{color:var(--gray-500);}
+#pdPage #hpd-numbers .hpd-nums{text-align:left;}
+/* smaller link + BUY NOW */
+@media (min-width:681px){
+  #pdPage .hxu-link{font-size:max(11px,calc(16*var(--u))) !important;}
+  #pdPage .hx-buynow{min-width:min(260px,100%) !important; height:max(42px,calc(54*var(--u))) !important; padding:0 28px !important; font-size:max(13px,calc(17*var(--u))) !important;}
+}
+@media (max-width:680px){ #pdPage .hpd-lead-h,#pdPage #hpd-numbers .hpd-h2{font-size:24px !important;} }
+@media (prefers-reduced-motion:reduce){ #pdPage .hpd-lead-p .hpd-w{color:var(--gray-500);} }
+</style>
 </head>
 <body>
 
@@ -3015,7 +3037,8 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 <section class="hpd-intro" id="hpd-intro">
   <div class="hpd-wordmark reveal" aria-hidden="true"><svg viewBox="0 0 205 34" fill="none"><path d="M195.347 5.55294L195.365 1.08802L193.318 1.08802L193.318 0.169308L198.522 0.169308L198.522 1.08802L196.357 1.08802L196.339 5.55294L195.347 5.55294Z" fill="currentColor"/><path d="M199.465 5.55294L199.465 0.169308L201.079 0.169308L201.839 3.50973L202.879 0.169308L204.474 0.169308L204.474 5.55294L203.478 5.55294L203.478 1.21296L202.155 5.3104L201.523 5.3104L200.461 1.17989L200.461 5.55294L199.465 5.55294Z" fill="currentColor"/><path d="M176.568 1.67573L176.568 18.3705C176.568 19.5759 175.315 20.3696 174.228 19.8515L132.706 0.191099C132.485 0.0882034 132.246 0.0330809 132.004 0.0330809L99.2279 0.033079L99.2279 5.52067e-06L56.6733 3.15309e-06C55.7693 3.1028e-06 55.0343 0.73497 55.0343 1.63898L55.0343 9.30468C55.0343 10.2087 54.2994 10.9437 53.3953 10.9437L12.6855 10.9437C11.7815 10.9437 11.0466 10.2087 11.0466 9.30468L11.0466 1.63898C11.0466 0.734968 10.3116 5.73698e-07 9.40758 5.23403e-07L1.63898 9.11865e-08C0.731292 4.06864e-08 -4.08908e-08 0.734967 -9.11865e-08 1.63898L-1.75279e-06 31.5044C-1.80308e-06 32.4084 0.734965 33.1433 1.63897 33.1433L9.40758 33.1433C10.3116 33.1433 11.0466 32.4084 11.0466 31.5044L11.0466 23.8387C11.0466 22.9346 11.7815 22.1997 12.6855 22.1997L53.3953 22.1997C54.2994 22.1997 55.0343 22.9346 55.0343 23.8387L55.0343 31.5044C55.0343 32.4084 55.7693 33.1433 56.6733 33.1433L99.2279 33.1433L99.2279 33.1764L130.732 33.1764C131.636 33.1764 132.371 32.4415 132.371 31.5374L132.371 23.7688C132.371 22.8648 131.636 22.1299 130.732 22.1299L100.867 22.1299C99.9629 22.1299 99.2279 21.3949 99.2279 20.4909L99.2279 12.7223C99.2279 11.8183 99.9629 11.0833 100.867 11.0833L129.531 11.0833C129.773 11.0833 130.012 11.1384 130.232 11.2413L176.234 33.0221C176.455 33.125 176.693 33.1801 176.936 33.1801L185.976 33.1801C186.88 33.1801 187.615 32.4451 187.615 31.5411L187.615 1.67574C187.615 0.771726 186.88 0.0367587 185.976 0.0367587L178.207 0.0367583C177.303 0.0367582 176.568 0.771725 176.568 1.67573ZM86.5387 22.0968L56.8791 22.0968C55.9751 22.0968 55.2401 21.3618 55.2401 20.4578L55.2401 12.6892C55.2401 11.7852 55.9751 11.0502 56.8791 11.0502L86.5387 11.0502C87.4427 11.0502 88.1777 11.7852 88.1777 12.6892L88.1777 20.4578C88.1777 21.3618 87.4427 22.0968 86.5387 22.0968Z" fill="currentColor"/></svg></div>
   <div class="hpd-label reveal">Here I Am Now</div>
-  <p class="hpd-lead reveal" data-words><span class="hpd-ln">Work doesn&rsquo;t have one place.</span><span class="hpd-ln">Neither should your workspace.</span><span class="hpd-gap" aria-hidden="true"></span><span class="hpd-ln">HIN-001 is a portable workspace</span><span class="hpd-ln">that folds light and opens to hold</span><span class="hpd-ln">your laptop at the height and angle you set.</span></p>
+  <h2 class="hpd-lead-h reveal d1" aria-label="Work doesn’t have one place. Neither should your workspace."><span aria-hidden="true">Work doesn<i class="hx-ap" aria-hidden="true"></i>t have one place.<br>Neither should your workspace.</span></h2>
+  <p class="hpd-lead-p reveal d2" data-words>HIN-001 is a portable workspace that folds light and opens to hold your laptop at the height and angle you set.</p>
   <div class="hpd-sub reveal">
     <p class="hpd-sub-kr">HIN은 이동하는 작업자를 위한 휴대용 워크스페이스입니다. 장소가 바뀌어도, 몰입은 그대로 이어집니다.</p>
   </div>
@@ -3171,7 +3194,8 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       <i class="hxu-veil hxu-vb" aria-hidden="true"></i>
       <section class="hpd-blk hxu-dims" id="hpd-numbers" aria-label="Dimensions">
         <div class="hpd-label hxr">Dimensions</div>
-        <h2 class="hpd-h2 hxr">Twenty-four millimetres.<span class="hpd-g">Folded, HIN-001 measures 340 × 215 × 24 mm — made to move with you.</span></h2>
+        <h2 class="hpd-h2 hxr" aria-label="Twenty-four millimetres."><span aria-hidden="true">Twenty<i class="hx-hy" aria-hidden="true"></i>four millimetres.</span></h2>
+        <p class="hpd-g hxr">Folded, HIN-001 measures 340 × 215 × 24 mm — made to move with you.</p>
         <div class="hpd-nums">
           <article class="hpd-num hpd-s6 hxr">
             <div class="hpd-t"><div class="hpd-k">Height / Folded</div><div class="hpd-v">24<small>mm</small></div><span class="hpd-chip">Folded flat</span></div>
@@ -4497,7 +4521,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   // real 3D stage (three.js + HIN glb) — loaded only when the section gets close, desktop only
   const useGL=()=>{ gl=!!window.__hxuGL; sec.classList.toggle('gl',gl); on(); };
   addEventListener('hxu-gl-ready',useGL);
-  if(!reduce && 'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting) && desk.matches){ io.disconnect(); import(new URL('assets/js/hxu3d.js?v=3',document.baseURI).href).catch(()=>{}); } },{rootMargin:'150% 0px'}); io.observe(sec); }
+  if(!reduce && 'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting) && desk.matches){ io.disconnect(); import(new URL('assets/js/hxu3d.js?v=4',document.baseURI).href).catch(()=>{}); } },{rootMargin:'150% 0px'}); io.observe(sec); }
   const mode=()=>{ const st=!desk.matches||reduce; if(st!==isStatic){ isStatic=st; sec.classList.toggle('static',st);
       if(st){ A.style.transform=S.style.transform=''; ['--co','--cy','--va','--vb','--zs'].forEach(k=>{ copy.style.removeProperty(k); VA.style.removeProperty(k); VB.style.removeProperty(k); SI.style.removeProperty(k); }); D.style.removeProperty('--do'); D.style.removeProperty('--dy'); rv.forEach(e=>e.classList.add('in')); } }
     if(st) mark.style.height=D.offsetHeight+'px'; else mark.style.height=''; sec.classList.add('ready'); };
