@@ -97,7 +97,7 @@ if (stage && !window.__hxuGL) {
     Ns.set(0, 0, 1).applyQuaternion(disp.getWorldQuaternion(new THREE.Quaternion())).normalize();
     up.set(0, 1, 0).applyQuaternion(disp.getWorldQuaternion(new THREE.Quaternion())).normalize(); geomReady = true; };
   const sph = (az, el) => new THREE.Vector3(Math.sin(az) * Math.cos(el), Math.sin(el), Math.cos(az) * Math.cos(el));
-  const P = { az: -0.8, el: 0.36, fit: 1.6 };   // start pose ≈ the angled KeyShot render
+  const P = { az: -0.8, el: 0.36, fit: 1.3 };   // start pose ≈ the angled KeyShot render
   const api = {
     P, cam, scene, R,
     draw(L) {   // L: {vw,vh,ax,ay,aw,ah,t1,t2,zs}
