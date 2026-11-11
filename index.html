@@ -2685,6 +2685,12 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   #pdPage #hpd-intro .hpd-label{margin-bottom:clamp(12px,1.2vw,18px) !important;}
   #pdPage .hpd-lead-p{margin-top:clamp(12px,1.1vw,16px) !important;}
 }
+/* 02 Overview headline: same word-by-word fill as the copy below */
+#pdPage .hpd-lead-h .hpd-w{color:#4e4e51; transition:color .35s ease;}
+#pdPage .hpd-lead-h .hpd-w.on{color:#fff;}
+#pdPage .hpd-lead-h .hx-ap{background:#4e4e51; transition:background .35s ease;}
+#pdPage .hpd-lead-h .hpd-w.on + .hx-ap{background:#fff;}
+@media (prefers-reduced-motion:reduce){ #pdPage .hpd-lead-h .hpd-w{color:#fff;} #pdPage .hpd-lead-h .hx-ap{background:#fff;} }
 </style>
 </head>
 <body>
@@ -3116,7 +3122,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 <section class="hpd-intro" id="hpd-intro">
   <div class="hpd-wordmark reveal" aria-hidden="true"><svg viewBox="0 0 205 34" fill="none"><path d="M195.347 5.55294L195.365 1.08802L193.318 1.08802L193.318 0.169308L198.522 0.169308L198.522 1.08802L196.357 1.08802L196.339 5.55294L195.347 5.55294Z" fill="currentColor"/><path d="M199.465 5.55294L199.465 0.169308L201.079 0.169308L201.839 3.50973L202.879 0.169308L204.474 0.169308L204.474 5.55294L203.478 5.55294L203.478 1.21296L202.155 5.3104L201.523 5.3104L200.461 1.17989L200.461 5.55294L199.465 5.55294Z" fill="currentColor"/><path d="M176.568 1.67573L176.568 18.3705C176.568 19.5759 175.315 20.3696 174.228 19.8515L132.706 0.191099C132.485 0.0882034 132.246 0.0330809 132.004 0.0330809L99.2279 0.033079L99.2279 5.52067e-06L56.6733 3.15309e-06C55.7693 3.1028e-06 55.0343 0.73497 55.0343 1.63898L55.0343 9.30468C55.0343 10.2087 54.2994 10.9437 53.3953 10.9437L12.6855 10.9437C11.7815 10.9437 11.0466 10.2087 11.0466 9.30468L11.0466 1.63898C11.0466 0.734968 10.3116 5.73698e-07 9.40758 5.23403e-07L1.63898 9.11865e-08C0.731292 4.06864e-08 -4.08908e-08 0.734967 -9.11865e-08 1.63898L-1.75279e-06 31.5044C-1.80308e-06 32.4084 0.734965 33.1433 1.63897 33.1433L9.40758 33.1433C10.3116 33.1433 11.0466 32.4084 11.0466 31.5044L11.0466 23.8387C11.0466 22.9346 11.7815 22.1997 12.6855 22.1997L53.3953 22.1997C54.2994 22.1997 55.0343 22.9346 55.0343 23.8387L55.0343 31.5044C55.0343 32.4084 55.7693 33.1433 56.6733 33.1433L99.2279 33.1433L99.2279 33.1764L130.732 33.1764C131.636 33.1764 132.371 32.4415 132.371 31.5374L132.371 23.7688C132.371 22.8648 131.636 22.1299 130.732 22.1299L100.867 22.1299C99.9629 22.1299 99.2279 21.3949 99.2279 20.4909L99.2279 12.7223C99.2279 11.8183 99.9629 11.0833 100.867 11.0833L129.531 11.0833C129.773 11.0833 130.012 11.1384 130.232 11.2413L176.234 33.0221C176.455 33.125 176.693 33.1801 176.936 33.1801L185.976 33.1801C186.88 33.1801 187.615 32.4451 187.615 31.5411L187.615 1.67574C187.615 0.771726 186.88 0.0367587 185.976 0.0367587L178.207 0.0367583C177.303 0.0367582 176.568 0.771725 176.568 1.67573ZM86.5387 22.0968L56.8791 22.0968C55.9751 22.0968 55.2401 21.3618 55.2401 20.4578L55.2401 12.6892C55.2401 11.7852 55.9751 11.0502 56.8791 11.0502L86.5387 11.0502C87.4427 11.0502 88.1777 11.7852 88.1777 12.6892L88.1777 20.4578C88.1777 21.3618 87.4427 22.0968 86.5387 22.0968Z" fill="currentColor"/></svg></div>
   <div class="hpd-label reveal">Here I Am Now</div>
-  <h2 class="hpd-lead-h reveal d1" aria-label="Work doesn’t have one place. Neither should your workspace."><span aria-hidden="true">Work doesn<i class="hx-ap" aria-hidden="true"></i>t have one place.<br>Neither should your workspace.</span></h2>
+  <h2 class="hpd-lead-h reveal d1" aria-label="Work doesn’t have one place. Neither should your workspace."><span aria-hidden="true" data-words>Work doesn<i class="hx-ap" aria-hidden="true"></i>t have one place.<br>Neither should your workspace.</span></h2>
   <p class="hpd-lead-p reveal d2" data-words>HIN-001 is a portable workspace that folds light and opens to hold your laptop at the height and angle you set.</p>
   <div class="hpd-sub reveal">
     <p class="hpd-sub-kr">HIN은 이동하는 작업자를 위한 휴대용 워크스페이스입니다. 장소가 바뀌어도, 몰입은 그대로 이어집니다.</p>
