@@ -2609,6 +2609,26 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 /* configurator: colour tile + quantity buttons without rounding */
 .sc-thumb,.sc-qty button{border-radius:0 !important;}
 </style>
+<style id="update-2026-11-11-homefeel">
+/* SHOP scroll feel = HOME: copy rises slowly out of a soft blur (home .tell), images are not animated */
+#viewShop .reveal{opacity:0; transform:translate3d(0,26px,0) scale(.992); filter:blur(9px);
+  transition:opacity 1s ease-out, transform 1.15s var(--ease-calm,cubic-bezier(.16,1,.3,1)), filter 1s ease-out !important;}
+#viewShop .reveal.in{opacity:1; transform:none; filter:blur(0);}
+#viewShop .reveal.d1{transition-delay:.1s !important;} #viewShop .reveal.d2{transition-delay:.2s !important;} #viewShop .reveal.d3{transition-delay:.3s !important;}
+#viewShop .reveal.rv-media{opacity:1 !important; transform:none !important; filter:none !important; transition:none !important;}
+@media (prefers-reduced-motion:reduce){ #viewShop .reveal{opacity:1; transform:none; filter:none; transition:none !important;} }
+
+/* SHOP Aeonik = HOME tracking / leading
+   large lines  → -0.02em / 1.02–1.05   (home hero copy)
+   small lines  → -0.01em / 1.25        (home info, list, sub)
+   paragraphs   → -0.01em / 1.45        (home s-desc)                                     */
+#viewShop .hx-fold-h,#viewShop .hx-fold-sub{letter-spacing:-.02em !important; line-height:1.05 !important;}
+#viewShop .hx14-cap,#viewShop .hx14-cap .hl{letter-spacing:-.02em !important; line-height:1.02 !important;}
+#viewShop .hx-fold-cols b,#viewShop #hxSpec .hl,#viewShop #hxPin .hl.kr,#viewShop #hxLook .hxl-item b,
+#viewShop .sc-summary,#viewShop .sc-price,#viewShop .sc-price span,#viewShop .sc-price b,#viewShop #s_card button{letter-spacing:-.01em !important; line-height:1.25 !important;}
+#viewShop .hpd-sub-kr,#viewShop .hpd-lead-p,#viewShop .hxu-p,#viewShop #hpd-numbers .hpd-g,#viewShop .hx-fold-cols p,
+#viewShop #hxFeatures p.hl,#viewShop #hxPin p.hl,#viewShop #hxLook .hxl-item span,#viewShop .sc-note,#viewShop .col-wide > div:not(.col-label){letter-spacing:-.01em !important; line-height:1.45 !important;}
+</style>
 </head>
 <body>
 
@@ -3812,8 +3832,10 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   // ===== 등장 모션 (구 #viewProduct 요소 전반 — 히어로 포함) =====
   (() => {
     const els=document.querySelectorAll('#viewProduct .reveal');
+    // same as home: images / products are not animated, only copy rises in
+    els.forEach(e=>{ if(e.matches('img,picture,video,canvas,model-viewer,figure') || (e.querySelector('img,picture,video,canvas,model-viewer') && e.textContent.trim().length<2)) e.classList.add('rv-media'); });
     if(!('IntersectionObserver' in window)||reduce){ els.forEach(e=>e.classList.add('in')); return; }
-    const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }),{threshold:.2});
+    const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }),{threshold:.25, rootMargin:'0px 0px -8% 0px'});
     els.forEach(e=>io.observe(e));
   })();
 
