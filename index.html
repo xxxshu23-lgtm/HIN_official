@@ -2644,17 +2644,15 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 /* dots: pure inversion instead of yellow */
 .custom-cursor{background:#fff !important; mix-blend-mode:difference;}
 .hxf-lines .sq-y{fill:#fff !important; filter:none !important; mix-blend-mode:difference;}
-/* 2nd photo roll: same transition + square counter as the home sliders */
-.hx15-sl{position:absolute; inset:0; overflow:hidden; transform:translateX(100%); transition:transform .9s cubic-bezier(.65,0,.15,1); will-change:transform;}
-.hx15-sl.on{transform:none;} .hx15-sl.past,.hx15-sl.from-left{transform:translateX(-100%);} .hx15-sl.to-right{transform:translateX(100%);}
-.hx15-sl.no-tr{transition:none !important;}
-.hx15-roll .hx15-sl img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.04) !important; transition:transform 1.2s cubic-bezier(.22,1,.36,1) !important;}
-.hx15-roll .hx15-sl.on img{transform:none !important;}
+/* 2nd photo roll: original vertical roll + square counter like the home sliders */
+.hx15-sl{position:absolute; inset:0; overflow:hidden; transform:translateY(100%); transition:transform .8s cubic-bezier(.65,0,.35,1);}
+.hx15-sl.on{transform:none;} .hx15-sl.out{transform:translateY(-100%);} .hx15-sl.prep{transition:none !important;}
+.hx15-roll .hx15-sl img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:none !important; transition:none !important;}
 .hx15-dots{position:absolute; left:clamp(14px,1.6vw,24px); bottom:clamp(14px,1.6vw,24px); z-index:3; display:flex; gap:calc(22*var(--u));}
 #pdPage .hx15-dots button{width:max(8px,calc(11*var(--u))) !important; height:max(8px,calc(11*var(--u))) !important; padding:0 !important; border:0 !important; border-radius:0 !important; cursor:pointer; background:rgba(255,255,255,.35) !important; transition:background .3s ease;}
 #pdPage .hx15-dots button.on{background:var(--dot) !important;}
 .hx15-dots button:focus-visible{outline:1px solid var(--dot); outline-offset:3px;}
-@media (prefers-reduced-motion:reduce){ .hx15-sl,.hx15-roll .hx15-sl img{transition:none !important;} }
+@media (prefers-reduced-motion:reduce){ .hx15-sl{transition:none !important;} }
 </style>
 </head>
 <body>
@@ -4422,15 +4420,15 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   if(s15){
     const imgs=[...s15.querySelectorAll('.hx15-sl')], dots=[...s15.querySelectorAll('.hx15-dots button')], prod=s15.querySelector('.hx15-prod');
     let i=0, timer=null;
-    // same move as the home People / Campaign slider: slides in from the right, the photo settles from a slight zoom
-    const go=(n,dir=1)=>{ n=(n+imgs.length)%imgs.length; if(n===i) return; const ps=imgs[i], ns=imgs[n];
-      ns.classList.add('no-tr'); ns.classList.toggle('from-left',dir<0); ns.classList.remove('past','to-right','on'); void ns.offsetWidth; ns.classList.remove('no-tr','from-left');
-      ps.classList.remove('on'); ps.classList.toggle('past',dir>0); ps.classList.toggle('to-right',dir<0); ns.classList.add('on');
-      imgs.forEach((s,k)=>{ if(k!==n&&k!==i){ s.classList.add('no-tr'); s.classList.remove('past','to-right','from-left'); void s.offsetWidth; s.classList.remove('no-tr'); } });
+    // original vertical roll: next photo rises from below, current one leaves upward
+    const go=n=>{ n=(n+imgs.length)%imgs.length; if(n===i) return; const cur=imgs[i], nx=imgs[n];
+      nx.classList.add('prep'); nx.classList.remove('out','on'); void nx.offsetWidth; nx.classList.remove('prep');
+      cur.classList.remove('on'); cur.classList.add('out'); nx.classList.add('on');
+      imgs.forEach((s,k)=>{ if(k!==n&&k!==i) s.classList.remove('out','on'); });
       i=n; dots.forEach((d,k)=>{ d.classList.toggle('on',k===i); d.setAttribute('aria-selected',k===i); }); };
-    const next=()=>go(i+1,1);
+    const next=()=>go(i+1);
     const start=()=>{ if(!timer && !rm) timer=setInterval(next,1200); }, stop=()=>{ clearInterval(timer); timer=null; };
-    dots.forEach((d,k)=>d.addEventListener('click',()=>{ stop(); go(k,k>i?1:-1); start(); }));
+    dots.forEach((d,k)=>d.addEventListener('click',()=>{ stop(); go(k); start(); }));
     if('IntersectionObserver' in window) new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?start():stop()),{threshold:.2}).observe(s15); else start();
     const zoom=()=>{ const r=s15.getBoundingClientRect(); const p=clamp((innerHeight-r.top)/(innerHeight+r.height),0,1); prod.style.transform=`scale(${(.92+.33*p).toFixed(4)})`; };
     if(!rm){ addEventListener('scroll',zoom,{passive:true}); addEventListener('resize',zoom); zoom(); }
