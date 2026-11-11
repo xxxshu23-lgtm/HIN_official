@@ -2712,14 +2712,20 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 @media (prefers-reduced-motion:reduce){ #pdPage .hxf-sq{transition:none !important;} }
 
 @media (min-width:681px){
-  /* full-screen pictures: one 1440x900 composition scaled to cover the whole screen */
+  /* full-screen pictures: one 1440x900 composition, full width; wider screens crop only its bottom */
   #pdPage .hxf-sticky, #pdPage .hxp-sticky{padding:0 !important; justify-content:center; align-items:flex-start !important;} /* wider screens crop the bottom, never the labels at the top */
-  #pdPage .hxf-viewport{flex:none; width:max(100vw,160vh) !important; margin:0 !important;}
-  #pdPage .hxp-stage{flex:none; width:max(100vw,160vh) !important; margin:0 !important;}
+  #pdPage .hxf-viewport{flex:none; width:100vw !important; margin:0 !important;}
+  #pdPage .hxp-stage{flex:none; width:100vw !important; margin:0 !important;}
   #pdPage .hxf-stage, #pdPage .hxp-rise{-webkit-mask-image:none !important; mask-image:none !important;}
   #pdPage .hxf-dots{bottom:calc(100% - 100vh + 76px) !important;}
   /* label above the line, description below it: same gap on both sides, same left edge, same type in 06 and 07 */
   #pdPage .hxf-txt p, #pdPage #hxPin .hxp-line .hxf-txt p{margin:0 !important; top:calc(var(--g)/14.4*1cqw - .30em) !important; left:-.05em !important; font-size:max(12.5px,calc(18.9/14.4*1cqw)) !important; line-height:1.45 !important;}
+}
+/* windows narrower than 16:10: never crop the sides (labels stay clear of the side dots); picture sits centred with soft black edges */
+@media (min-width:681px) and (max-aspect-ratio:16/10){
+  #pdPage .hxf-sticky, #pdPage .hxp-sticky{align-items:center !important;}
+  #pdPage .hxf-dots{bottom:76px !important;}
+  #pdPage .hxf-img, #pdPage .hxp-rise{-webkit-mask-image:linear-gradient(180deg,transparent,#000 7%,#000 88%,transparent) !important; mask-image:linear-gradient(180deg,transparent,#000 7%,#000 88%,transparent) !important;}
 }
 </style>
 </head>
