@@ -4641,7 +4641,9 @@ document.addEventListener('touchstart',()=>{},{passive:true});
     st[st.length-1].b=maxY;                                   // last chapter runs to the end of the page
     for(let i=1;i<st.length;i++){ if(st[i].a<st[i-1].b) st[i].a=st[i-1].b; if(st[i].b<st[i].a) st[i].b=st[i].a; }
     CH=st; };
-  const active=()=>html.dataset.view==='shop' && desk.matches && CH.length;
+  let mAt=0;
+  const fresh=()=>{ const now=performance.now(), m=Math.max(0,html.scrollHeight-innerHeight); if(Math.abs(m-maxY)>2 || now-mAt>2000){ mAt=now; measure(); } };   // layout changes (lazy images, view switch) → re-measure
+  const active=()=>{ if(html.dataset.view!=='shop' || !desk.matches) return false; fresh(); return CH.length>0 && maxY>0; };
   /* positional in-place dissolve between chapter i and i+1 */
   let painted=false;
   const paint=()=>{ if(!active()){ if(painted){ CH.forEach(c=>c.els.forEach(e=>{ e.style.opacity=''; e.style.transform=''; })); painted=false; } return; } painted=true;
