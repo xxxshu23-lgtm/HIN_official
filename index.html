@@ -4573,5 +4573,33 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   mode(); paint();
 })();
 </script>
+
+<script>
+/* SHOP — weighted wheel scroll: the page eases toward the wheel target instead of jumping 1:1 */
+(() => {
+  const html=document.documentElement;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const fine=matchMedia('(hover:hover) and (pointer:fine)');
+  const EASE=.085;
+  let target=scrollY, cur=scrollY, raf=0;
+  const max=()=>Math.max(0,html.scrollHeight-innerHeight);
+  const innerCanScroll=(el,dy)=>{ for(;el&&el!==document.body&&el!==html;el=el.parentElement){ if(!(el instanceof Element)) continue; const oy=getComputedStyle(el).overflowY;
+      if((oy==='auto'||oy==='scroll') && el.scrollHeight>el.clientHeight+1){ if(dy>0&&el.scrollTop+el.clientHeight<el.scrollHeight-1) return true; if(dy<0&&el.scrollTop>0) return true; } } return false; };
+  const step=()=>{ cur+=(target-cur)*EASE; if(Math.abs(target-cur)<.5){ cur=target; raf=0; } else raf=requestAnimationFrame(step); scrollTo(0,cur); };
+  addEventListener('wheel',e=>{
+    if(html.dataset.view!=='shop'||!fine.matches||e.ctrlKey||e.metaKey||e.defaultPrevented) return;
+    if(Math.abs(e.deltaX)>Math.abs(e.deltaY)) return;
+    if(innerCanScroll(e.target,e.deltaY)) return;
+    e.preventDefault();
+    if(!raf){ target=cur=scrollY; }
+    const d=e.deltaMode===1?e.deltaY*16:e.deltaMode===2?e.deltaY*innerHeight:e.deltaY;
+    target=Math.max(0,Math.min(max(),target+d));
+    if(!raf) raf=requestAnimationFrame(step);
+  },{passive:false});
+  // anything else moves the page (keys, scrollbar, links, smooth jumps) → stop easing and follow it
+  addEventListener('scroll',()=>{ if(raf && Math.abs(scrollY-cur)>3){ cancelAnimationFrame(raf); raf=0; target=cur=scrollY; } },{passive:true});
+  addEventListener('keydown',()=>{ if(raf){ cancelAnimationFrame(raf); raf=0; } });
+})();
+</script>
 </body>
 </html>
