@@ -4505,7 +4505,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     let last=-1;
     const upd=()=>{ const r=pin.getBoundingClientRect(), total=pin.offsetHeight-innerHeight; const p=total>0?clamp(-r.top/total,0,1):0;
       const up=Math.min(p/.35,1); rise.style.transform='none';
-      const st=p<.4?0:p<.68?1:2, show=p>.04 && p<.92, key=st+(show?'s':'h');
+      const st=p<.4?0:p<.68?1:2, show=true, key=st+(show?'s':'h');
       if(key!==last){ last=key; imgs.forEach((el,k)=>el.classList.toggle('on',k===st)); lines.forEach((el,k)=>el.classList.toggle('on',show&&k===st)); } };
     addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); addEventListener('hashchange',()=>setTimeout(upd,60)); upd();
   }
@@ -4688,7 +4688,6 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   addEventListener('resize',remeasure); addEventListener('load',remeasure); addEventListener('hashchange',remeasure);
   new MutationObserver(remeasure).observe(html,{attributes:true,attributeFilter:['data-view']});
   if(window.ResizeObserver){ const pd=$('#pdPage'); if(pd) new ResizeObserver(remeasure).observe(pd); }
-  window.__hxFlow={get CH(){return CH;}, get st(){return {target,cur,raf,anim:!!anim,lockUntil,needFresh,acc,maxY};}, measure};
   measure(); paint();
 })();
 </script>
