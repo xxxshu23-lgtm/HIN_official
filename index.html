@@ -4617,76 +4617,29 @@ document.addEventListener('touchstart',()=>{},{passive:true});
 
 
 <script>
-/* SHOP — weighted chapter flow (desktop, mouse/trackpad):
-   • inside a chapter the wheel eases (heavy) and stops at the chapter edge
-   • at the edge the next push carries you to the next chapter on its own, 1.1 s, like the 06 slide change
-   • during that move the outgoing chapter holds still and dims out while the next one comes up in place */
+/* SHOP — weighted wheel scroll: the page eases toward the wheel target instead of jumping 1:1 */
 (() => {
   const html=document.documentElement;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const desk=matchMedia('(min-width:681px)'), fine=matchMedia('(hover:hover) and (pointer:fine)');
-  const $=q=>document.querySelector(q);
-  const DEF=[['#viewShop .shop-screen'],['#hpd-intro'],['#hx14'],['#hx15'],['#hpd-fold'],['#hxLook','#pdPage .hx-buy'],['#hxUnfold'],['#hxFeatures'],['#hxPin'],['#hxSpec'],['#shopAboutSlot']];
-  const cl=(v,a=0,b=1)=>Math.min(Math.max(v,a),b), sm=t=>t*t*(3-2*t), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-  let CH=[], maxY=0;
-  const measure=()=>{ const vh=innerHeight; maxY=Math.max(0,html.scrollHeight-vh);
-    const st=[];
-    for(const g of DEF){ const els=g.map($).filter(Boolean); if(!els.length) continue;
-      els.forEach(e=>e.style.transform='');
-      const top=els[0].getBoundingClientRect().top+scrollY, bot=els[els.length-1].getBoundingClientRect().bottom+scrollY, h=bot-top;
-      let a,b; if(h>=vh-2){ a=top; b=bot-vh; } else { a=b=top+h/2-vh/2; }
-      st.push({els,a:cl(a,0,maxY),b:cl(b,0,maxY)}); }
-    st[st.length-1].b=maxY;                                   // last chapter runs to the end of the page
-    for(let i=1;i<st.length;i++){ if(st[i].a<st[i-1].b) st[i].a=st[i-1].b; if(st[i].b<st[i].a) st[i].b=st[i].a; }
-    CH=st; };
-  let mAt=0;
-  const fresh=()=>{ const now=performance.now(), m=Math.max(0,html.scrollHeight-innerHeight); if(Math.abs(m-maxY)>2 || now-mAt>2000){ mAt=now; measure(); } };   // layout changes (lazy images, view switch) → re-measure
-  const active=()=>{ if(html.dataset.view!=='shop' || !desk.matches) return false; fresh(); return CH.length>0 && maxY>0; };
-  /* positional in-place dissolve between chapter i and i+1 */
-  let painted=false;
-  const paint=()=>{ if(!active()){ if(painted){ CH.forEach(c=>c.els.forEach(e=>{ e.style.opacity=''; e.style.transform=''; })); painted=false; } return; } painted=true;
-    const y=scrollY;
-    CH.forEach((c,i)=>{ let o=1, ty=0; const prev=CH[i-1], next=CH[i+1];
-      if(y<c.a && prev && y>prev.b){ const t=(y-prev.b)/(c.a-prev.b); o=sm(cl((t-.35)/.65)); ty=-(c.a-y); }       // incoming: already in place, comes up
-      else if(y>c.b && next && y<next.a){ const t=(y-c.b)/(next.a-c.b); o=1-sm(cl(t/.65)); ty=(y-c.b); }          // outgoing: holds still, dims out
-      else if(y<c.a || y>c.b){ o=(y<c.a&&!prev)||(y>c.b&&!next)?1:0; }
-      const tr=ty?`translate3d(0,${ty.toFixed(1)}px,0)`:'', op=o>.995?'':o.toFixed(3);
-      c.els.forEach(e=>{ if(e.style.opacity!==op) e.style.opacity=op; if(e.style.transform!==tr) e.style.transform=tr; }); }); };
-  /* wheel */
-  let target=scrollY, cur=scrollY, raf=0, anim=null, lockUntil=0, needFresh=false, lastWheel=0, acc=0;
-  const EASE=.07;
-  const idxAt=y=>{ for(let i=0;i<CH.length;i++) if(y>=CH[i].a-2 && y<=CH[i].b+2) return i; return -1; };
-  const stepEase=()=>{ cur+=(target-cur)*EASE; if(Math.abs(target-cur)<.5){ cur=target; raf=0; } else raf=requestAnimationFrame(stepEase); scrollTo(0,cur); };
-  const glide=(to)=>{ cancelAnimationFrame(raf); raf=0; const from=scrollY, d=to-from, T=performance.now(), dur=1100;
-    lockUntil=T+dur+380; needFresh=true; acc=0;
-    const run=now=>{ const k=cl((now-T)/dur); const v=from+d*eio(k); scrollTo(0,v); cur=target=v; if(k<1) anim=requestAnimationFrame(run); else anim=null; };
-    anim=requestAnimationFrame(run); };
+  const fine=matchMedia('(hover:hover) and (pointer:fine)');
+  const EASE=.085;
+  let target=scrollY, cur=scrollY, raf=0;
+  const max=()=>Math.max(0,html.scrollHeight-innerHeight);
   const innerCanScroll=(el,dy)=>{ for(;el&&el!==document.body&&el!==html;el=el.parentElement){ if(!(el instanceof Element)) continue; const oy=getComputedStyle(el).overflowY;
       if((oy==='auto'||oy==='scroll') && el.scrollHeight>el.clientHeight+1){ if(dy>0&&el.scrollTop+el.clientHeight<el.scrollHeight-1) return true; if(dy<0&&el.scrollTop>0) return true; } } return false; };
+  const step=()=>{ cur+=(target-cur)*EASE; if(Math.abs(target-cur)<.5){ cur=target; raf=0; } else raf=requestAnimationFrame(step); scrollTo(0,cur); };
   addEventListener('wheel',e=>{
-    if(!active()||!fine.matches||e.ctrlKey||e.metaKey||e.defaultPrevented) return;
+    if(html.dataset.view!=='shop'||!fine.matches||e.ctrlKey||e.metaKey||e.defaultPrevented) return;
     if(Math.abs(e.deltaX)>Math.abs(e.deltaY)) return;
     if(innerCanScroll(e.target,e.deltaY)) return;
     e.preventDefault();
-    const now=performance.now(), d=e.deltaMode===1?e.deltaY*16:e.deltaMode===2?e.deltaY*innerHeight:e.deltaY;
-    if(now-lastWheel>220){ needFresh=false; acc=0; } lastWheel=now;
-    if(anim||now<lockUntil) return;
     if(!raf){ target=cur=scrollY; }
-    const y=target, i=idxAt(y);
-    if(i<0){ const n=d>0?CH.find(c=>c.a>y):[...CH].reverse().find(c=>c.b<y); if(n) glide(d>0?n.a:n.b); return; }
-    const c=CH[i];
-    if(d>0 && y>=c.b-1 && CH[i+1]){ if(needFresh) return; acc+=d; if(acc>36) glide(CH[i+1].a); return; }
-    if(d<0 && y<=c.a+1 && CH[i-1]){ if(needFresh) return; acc+=d; if(acc<-36) glide(CH[i-1].b); return; }
-    acc=0; target=cl(y+d,c.a,c.b);
-    if(!raf) raf=requestAnimationFrame(stepEase);
+    const d=e.deltaMode===1?e.deltaY*16:e.deltaMode===2?e.deltaY*innerHeight:e.deltaY;
+    target=Math.max(0,Math.min(max(),target+d));
+    if(!raf) raf=requestAnimationFrame(step);
   },{passive:false});
-  addEventListener('scroll',()=>{ if(raf && !anim && Math.abs(scrollY-cur)>3){ cancelAnimationFrame(raf); raf=0; target=cur=scrollY; } requestAnimationFrame(paint); },{passive:true});
+  addEventListener('scroll',()=>{ if(raf && Math.abs(scrollY-cur)>3){ cancelAnimationFrame(raf); raf=0; target=cur=scrollY; } },{passive:true});
   addEventListener('keydown',()=>{ if(raf){ cancelAnimationFrame(raf); raf=0; } });
-  let mt; const remeasure=()=>{ clearTimeout(mt); mt=setTimeout(()=>{ measure(); paint(); },120); };
-  addEventListener('resize',remeasure); addEventListener('load',remeasure); addEventListener('hashchange',remeasure);
-  new MutationObserver(remeasure).observe(html,{attributes:true,attributeFilter:['data-view']});
-  if(window.ResizeObserver){ const pd=$('#pdPage'); if(pd) new ResizeObserver(remeasure).observe(pd); }
-  measure(); paint();
 })();
 </script>
 </body>
