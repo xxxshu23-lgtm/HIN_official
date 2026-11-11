@@ -2701,6 +2701,27 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   #pdPage #hx14{margin-top:0 !important;}
 }
 </style>
+<style id="update-2026-11-12-ch67">
+/* 06 Features + 07 Details: pointer line + square exactly like the Portable columns */
+#pdPage .hxf-lines path{stroke:rgba(255,255,255,.22) !important; stroke-width:1 !important;}
+#pdPage .hxf-lines rect{display:none !important;}
+#pdPage .hxf-sq{position:absolute; left:calc(var(--cx)/14.4*1cqw); top:calc(var(--cy)/14.4*1cqw); width:6px; height:6px; margin:-3px 0 0 -3px; background:#FFFBBA;
+  box-shadow:0 0 10px 2px rgba(255,251,186,.5), 0 0 22px 4px rgba(255,251,186,.18); opacity:0; transition:opacity .4s ease; pointer-events:none; z-index:1;}
+#pdPage .hxf-slide.on .hxf-sq, #pdPage #hxPin .hxp-line.on .hxf-sq{opacity:1; transition:opacity .4s ease 1.4s;}
+@media (max-width:680px){ #pdPage .hxf-sq{display:none;} }
+@media (prefers-reduced-motion:reduce){ #pdPage .hxf-sq{transition:none !important;} }
+
+@media (min-width:681px){
+  /* full-screen pictures: one 1440x900 composition scaled to cover the whole screen */
+  #pdPage .hxf-sticky, #pdPage .hxp-sticky{padding:0 !important; justify-content:center; align-items:flex-start !important;} /* wider screens crop the bottom, never the labels at the top */
+  #pdPage .hxf-viewport{flex:none; width:max(100vw,160vh) !important; margin:0 !important;}
+  #pdPage .hxp-stage{flex:none; width:max(100vw,160vh) !important; margin:0 !important;}
+  #pdPage .hxf-stage, #pdPage .hxp-rise{-webkit-mask-image:none !important; mask-image:none !important;}
+  #pdPage .hxf-dots{bottom:calc(100% - 100vh + 76px) !important;}
+  /* label above the line, description below it: same gap on both sides, same left edge, same type in 06 and 07 */
+  #pdPage .hxf-txt p, #pdPage #hxPin .hxp-line .hxf-txt p{margin:0 !important; top:calc(var(--g)/14.4*1cqw - .30em) !important; left:-.05em !important; font-size:max(12.5px,calc(18.9/14.4*1cqw)) !important; line-height:1.45 !important;}
+}
+</style>
 </head>
 <body>
 
@@ -3340,22 +3361,22 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     <div class="hxf-slides">
       <article class="hxf-slide on" data-i="0" aria-label="1 / 3">
         <div class="hx-stage hxf-stage">
-          <img class="hxf-img f01" src="assets/f01-lightbar.webp?v=2" alt="세워진 HIN-001과 일체형 LED 라이트바" loading="lazy" decoding="async" draggable="false">
-          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H900L1280 477" pathLength="1"/><rect x="1274" y="471" width="12" height="12" class="sq-y"/></svg>
-          <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">01. LIGHT BAR</h3><p class="hl" style="--i:1">An integrated LED light bar provides soft, even illumination across your workspace, <br>helping create a more comfortable and focused environment for work.</p></div>
+          <img class="hxf-img f01" src="assets/f01-lightbar.webp?v=3" alt="세워진 HIN-001과 일체형 LED 라이트바" loading="lazy" decoding="async" draggable="false">
+          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H900L1280 477" pathLength="1"/></svg><i class="hxf-sq" style="--cx:1280;--cy:477" aria-hidden="true"></i>
+          <div class="hxf-txt" style="--x:150;--ly:181"><h3 class="hl" style="--i:0">01. LIGHT BAR</h3><p class="hl" style="--i:1">An integrated LED light bar provides soft, even illumination across your workspace, <br>helping create a more comfortable and focused environment for work.</p></div>
         </div>
       </article>
       <article class="hxf-slide" data-i="1" aria-label="2 / 3">
         <div class="hx-stage hxf-stage">
           <img class="hxf-img full" src="assets/f02-power.webp?v=2" alt="라이트 라인이 들어간 HIN-001 배터리 모듈" loading="lazy" decoding="async" draggable="false">
-          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M151 180H806L951 384" pathLength="1"/><rect x="945" y="378" width="12" height="12" class="sq-y"/></svg>
-          <div class="hxf-txt" style="--x:159;--ly:180"><h3 class="hl" style="--i:0">02. POWER</h3><p class="hl" style="--i:1">65Wh built-in battery and USB-C connectivity, <br>an uninterrupted workflow wherever you go.</p></div>
+          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 180H806L951 384" pathLength="1"/></svg><i class="hxf-sq" style="--cx:951;--cy:384" aria-hidden="true"></i>
+          <div class="hxf-txt" style="--x:150;--ly:180"><h3 class="hl" style="--i:0">02. POWER</h3><p class="hl" style="--i:1">65Wh built-in battery and USB-C connectivity, <br>an uninterrupted workflow wherever you go.</p></div>
         </div>
       </article>
       <article class="hxf-slide" data-i="2" aria-label="3 / 3">
         <div class="hx-stage hxf-stage">
           <img class="hxf-img full" src="assets/f03-mousepad.webp" alt="본체에서 분리된 HIN-001 마우스패드" loading="lazy" decoding="async" draggable="false">
-          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M1100 128H576L492 357" pathLength="1"/><rect x="486" y="351" width="12" height="12" class="sq-y"/></svg>
+          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M1100 128H576L492 357" pathLength="1"/></svg><i class="hxf-sq" style="--cx:492;--cy:357" aria-hidden="true"></i>
           <div class="hxf-txt r" style="--rx:1100;--ly:128"><h3 class="hl" style="--i:0">03. MOUSE PAD</h3><p class="hl" style="--i:1">A detachable mouse pad that adapts <br>to different spaces and working needs.</p></div>
         </div>
       </article>
@@ -3373,21 +3394,21 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     <div class="hx-stage hxp-stage">
       <div class="hxp-rise">
         <div class="hxp-img on" data-i="0"><img class="cover" src="assets/d01-quick.webp?v=2" alt="펼쳐진 HIN-001 본체와 분리된 마우스패드, 라이트 모듈" loading="lazy" decoding="async"></div>
-        <div class="hxp-img" data-i="1"><img class="cover" src="assets/d02-mark.webp?v=3" alt="HIN-001 상단 모듈에 각인된 HIN 마크" loading="lazy" decoding="async"></div>
-        <div class="hxp-img" data-i="2"><i class="hxp-glow" aria-hidden="true"></i><img class="d03" src="assets/d03-stable.webp?v=3" alt="노트북을 올린 HIN-001 정면" loading="lazy" decoding="async"></div>
+        <div class="hxp-img" data-i="1"><img class="cover" src="assets/d02-mark.webp?v=4" alt="HIN-001 상단 모듈에 각인된 HIN 마크" loading="lazy" decoding="async"></div>
+        <div class="hxp-img" data-i="2"><i class="hxp-glow" aria-hidden="true"></i><img class="d03" src="assets/d03-stable.webp?v=4" alt="노트북을 올린 HIN-001 정면" loading="lazy" decoding="async"></div>
       </div>
       <i class="hxp-fade" aria-hidden="true"></i>
       <div class="hxp-line on" data-i="0">
-        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H690L830 450" pathLength="1"/><rect x="824" y="444" width="12" height="12" class="sq-y"/></svg>
-        <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">04. QUICK SETTING</h3><p class="hl" style="--i:1">Designed to cut the transition time from the moment you arrive <br>to the moment you start working.</p></div>
+        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H690L830 450" pathLength="1"/></svg><i class="hxf-sq" style="--cx:830;--cy:450" aria-hidden="true"></i>
+        <div class="hxf-txt" style="--x:150;--ly:181"><h3 class="hl" style="--i:0">04. QUICK SETTING</h3><p class="hl" style="--i:1">Designed to cut the transition time from the moment you arrive <br>to the moment you start working.</p></div>
       </div>
       <div class="hxp-line" data-i="1">
-        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H640L780 500" pathLength="1"/><rect x="774" y="494" width="12" height="12" class="sq-y"/></svg>
-        <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">05. HIN MARK</h3><p class="hl" style="--i:1">The HIN mark, carrying the identity of the brand, <br>is engraved on the top module.</p></div>
+        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 600H520L780 500" pathLength="1"/></svg><i class="hxf-sq" style="--cx:780;--cy:500" aria-hidden="true"></i>
+        <div class="hxf-txt" style="--x:150;--ly:600"><h3 class="hl" style="--i:0">05. HIN MARK</h3><p class="hl" style="--i:1">The HIN mark, carrying the identity of the brand, <br>is engraved on the top module.</p></div>
       </div>
       <div class="hxp-line" data-i="2">
-        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H550L690 560" pathLength="1"/><rect x="684" y="554" width="12" height="12" class="sq-y"/></svg>
-        <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">06. STABLE STRUCTURE</h3><p class="hl" style="--i:1">Provides a stable working environment, <br>even away from a fixed workspace.</p></div>
+        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H550L690 560" pathLength="1"/></svg><i class="hxf-sq" style="--cx:690;--cy:560" aria-hidden="true"></i>
+        <div class="hxf-txt" style="--x:150;--ly:181"><h3 class="hl" style="--i:0">06. STABLE STRUCTURE</h3><p class="hl" style="--i:1">Provides a stable working environment, <br>even away from a fixed workspace.</p></div>
       </div>
     </div>
   </div>
