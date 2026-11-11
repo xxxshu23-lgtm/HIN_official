@@ -2628,6 +2628,12 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #viewShop .sc-summary,#viewShop .sc-price,#viewShop .sc-price span,#viewShop .sc-price b,#viewShop #s_card button{letter-spacing:-.01em !important; line-height:1.25 !important;}
 #viewShop .hpd-sub-kr,#viewShop .hpd-lead-p,#viewShop .hxu-p,#viewShop #hpd-numbers .hpd-g,#viewShop .hx-fold-cols p,
 #viewShop #hxFeatures p.hl,#viewShop #hxPin p.hl,#viewShop #hxLook .hxl-item span,#viewShop .sc-note,#viewShop .col-wide > div:not(.col-label){letter-spacing:-.01em !important; line-height:1.45 !important;}
+/* 08 SPECIFICATIONS: chapter heading block like 02 / 04 / 05 so the chapter change reads */
+#pdPage .hxs{flex-direction:column; justify-content:center; align-items:stretch;}
+#pdPage .hxs-top{text-align:center; margin:0 0 clamp(40px,4.5vw,72px);}
+#pdPage .hxs-top .hpd-label{justify-content:center; font:400 var(--t-label,15px)/1 "HIN Type",var(--pixel) !important; letter-spacing:.075em !important; margin:0 0 clamp(16px,1.6vw,24px) !important;}
+#pdPage .hxs-h{margin:0; font:400 var(--t-display,36px)/1.1 "HIN Type",var(--pixel); letter-spacing:.05em; text-transform:uppercase; color:#fff;}
+@media (max-width:680px){ #pdPage .hxs-h{font-size:24px;} #pdPage .hxs-top{margin-bottom:32px;} }
 </style>
 </head>
 <body>
@@ -3328,7 +3334,11 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 
 
 <!-- ================= SPECS ================= -->
-<section class="hxs" id="hxSpec" aria-label="Product specification">
+<section class="hxs" id="hxSpec" aria-labelledby="hxs-h">
+  <div class="hxs-top">
+    <div class="hpd-label reveal">Specifications</div>
+    <h2 class="hxs-h reveal d1" id="hxs-h">Tech specs.</h2>
+  </div>
   <div class="hxs-in">
     <div class="hxs-table">
       <div class="hxs-head"><span class="hl" style="--i:0">PRODUCT</span><span class="hl" style="--i:0">SPECIFICATION</span></div><i class="hxs-rule" style="--i:0"></i>
