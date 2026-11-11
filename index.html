@@ -4502,8 +4502,8 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     const rise=pin.querySelector('.hxp-rise'), stage=pin.querySelector('.hxp-stage'), imgs=[...pin.querySelectorAll('.hxp-img')], lines=[...pin.querySelectorAll('.hxp-line')];
     let last=-1;
     const upd=()=>{ const r=pin.getBoundingClientRect(), total=pin.offsetHeight-innerHeight; const p=total>0?clamp(-r.top/total,0,1):0;
-      const up=Math.min(p/.35,1); rise.style.transform='none';
-      const st=p<.4?0:p<.68?1:2, show=true, key=st+(show?'s':'h');
+      const up=Math.min(p/.35,1); rise.style.transform=rm?'none':`translateY(${((1-up)*60).toFixed(2)}vh)`;
+      const st=p<.42?0:p<.68?1:2, show=up>=.85, key=st+(show?'s':'h');
       if(key!==last){ last=key; imgs.forEach((el,k)=>el.classList.toggle('on',k===st)); lines.forEach((el,k)=>el.classList.toggle('on',show&&k===st)); } };
     addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); addEventListener('hashchange',()=>setTimeout(upd,60)); upd();
   }
@@ -4600,7 +4600,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
     if(!gl){ A.style.transform=homo(LQ,Q); S.style.transform=homo(SQ,Q); }
     else window.__hxuGL.draw({vw,vh,ax:0,ay:top,aw:vw,ah,t1,t2,zs:1+.16*eio(seg(p,.28,.74))});
     SI.style.setProperty('--zs',(1+.16*eio(seg(p,.28,.74))).toFixed(4));
-    const c=seg(p,.07,.16); copy.style.setProperty('--co',(1-c).toFixed(3)); copy.style.setProperty('--cy',(-36*eo(c)).toFixed(1)+'px'); copy.style.pointerEvents=c>.5?'none':'';
+    const c=seg(p,.02,.12); copy.style.setProperty('--co',(1-c).toFixed(3)); copy.style.setProperty('--cy',(-36*eo(c)).toFixed(1)+'px'); copy.style.pointerEvents=c>.5?'none':'';
     VA.style.setProperty('--va',(.5*seg(p,.08,.34)+.5*seg(p,.34,.56)).toFixed(3));
     VB.style.setProperty('--vb',(.86*seg(p,.62,.74)).toFixed(3));
     const d=seg(p,.64,.76); D.style.setProperty('--do',d.toFixed(3)); D.style.setProperty('--dy',((1-eo(d))*40).toFixed(1)+'px'); D.classList.toggle('live',d>.6);
