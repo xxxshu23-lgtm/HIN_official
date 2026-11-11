@@ -1093,7 +1093,8 @@
   .sc-cta:active{transform:scale(.985);}
   .sc-cta.done{background:#FFFBBA; color:#111;}
 
-  html[data-view="shop"]:not(.shop-below) .dots{display:none !important;}
+  .dots{transition:opacity .9s cubic-bezier(.22,1,.36,1);}
+  html[data-view="shop"]:not(.shop-below) .dots{opacity:0;} /* shop: side dots fade in as you scroll past the buy view instead of popping */
 
   @media (prefers-reduced-motion:reduce){ .shop-view,.sc-more,.sc-more-in,.sc-toggle,.sc-toggle svg,.sh-tile,.sc-cta{transition:none;} }
 
@@ -2727,6 +2728,36 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   #pdPage .hxf-dots{bottom:76px !important;}
   #pdPage .hxf-img, #pdPage .hxp-rise{-webkit-mask-image:linear-gradient(180deg,transparent,#000 7%,#000 88%,transparent) !important; mask-image:linear-gradient(180deg,transparent,#000 7%,#000 88%,transparent) !important;}
 }
+
+/* same visible gap between every chapter (desktop, measured from what you see: last picture/text to the next) */
+@media (min-width:681px){
+  #pdPage #hx15{margin-top:calc(-80*var(--u)) !important;}
+  #pdPage #hpd-fold{margin-top:calc(26.7*var(--u)) !important;}
+  #pdPage #hxLook{margin-top:calc(-21.3*var(--u)) !important;}
+  #pdPage #hxUnfold{margin-top:calc(32*var(--u)) !important;}
+  #pdPage #hxUnfold{margin-bottom:0 !important;}
+  #pdPage #hxFeatures{margin-top:calc(90.7*var(--u)) !important;}
+  #pdPage #hxPin{margin-bottom:0 !important;}
+  #pdPage #hxSpec{min-height:0 !important; padding-top:calc(5.3*var(--u)) !important;}
+  #pdPage #hpd-intro{padding-top:calc(230.7*var(--u)) !important;}
+  #shopAboutSlot .about-section{margin-top:0 !important; padding-top:calc(124*var(--u)) !important;}
+}
+
+/* buy card: a little more air between PORTABLE WORKSPACE S and HIN-001 */
+.sc-eyebrow{margin-bottom:calc(18*var(--u)) !important;}
+@media (max-width:680px){ .sc-eyebrow{margin-bottom:10px !important;} }
+/* A CLOSER LOOK: the opening picture (before any button) sits a bit further right */
+@media (min-width:681px){ #hxLook .hxl-m[data-k="intro"] img{transform:translateX(7%);} }
+
+/* HIN Type tracking = MAIN: small labels .25em, headings .10em, sentences .136em */
+#pdPage #hpd-intro .hpd-label, #pdPage #hpd-fold .hpd-label, #pdPage #hpd-numbers .hpd-label, #pdPage #hxUnfold .hxu-eb{letter-spacing:.25em !important;}
+#pdPage #hpd-intro .hpd-lead-h{letter-spacing:.136em !important;}
+#pdPage #hpd-numbers .hpd-h2, #pdPage #hxUnfold .hxu-h, #pdPage #hpd-numbers .hpd-v{letter-spacing:.10em !important;}
+#pdPage #hpd-numbers .hpd-k, #pdPage #hpd-numbers .hpd-chip, #pdPage #hpd-numbers .hpd-dg text{letter-spacing:.136em !important;}
+#pdPage #hxFeatures .hxf-txt h3, #pdPage #hxPin .hxf-txt h3{letter-spacing:.10em !important;}
+#pdPage #hxUnfold .hxu-link, #pdPage #hxUnfold .hxu-link span{letter-spacing:.136em !important;}
+#viewShop #hxLook .hxl-pill > span, #viewShop #hxLook .hxl-pill, #viewShop #hxLook .hxl-cl b{letter-spacing:.13em !important;}
+#viewShop #s_card #s_orderLabel{letter-spacing:.136em !important;}
 </style>
 </head>
 <body>
@@ -3183,7 +3214,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     </div>
     <div class="hx15-panel">
       <i class="hx15-sq" aria-hidden="true"></i>
-      <img class="hx15-prod" src="assets/s15-product.webp?v=2" alt="접힌 HIN-001 측면, 라이트 라인이 켜진 모습" loading="lazy" decoding="async">
+      <img class="hx15-prod" src="assets/s15-product.webp?v=3" alt="접힌 HIN-001 측면, 라이트 라인이 켜진 모습" loading="lazy" decoding="async">
     </div>
   </div>
 </section>
@@ -3307,7 +3338,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       <div class="hxu-copy">
       <p class="hxu-eb reveal">HIN-001 Portable Workspace</p>
       <h2 class="hxu-h reveal d1" id="hxu-h">Work, unfolded.</h2>
-      <p class="hxu-p reveal d2" data-words><span class="hxu-ln">HIN-001 brings a complete workspace into a single folded form. Weighing just 1.2&nbsp;kg and measuring 340&nbsp;×&nbsp;215&nbsp;×&nbsp;24&nbsp;mm</span> <span class="hxu-ln">when folded, it unfolds in one motion into a stable stand that holds 11–16&Prime; laptops at the height and angle you choose.</span> <span class="hxu-ln">An integrated LED light bar, a 65Wh built-in battery with USB-C, and a detachable mouse pad complete the setup —</span> <span class="hxu-ln">so the desk, the café table, or the window seat becomes your place to work.</span></p>
+      <p class="hxu-p reveal d2" data-words><span class="hxu-ln">HIN-001 brings a complete workspace into one folded form: 1.2&nbsp;kg and 340&nbsp;×&nbsp;215&nbsp;×&nbsp;24&nbsp;mm when folded.</span> <span class="hxu-ln">It unfolds in one motion into a stable stand for 11–16&Prime; laptops, at the height and angle you choose,</span> <span class="hxu-ln">with an LED light bar, a 65Wh USB-C battery and a detachable mouse pad built in.</span></p>
       <a class="hxu-link reveal d3" href="#hxSpec"><span>View HIN-001 Specifications</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 5.5H18.5V16"/><path d="M18 6L5.5 18.5"/></svg></a>
       </div>
       <div class="hxu-a"><img class="hxu-img" src="assets/product/work-unfolded.webp" alt="HIN-001 스탠드에 거치된 노트북 — 라이트 바 모듈과 후면 서포트가 펼쳐진 모습" decoding="async"></div>
@@ -4505,7 +4536,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     const start=()=>{ if(!timer && !kick && !rm) kick=setTimeout(()=>{ kick=null; next(); timer=setInterval(next,3000); },1500); }, stop=()=>{ clearInterval(timer); clearTimeout(kick); timer=null; kick=null; };
     dots.forEach((d,k)=>d.addEventListener('click',()=>{ stop(); go(k,k>i?1:-1); start(); }));
     if('IntersectionObserver' in window) new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?start():stop()),{threshold:.2}).observe(s15); else start();
-    const zoom=()=>{ const r=s15.getBoundingClientRect(); const p=clamp((innerHeight-r.top)/(innerHeight+r.height),0,1); prod.style.transform=`scale(${(.92+.33*p).toFixed(4)})`; };
+    const zoom=()=>{ const r=s15.getBoundingClientRect(), vh=innerHeight, c=r.top+r.height/2; /* small as it comes in, full size once the pair sits in the middle, a touch larger as it leaves */
+      const a=clamp((vh*1.15-c)/(vh*.65),0,1), e=1-(1-a)*(1-a), b=clamp((vh*.5-c)/(vh*.7),0,1);
+      prod.style.transform=`scale(${(.6+.4*e+.06*b).toFixed(4)})`; };
     if(!rm){ addEventListener('scroll',zoom,{passive:true}); addEventListener('resize',zoom); zoom(); }
   }
 
