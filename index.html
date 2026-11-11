@@ -2583,6 +2583,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   #pdPage #hxLook{padding-top:var(--ch-gap) !important; padding-bottom:0 !important;}
   #pdPage .hx-buy{padding-bottom:var(--ch-gap) !important;}
   #pdPage #hx14,#pdPage #hxUnfold,#pdPage #hxFeatures,#pdPage #hxPin{margin-top:var(--ch-gap) !important; margin-bottom:var(--ch-gap) !important;}
+  #pdPage #hxFeatures{margin-bottom:0 !important;} #pdPage #hxPin{margin-top:0 !important;}
 }
 </style>
 <style id="update-2026-11-11-chapters">
@@ -2643,6 +2644,17 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 /* dots: pure inversion instead of yellow */
 .custom-cursor{background:#fff !important; mix-blend-mode:difference;}
 .hxf-lines .sq-y{fill:#fff !important; filter:none !important; mix-blend-mode:difference;}
+/* 2nd photo roll: same transition + square counter as the home sliders */
+.hx15-sl{position:absolute; inset:0; overflow:hidden; transform:translateX(100%); transition:transform .9s cubic-bezier(.65,0,.15,1); will-change:transform;}
+.hx15-sl.on{transform:none;} .hx15-sl.past,.hx15-sl.from-left{transform:translateX(-100%);} .hx15-sl.to-right{transform:translateX(100%);}
+.hx15-sl.no-tr{transition:none !important;}
+.hx15-roll .hx15-sl img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.04) !important; transition:transform 1.2s cubic-bezier(.22,1,.36,1) !important;}
+.hx15-roll .hx15-sl.on img{transform:none !important;}
+.hx15-dots{position:absolute; left:clamp(14px,1.6vw,24px); bottom:clamp(14px,1.6vw,24px); z-index:3; display:flex; gap:calc(22*var(--u));}
+.hx15-dots button{width:max(8px,calc(11*var(--u))); height:max(8px,calc(11*var(--u))); padding:0; border:0; cursor:pointer; background:rgba(255,255,255,.35); transition:background .3s ease;}
+.hx15-dots button.on{background:var(--dot);}
+.hx15-dots button:focus-visible{outline:1px solid var(--dot); outline-offset:3px;}
+@media (prefers-reduced-motion:reduce){ .hx15-sl,.hx15-roll .hx15-sl img{transition:none !important;} }
 </style>
 </head>
 <body>
@@ -3092,9 +3104,10 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 <section class="hx15" id="hx15" aria-label="어디서든 이어지는 작업">
   <div class="hx15-box">
     <div class="hx15-roll" aria-roledescription="사진 롤링">
-      <img class="on" src="assets/s15-photo-1.webp?v=3" alt="잔디밭에 앉아 노트북으로 함께 작업하는 사람들" loading="lazy" decoding="async">
-      <img src="assets/s15-photo-2.webp?v=3" alt="창가 회의실에서 노트북을 펼치고 회의하는 팀" loading="lazy" decoding="async">
-      <img src="assets/s15-photo-3.webp?v=3" alt="카페 테이블에서 노트북으로 작업하는 사람들" loading="lazy" decoding="async">
+      <div class="hx15-sl on"><img src="assets/s15-photo-1.webp?v=3" alt="잔디밭에 앉아 노트북으로 함께 작업하는 사람들" loading="lazy" decoding="async"></div>
+      <div class="hx15-sl"><img src="assets/s15-photo-2.webp?v=3" alt="창가 회의실에서 노트북을 펼치고 회의하는 팀" loading="lazy" decoding="async"></div>
+      <div class="hx15-sl"><img src="assets/s15-photo-3.webp?v=3" alt="카페 테이블에서 노트북으로 작업하는 사람들" loading="lazy" decoding="async"></div>
+      <div class="hx15-dots" role="tablist" aria-label="사진 선택"><button type="button" role="tab" aria-label="1 / 3" class="on" aria-selected="true"></button><button type="button" role="tab" aria-label="2 / 3" aria-selected="false"></button><button type="button" role="tab" aria-label="3 / 3" aria-selected="false"></button></div>
     </div>
     <div class="hx15-panel">
       <i class="hx15-sq" aria-hidden="true"></i>
@@ -3320,16 +3333,16 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       </div>
       <i class="hxp-fade" aria-hidden="true"></i>
       <div class="hxp-line on" data-i="0">
-        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H820L712 537" pathLength="1"/><rect x="706" y="531" width="12" height="12" class="sq-y"/></svg>
+        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H690L830 450" pathLength="1"/><rect x="824" y="444" width="12" height="12" class="sq-y"/></svg>
         <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">01. QUICK SETTING</h3><p class="hl" style="--i:1">Designed to cut the transition time from the moment you arrive <br>to the moment you start working.</p></div>
       </div>
       <div class="hxp-line" data-i="1">
-        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H820L700 518" pathLength="1"/><rect x="694" y="512" width="12" height="12" class="sq-y"/></svg>
-        <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">02. HIN MARK</h3><p class="hl" style="--i:1">The HIN mark, carrying the identity of the brand, <br>is engraved on the top module.</p></div>
+        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 330H840L700 528" pathLength="1"/><rect x="694" y="522" width="12" height="12" class="sq-y"/></svg>
+        <div class="hxf-txt" style="--x:160;--ly:330"><h3 class="hl" style="--i:0">02. HIN MARK</h3><p class="hl" style="--i:1">The HIN mark, carrying the identity of the brand, <br>is engraved on the top module.</p></div>
       </div>
       <div class="hxp-line" data-i="2">
-        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H820L683 600" pathLength="1"/><rect x="677" y="594" width="12" height="12" class="sq-y"/></svg>
-        <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">03. STABLE STRUCTURE</h3><p class="hl" style="--i:1">Provides a stable working environment, <br>even away from a fixed workspace.</p></div>
+        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 330H830L690 550" pathLength="1"/><rect x="684" y="544" width="12" height="12" class="sq-y"/></svg>
+        <div class="hxf-txt" style="--x:160;--ly:330"><h3 class="hl" style="--i:0">03. STABLE STRUCTURE</h3><p class="hl" style="--i:1">Provides a stable working environment, <br>even away from a fixed workspace.</p></div>
       </div>
     </div>
   </div>
@@ -4407,12 +4420,17 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   // 3) website 15: vertical photo rolling + product zoom on scroll
   const s15=document.getElementById('hx15');
   if(s15){
-    const imgs=[...s15.querySelectorAll('.hx15-roll img')], prod=s15.querySelector('.hx15-prod');
+    const imgs=[...s15.querySelectorAll('.hx15-sl')], dots=[...s15.querySelectorAll('.hx15-dots button')], prod=s15.querySelector('.hx15-prod');
     let i=0, timer=null;
-    const next=()=>{ const cur=imgs[i], n=imgs[(i+1)%imgs.length];
-      n.classList.add('prep'); n.classList.remove('out','on'); void n.offsetWidth; n.classList.remove('prep');
-      cur.classList.remove('on'); cur.classList.add('out'); n.classList.add('on'); i=(i+1)%imgs.length; };
+    // same move as the home People / Campaign slider: slides in from the right, the photo settles from a slight zoom
+    const go=(n,dir=1)=>{ n=(n+imgs.length)%imgs.length; if(n===i) return; const ps=imgs[i], ns=imgs[n];
+      ns.classList.add('no-tr'); ns.classList.toggle('from-left',dir<0); ns.classList.remove('past','to-right','on'); void ns.offsetWidth; ns.classList.remove('no-tr','from-left');
+      ps.classList.remove('on'); ps.classList.toggle('past',dir>0); ps.classList.toggle('to-right',dir<0); ns.classList.add('on');
+      imgs.forEach((s,k)=>{ if(k!==n&&k!==i){ s.classList.add('no-tr'); s.classList.remove('past','to-right','from-left'); void s.offsetWidth; s.classList.remove('no-tr'); } });
+      i=n; dots.forEach((d,k)=>{ d.classList.toggle('on',k===i); d.setAttribute('aria-selected',k===i); }); };
+    const next=()=>go(i+1,1);
     const start=()=>{ if(!timer && !rm) timer=setInterval(next,1200); }, stop=()=>{ clearInterval(timer); timer=null; };
+    dots.forEach((d,k)=>d.addEventListener('click',()=>{ stop(); go(k,k>i?1:-1); start(); }));
     if('IntersectionObserver' in window) new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?start():stop()),{threshold:.2}).observe(s15); else start();
     const zoom=()=>{ const r=s15.getBoundingClientRect(); const p=clamp((innerHeight-r.top)/(innerHeight+r.height),0,1); prod.style.transform=`scale(${(.92+.33*p).toFixed(4)})`; };
     if(!rm){ addEventListener('scroll',zoom,{passive:true}); addEventListener('resize',zoom); zoom(); }
@@ -4596,62 +4614,79 @@ document.addEventListener('touchstart',()=>{},{passive:true});
 })();
 </script>
 
+
+
+
+
 <script>
-/* SHOP — weighted wheel scroll: the page eases toward the wheel target instead of jumping 1:1 */
+/* SHOP — weighted chapter flow (desktop, mouse/trackpad):
+   • inside a chapter the wheel eases (heavy) and stops at the chapter edge
+   • at the edge the next push carries you to the next chapter on its own, 1.1 s, like the 06 slide change
+   • during that move the outgoing chapter holds still and dims out while the next one comes up in place */
 (() => {
   const html=document.documentElement;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const fine=matchMedia('(hover:hover) and (pointer:fine)');
-  const EASE=.085;
-  let target=scrollY, cur=scrollY, raf=0;
-  const max=()=>Math.max(0,html.scrollHeight-innerHeight);
+  const desk=matchMedia('(min-width:681px)'), fine=matchMedia('(hover:hover) and (pointer:fine)');
+  const $=q=>document.querySelector(q);
+  const DEF=[['#s_viewWrap'],['#hpd-intro'],['#hx14'],['#hx15'],['#hpd-fold'],['#hxLook','#pdPage .hx-buy'],['#hxUnfold'],['#hxFeatures'],['#hxPin'],['#hxSpec'],['#shopAboutSlot']];
+  const cl=(v,a=0,b=1)=>Math.min(Math.max(v,a),b), sm=t=>t*t*(3-2*t), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  let CH=[], maxY=0;
+  const measure=()=>{ const vh=innerHeight; maxY=Math.max(0,html.scrollHeight-vh);
+    const st=[];
+    for(const g of DEF){ const els=g.map($).filter(Boolean); if(!els.length) continue;
+      els.forEach(e=>e.style.transform='');
+      const top=els[0].getBoundingClientRect().top+scrollY, bot=els[els.length-1].getBoundingClientRect().bottom+scrollY, h=bot-top;
+      let a,b; if(h>=vh-2){ a=top; b=bot-vh; } else { a=b=top+h/2-vh/2; }
+      st.push({els,a:cl(a,0,maxY),b:cl(b,0,maxY)}); }
+    st[st.length-1].b=maxY;                                   // last chapter runs to the end of the page
+    for(let i=1;i<st.length;i++){ if(st[i].a<st[i-1].b) st[i].a=st[i-1].b; if(st[i].b<st[i].a) st[i].b=st[i].a; }
+    CH=st; };
+  const active=()=>html.dataset.view==='shop' && desk.matches && CH.length;
+  /* positional in-place dissolve between chapter i and i+1 */
+  let painted=false;
+  const paint=()=>{ if(!active()){ if(painted){ CH.forEach(c=>c.els.forEach(e=>{ e.style.opacity=''; e.style.transform=''; })); painted=false; } return; } painted=true;
+    const y=scrollY;
+    CH.forEach((c,i)=>{ let o=1, ty=0; const prev=CH[i-1], next=CH[i+1];
+      if(y<c.a && prev && y>prev.b){ const t=(y-prev.b)/(c.a-prev.b); o=sm(cl((t-.35)/.65)); ty=-(c.a-y); }       // incoming: already in place, comes up
+      else if(y>c.b && next && y<next.a){ const t=(y-c.b)/(next.a-c.b); o=1-sm(cl(t/.65)); ty=(y-c.b); }          // outgoing: holds still, dims out
+      else if(y<c.a || y>c.b){ o=(y<c.a&&!prev)||(y>c.b&&!next)?1:0; }
+      const tr=ty?`translate3d(0,${ty.toFixed(1)}px,0)`:'', op=o>.995?'':o.toFixed(3);
+      c.els.forEach(e=>{ if(e.style.opacity!==op) e.style.opacity=op; if(e.style.transform!==tr) e.style.transform=tr; }); }); };
+  /* wheel */
+  let target=scrollY, cur=scrollY, raf=0, anim=null, lockUntil=0, needFresh=false, lastWheel=0, acc=0;
+  const EASE=.07;
+  const idxAt=y=>{ for(let i=0;i<CH.length;i++) if(y>=CH[i].a-2 && y<=CH[i].b+2) return i; return -1; };
+  const stepEase=()=>{ cur+=(target-cur)*EASE; if(Math.abs(target-cur)<.5){ cur=target; raf=0; } else raf=requestAnimationFrame(stepEase); scrollTo(0,cur); };
+  const glide=(to)=>{ cancelAnimationFrame(raf); raf=0; const from=scrollY, d=to-from, T=performance.now(), dur=1100;
+    lockUntil=T+dur+380; needFresh=true; acc=0;
+    const run=now=>{ const k=cl((now-T)/dur); const v=from+d*eio(k); scrollTo(0,v); cur=target=v; if(k<1) anim=requestAnimationFrame(run); else anim=null; };
+    anim=requestAnimationFrame(run); };
   const innerCanScroll=(el,dy)=>{ for(;el&&el!==document.body&&el!==html;el=el.parentElement){ if(!(el instanceof Element)) continue; const oy=getComputedStyle(el).overflowY;
       if((oy==='auto'||oy==='scroll') && el.scrollHeight>el.clientHeight+1){ if(dy>0&&el.scrollTop+el.clientHeight<el.scrollHeight-1) return true; if(dy<0&&el.scrollTop>0) return true; } } return false; };
-  const step=()=>{ cur+=(target-cur)*EASE; if(Math.abs(target-cur)<.5){ cur=target; raf=0; } else raf=requestAnimationFrame(step); scrollTo(0,cur); };
   addEventListener('wheel',e=>{
-    if(html.dataset.view!=='shop'||!fine.matches||e.ctrlKey||e.metaKey||e.defaultPrevented) return;
+    if(!active()||!fine.matches||e.ctrlKey||e.metaKey||e.defaultPrevented) return;
     if(Math.abs(e.deltaX)>Math.abs(e.deltaY)) return;
     if(innerCanScroll(e.target,e.deltaY)) return;
     e.preventDefault();
+    const now=performance.now(), d=e.deltaMode===1?e.deltaY*16:e.deltaMode===2?e.deltaY*innerHeight:e.deltaY;
+    if(now-lastWheel>220){ needFresh=false; acc=0; } lastWheel=now;
+    if(anim||now<lockUntil) return;
     if(!raf){ target=cur=scrollY; }
-    const d=e.deltaMode===1?e.deltaY*16:e.deltaMode===2?e.deltaY*innerHeight:e.deltaY;
-    target=Math.max(0,Math.min(max(),target+d));
-    if(!raf) raf=requestAnimationFrame(step);
+    const y=target, i=idxAt(y);
+    if(i<0){ const n=d>0?CH.find(c=>c.a>y):[...CH].reverse().find(c=>c.b<y); if(n) glide(d>0?n.a:n.b); return; }
+    const c=CH[i];
+    if(d>0 && y>=c.b-1 && CH[i+1]){ if(needFresh) return; acc+=d; if(acc>36) glide(CH[i+1].a); return; }
+    if(d<0 && y<=c.a+1 && CH[i-1]){ if(needFresh) return; acc+=d; if(acc<-36) glide(CH[i-1].b); return; }
+    acc=0; target=cl(y+d,c.a,c.b);
+    if(!raf) raf=requestAnimationFrame(stepEase);
   },{passive:false});
-  // anything else moves the page (keys, scrollbar, links, smooth jumps) → stop easing and follow it
-  addEventListener('scroll',()=>{ if(raf && Math.abs(scrollY-cur)>3){ cancelAnimationFrame(raf); raf=0; target=cur=scrollY; } },{passive:true});
+  addEventListener('scroll',()=>{ if(raf && !anim && Math.abs(scrollY-cur)>3){ cancelAnimationFrame(raf); raf=0; target=cur=scrollY; } requestAnimationFrame(paint); },{passive:true});
   addEventListener('keydown',()=>{ if(raf){ cancelAnimationFrame(raf); raf=0; } });
-})();
-</script>
-
-<script>
-/* SHOP — every chapter change dissolves like the 06 slide change:
-   the outgoing chapter dims out in place, the next one comes up out of black (copy sharpens from blur via .reveal/.hl) */
-(() => {
-  const html=document.documentElement;
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const desk=matchMedia('(min-width:681px)');
-  const SEL=['#s_viewWrap','#hpd-intro','#hx14','#hx15','#hpd-fold','#hxLook','#pdPage .hx-buy','#hxUnfold','#hxFeatures','#hxPin','#hxSpec'];
-  const els=SEL.map(q=>document.querySelector(q)).filter(Boolean);
-  const cl=v=>Math.min(Math.max(v,0),1), ease=t=>t*t*(3-2*t);
-  let raf=0, was=false;
-  const paint=()=>{ raf=0;
-    const on=html.dataset.view==='shop' && desk.matches;
-    if(!on){ if(was){ els.forEach(e=>{ e.style.opacity=''; }); was=false; } return; } was=true;
-    const vh=innerHeight;
-    els.forEach(e=>{ const r=e.getBoundingClientRect(); let o;
-      if(r.bottom<-vh*.2 || r.top>vh*1.2){ o=0; }
-      else if(e._pin??=!!e.querySelector('.hxu-sticky,.hxf-sticky,.hxp-sticky')){   // pinned scene: fade in / out while it holds still
-        const a=cl(-r.top/(vh*.28)), b=cl((r.bottom-vh)/(vh*.32)); o=Math.min(a,b);
-      } else {                                     // regular chapter: comes up out of black, dims as it leaves
-        const a=cl((vh-r.top)/(vh*.55)), b=cl(r.bottom/(vh*.55)); o=Math.min(a,b);
-      }
-      o=ease(o); e.style.opacity=o>.995?'':o.toFixed(3); }); };
-  const go=()=>{ if(!raf) raf=requestAnimationFrame(paint); };
-  addEventListener('scroll',go,{passive:true}); addEventListener('resize',go);
-  addEventListener('hashchange',()=>setTimeout(go,60)); document.addEventListener('click',()=>setTimeout(go,80));
-  new MutationObserver(go).observe(html,{attributes:true,attributeFilter:['data-view']});
-  go();
+  let mt; const remeasure=()=>{ clearTimeout(mt); mt=setTimeout(()=>{ measure(); paint(); },120); };
+  addEventListener('resize',remeasure); addEventListener('load',remeasure); addEventListener('hashchange',remeasure);
+  new MutationObserver(remeasure).observe(html,{attributes:true,attributeFilter:['data-view']});
+  if(window.ResizeObserver){ const pd=$('#pdPage'); if(pd) new ResizeObserver(remeasure).observe(pd); }
+  measure(); paint();
 })();
 </script>
 </body>
