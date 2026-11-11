@@ -4626,57 +4626,6 @@ document.addEventListener('touchstart',()=>{},{passive:true});
 
 
 
-<script>
-/* SHOP — section push (desktop wheel/trackpad), like the home Campaign slider but vertical:
-   inside a section the page scrolls normally; at a section edge one wheel push carries the next section up
-   (0.9 s, home slider curve) and its picture settles from a slight zoom. No cross-fade, nothing overlaps. */
-(() => {
-  const html=document.documentElement;
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const desk=matchMedia('(min-width:681px)'), fine=matchMedia('(hover:hover) and (pointer:fine)');
-  const $=q=>document.querySelector(q);
-  const DEF=[['#viewShop .shop-screen'],['#hpd-intro'],['#hx14'],['#hx15'],['#hpd-fold'],['#hxLook','#pdPage .hx-buy'],['#hxUnfold'],['#hxFeatures'],['#hxPin'],['#hxSpec'],['#shopAboutSlot']];
-  const cl=(v,a=0,b=1)=>Math.min(Math.max(v,a),b);
-  // cubic-bezier(.65,0,.15,1) — the home slider curve
-  const bez=(x1,y1,x2,y2)=>t=>{ let u=t; for(let k=0;k<6;k++){ const x=3*(1-u)*(1-u)*u*x1+3*(1-u)*u*u*x2+u*u*u-t, dx=3*(1-u)*(1-u)*x1+6*(1-u)*u*(x2-x1)+3*u*u*(1-x2); if(Math.abs(dx)<1e-6) break; u=cl(u-x/dx); } return 3*(1-u)*(1-u)*u*y1+3*(1-u)*u*u*y2+u*u*u; };
-  const curve=bez(.65,0,.15,1);
-  let CH=[], maxY=0, mAt=0;
-  const measure=()=>{ const vh=innerHeight; maxY=Math.max(0,html.scrollHeight-vh); const st=[];
-    for(const g of DEF){ const els=g.map($).filter(Boolean); if(!els.length) continue;
-      const top=els[0].getBoundingClientRect().top+scrollY, bot=els[els.length-1].getBoundingClientRect().bottom+scrollY, h=bot-top;
-      let a,b; if(h>=vh-2){ a=top; b=bot-vh; } else { a=b=top+h/2-vh/2; }
-      st.push({els,a:cl(a,0,maxY),b:cl(b,0,maxY)}); }
-    if(st.length) st[st.length-1].b=maxY;
-    for(let i=1;i<st.length;i++){ if(st[i].a<st[i-1].b) st[i].a=st[i-1].b; if(st[i].b<st[i].a) st[i].b=st[i].a; }
-    CH=st; mAt=performance.now(); };
-  const ready=()=>{ if(html.dataset.view!=='shop'||!desk.matches||!fine.matches) return false;
-    const m=Math.max(0,html.scrollHeight-innerHeight); if(Math.abs(m-maxY)>2||performance.now()-mAt>2000) measure(); return CH.length>1 && maxY>0; };
-  const settle=c=>{ const el=c.els[0]; const tgt=el.querySelector('.hxu-sticky,.hxf-sticky,.hxp-sticky')||el;
-    try{ tgt.animate([{transform:'scale(1.04)'},{transform:'none'}],{duration:1200,easing:'cubic-bezier(.22,1,.36,1)'}); }catch(_){} };
-  let anim=0, lockUntil=0, needFresh=false, lastWheel=0, acc=0;
-  const push=(to,c)=>{ const from=scrollY, d=to-from, T=performance.now(), dur=900; lockUntil=T+dur+350; needFresh=true; acc=0; settle(c);
-    const run=now=>{ const k=cl((now-T)/dur); scrollTo(0,from+d*curve(k)); anim=k<1?requestAnimationFrame(run):0; }; anim=requestAnimationFrame(run); };
-  const idxAt=y=>{ for(let i=0;i<CH.length;i++) if(y>=CH[i].a-2&&y<=CH[i].b+2) return i; return -1; };
-  const innerCanScroll=(el,dy)=>{ for(;el&&el!==document.body&&el!==html;el=el.parentElement){ if(!(el instanceof Element)) continue; const oy=getComputedStyle(el).overflowY;
-      if((oy==='auto'||oy==='scroll')&&el.scrollHeight>el.clientHeight+1){ if(dy>0&&el.scrollTop+el.clientHeight<el.scrollHeight-1) return true; if(dy<0&&el.scrollTop>0) return true; } } return false; };
-  addEventListener('wheel',e=>{
-    if(e.ctrlKey||e.metaKey||e.defaultPrevented||!ready()) return;
-    if(Math.abs(e.deltaX)>Math.abs(e.deltaY)) return;
-    if(innerCanScroll(e.target,e.deltaY)) return;
-    const now=performance.now(), d=e.deltaMode===1?e.deltaY*16:e.deltaMode===2?e.deltaY*innerHeight:e.deltaY;
-    if(now-lastWheel>220){ needFresh=false; acc=0; } lastWheel=now;
-    if(anim||now<lockUntil){ e.preventDefault(); return; }
-    const y=scrollY, i=idxAt(y);
-    if(i<0){ e.preventDefault(); const n=d>0?CH.findIndex(c=>c.a>y):CH.map(c=>c.b<y).lastIndexOf(true); if(n>=0) push(d>0?CH[n].a:CH[n].b,CH[n]); return; }
-    const c=CH[i];
-    if(d>0){ if(y>=c.b-2 && CH[i+1]){ e.preventDefault(); if(needFresh) return; acc+=d; if(acc>30) push(CH[i+1].a,CH[i+1]); return; }
-             if(y+d>c.b){ e.preventDefault(); scrollTo(0,c.b); return; } }
-    if(d<0){ if(y<=c.a+2 && CH[i-1]){ e.preventDefault(); if(needFresh) return; acc+=d; if(acc<-30) push(CH[i-1].b,CH[i-1]); return; }
-             if(y+d<c.a){ e.preventDefault(); scrollTo(0,c.a); return; } }
-    acc=0;                                   // inside a section: plain native scrolling
-  },{passive:false});
-  addEventListener('resize',()=>{ mAt=0; });
-})();
-</script>
+
 </body>
 </html>
