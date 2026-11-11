@@ -2628,12 +2628,21 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #viewShop .sc-summary,#viewShop .sc-price,#viewShop .sc-price span,#viewShop .sc-price b,#viewShop #s_card button{letter-spacing:-.01em !important; line-height:1.25 !important;}
 #viewShop .hpd-sub-kr,#viewShop .hpd-lead-p,#viewShop .hxu-p,#viewShop #hpd-numbers .hpd-g,#viewShop .hx-fold-cols p,
 #viewShop #hxFeatures p.hl,#viewShop #hxPin p.hl,#viewShop #hxLook .hxl-item span,#viewShop .sc-note,#viewShop .col-wide > div:not(.col-label){letter-spacing:-.01em !important; line-height:1.45 !important;}
-/* 08 SPECIFICATIONS: chapter heading block like 02 / 04 / 05 so the chapter change reads */
-#pdPage .hxs{flex-direction:column; justify-content:center; align-items:stretch;}
-#pdPage .hxs-top{text-align:center; margin:0 0 clamp(40px,4.5vw,72px);}
-#pdPage .hxs-top .hpd-label{justify-content:center; font:400 var(--t-label,15px)/1 "HIN Type",var(--pixel) !important; letter-spacing:.075em !important; margin:0 0 clamp(16px,1.6vw,24px) !important;}
-#pdPage .hxs-h{margin:0; font:400 var(--t-display,36px)/1.1 "HIN Type",var(--pixel); letter-spacing:.05em; text-transform:uppercase; color:#fff;}
-@media (max-width:680px){ #pdPage .hxs-h{font-size:24px;} #pdPage .hxs-top{margin-bottom:32px;} }
+/* 07 DETAILS like 06: connector draws to the product, dot at the end */
+#hxPin .hxp-line{position:absolute; inset:0; width:auto; z-index:2; pointer-events:none;}
+#hxPin .hxp-line .hxf-lines path{stroke-dashoffset:1;}
+#hxPin .hxp-line.on .hxf-lines path{stroke-dashoffset:0;}
+#hxPin .hxp-line.on .hxf-lines rect{opacity:1;}
+#hxPin .hxp-line .hxf-txt p{text-shadow:0 0 10px rgba(0,0,0,.55), 0 1px 2px rgba(0,0,0,.5);}
+#hxPin .hxp-stage{transform-origin:50% 40%; will-change:opacity,transform;}
+.hxp{height:320vh;}
+@media (max-width:680px){ .hxp{height:260vh;} #hxPin .hxp-line{inset:auto; left:0; right:0; top:0;} }
+/* spec table head on the same three columns as the rows */
+.hxs-head{grid-template-columns:clamp(48px,4.6vw,68px) 1fr auto !important;}
+.hxs-head .v{text-align:right;}
+/* dots: pure inversion instead of yellow */
+.custom-cursor{background:#fff !important; mix-blend-mode:difference;}
+.hxf-lines .sq-y{fill:#fff !important; filter:none !important; mix-blend-mode:difference;}
 </style>
 </head>
 <body>
@@ -3275,28 +3284,28 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
         <div class="hx-stage hxf-stage">
           <img class="hxf-img f01" src="assets/f01-lightbar.webp?v=2" alt="세워진 HIN-001과 일체형 LED 라이트바" loading="lazy" decoding="async" draggable="false">
           <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H900L1280 477" pathLength="1"/><rect x="1274" y="471" width="12" height="12" class="sq-y"/></svg>
-          <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">01 LIGHT BAR</h3><p class="hl" style="--i:1">An integrated LED light bar provides soft, even illumination across your workspace, <br>helping create a more comfortable and focused environment for work.</p></div>
+          <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">01. LIGHT BAR</h3><p class="hl" style="--i:1">An integrated LED light bar provides soft, even illumination across your workspace, <br>helping create a more comfortable and focused environment for work.</p></div>
         </div>
       </article>
       <article class="hxf-slide" data-i="1" aria-label="2 / 3">
         <div class="hx-stage hxf-stage">
           <img class="hxf-img full" src="assets/f02-power.webp?v=2" alt="라이트 라인이 들어간 HIN-001 배터리 모듈" loading="lazy" decoding="async" draggable="false">
           <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M151 180H806L951 384" pathLength="1"/><rect x="945" y="378" width="12" height="12" class="sq-y"/></svg>
-          <div class="hxf-txt" style="--x:159;--ly:180"><h3 class="hl" style="--i:0">02 POWER</h3><p class="hl" style="--i:1">65Wh built-in battery and USB-C connectivity, <br>an uninterrupted workflow wherever you go.</p></div>
+          <div class="hxf-txt" style="--x:159;--ly:180"><h3 class="hl" style="--i:0">02. POWER</h3><p class="hl" style="--i:1">65Wh built-in battery and USB-C connectivity, <br>an uninterrupted workflow wherever you go.</p></div>
         </div>
       </article>
       <article class="hxf-slide" data-i="2" aria-label="3 / 3">
         <div class="hx-stage hxf-stage">
           <img class="hxf-img full" src="assets/f03-mousepad.webp" alt="본체에서 분리된 HIN-001 마우스패드" loading="lazy" decoding="async" draggable="false">
           <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M1100 128H576L492 357" pathLength="1"/><rect x="486" y="351" width="12" height="12" class="sq-y"/></svg>
-          <div class="hxf-txt r" style="--rx:1100;--ly:128"><h3 class="hl" style="--i:0">03 MOUSE PAD</h3><p class="hl" style="--i:1">A detachable mouse pad that adapts <br>to different spaces and working needs.</p></div>
+          <div class="hxf-txt r" style="--rx:1100;--ly:128"><h3 class="hl" style="--i:0">03. MOUSE PAD</h3><p class="hl" style="--i:1">A detachable mouse pad that adapts <br>to different spaces and working needs.</p></div>
         </div>
       </article>
     </div>
     <div class="hxf-dots" role="tablist" aria-label="슬라이드 선택">
-      <button type="button" class="on" role="tab" aria-selected="true" aria-label="01 LIGHT BAR"></button>
-      <button type="button" role="tab" aria-selected="false" aria-label="02 POWER"></button>
-      <button type="button" role="tab" aria-selected="false" aria-label="03 MOUSE PAD"></button>
+      <button type="button" class="on" role="tab" aria-selected="true" aria-label="01. LIGHT BAR"></button>
+      <button type="button" role="tab" aria-selected="false" aria-label="02. POWER"></button>
+      <button type="button" role="tab" aria-selected="false" aria-label="03. MOUSE PAD"></button>
     </div>
   </div>
  </div>
@@ -3310,10 +3319,17 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
         <div class="hxp-img" data-i="2"><i class="hxp-glow" aria-hidden="true"></i><img class="d03" src="assets/d03-stable.webp?v=3" alt="노트북을 올린 HIN-001 정면" loading="lazy" decoding="async"></div>
       </div>
       <i class="hxp-fade" aria-hidden="true"></i>
-      <div class="hxp-txt">
-        <div class="hxp-line on"><div class="hxp-row"><h3 class="hl" style="--i:0">QUICK SETTING</h3><span class="hl kr" style="--i:0">최적화 세팅 구조</span></div><i class="hxp-rule hl" style="--i:1"></i><p class="hl" style="--i:2">도착한 순간부터 작업을 시작하기까지의 전환 시간을 줄이도록 설계</p></div>
-        <div class="hxp-line"><div class="hxp-row"><h3 class="hl" style="--i:0">HIN MARK</h3><span class="hl kr" style="--i:0">상단 모듈에 각인된 마크</span></div><i class="hxp-rule hl" style="--i:1"></i><p class="hl" style="--i:2">HIN의 정체성을 담은 마크가 상단 모듈에 새겨져 있습니다.</p></div>
-        <div class="hxp-line"><div class="hxp-row"><h3 class="hl" style="--i:0">STABLE STRUCTURE</h3><span class="hl kr" style="--i:0">견고한 구조</span></div><i class="hxp-rule hl" style="--i:1"></i><p class="hl" style="--i:2">고정된 작업 공간을 벗어나서도 안정적인 작업 환경을 제공</p></div>
+      <div class="hxp-line on" data-i="0">
+        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H820L705 450" pathLength="1"/><rect x="699" y="444" width="12" height="12" class="sq-y"/></svg>
+        <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">01. QUICK SETTING</h3><p class="hl" style="--i:1">Designed to cut the transition time from the moment you arrive <br>to the moment you start working.</p></div>
+      </div>
+      <div class="hxp-line" data-i="1">
+        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H820L698 458" pathLength="1"/><rect x="692" y="452" width="12" height="12" class="sq-y"/></svg>
+        <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">02. HIN MARK</h3><p class="hl" style="--i:1">The HIN mark, carrying the identity of the brand, <br>is engraved on the top module.</p></div>
+      </div>
+      <div class="hxp-line" data-i="2">
+        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H820L683 600" pathLength="1"/><rect x="677" y="594" width="12" height="12" class="sq-y"/></svg>
+        <div class="hxf-txt" style="--x:160;--ly:181"><h3 class="hl" style="--i:0">03. STABLE STRUCTURE</h3><p class="hl" style="--i:1">Provides a stable working environment, <br>even away from a fixed workspace.</p></div>
       </div>
     </div>
   </div>
@@ -3334,14 +3350,10 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 
 
 <!-- ================= SPECS ================= -->
-<section class="hxs" id="hxSpec" aria-labelledby="hxs-h">
-  <div class="hxs-top">
-    <div class="hpd-label reveal">Specifications</div>
-    <h2 class="hxs-h reveal d1" id="hxs-h">Tech specs.</h2>
-  </div>
+<section class="hxs" id="hxSpec" aria-label="Product specification">
   <div class="hxs-in">
     <div class="hxs-table">
-      <div class="hxs-head"><span class="hl" style="--i:0">PRODUCT</span><span class="hl" style="--i:0">SPECIFICATION</span></div><i class="hxs-rule" style="--i:0"></i>
+      <div class="hxs-head"><span class="hl n" style="--i:0">NO.</span><span class="hl k" style="--i:0">PRODUCT</span><span class="hl v" style="--i:0">SPECIFICATION</span></div><i class="hxs-rule" style="--i:0"></i>
       <div class="hxs-row"><span class="hl n" style="--i:1">01</span><span class="hl k" style="--i:1">Product Name</span><span class="hl v" style="--i:1">HIN Portable Workspace</span></div><i class="hxs-rule" style="--i:1"></i><div class="hxs-row"><span class="hl n" style="--i:2">02</span><span class="hl k" style="--i:2">Dimensions</span><span class="hl v" style="--i:2">340 × 215 × 24 mm (folded)</span></div><i class="hxs-rule" style="--i:2"></i><div class="hxs-row"><span class="hl n" style="--i:3">03</span><span class="hl k" style="--i:3">Color</span><span class="hl v" style="--i:3">Gray / Black / Yellow</span></div><i class="hxs-rule" style="--i:3"></i><div class="hxs-row"><span class="hl n" style="--i:4">04</span><span class="hl k" style="--i:4">Compatibility</span><span class="hl v" style="--i:4">11–16″ Laptops</span></div><i class="hxs-rule" style="--i:4"></i>
     </div>
     <figure class="hxs-fig"><img src="assets/spec-colors.webp" alt="옐로우, 그레이, 블랙 세 가지 컬러의 HIN-001" loading="lazy" decoding="async"></figure>
@@ -4471,12 +4483,13 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   // 6) pinned details: rise + 3 stages by scroll progress
   const pin=document.getElementById('hxPin');
   if(pin){
-    const rise=pin.querySelector('.hxp-rise'), imgs=[...pin.querySelectorAll('.hxp-img')], lines=[...pin.querySelectorAll('.hxp-line')];
+    const rise=pin.querySelector('.hxp-rise'), stage=pin.querySelector('.hxp-stage'), imgs=[...pin.querySelectorAll('.hxp-img')], lines=[...pin.querySelectorAll('.hxp-line')];
     let last=-1;
     const upd=()=>{ const r=pin.getBoundingClientRect(), total=pin.offsetHeight-innerHeight; const p=total>0?clamp(-r.top/total,0,1):0;
       const up=Math.min(p/.35,1); rise.style.transform=rm?'none':`translateY(${((1-up)*60).toFixed(2)}vh)`;
-      const st=p<.4?0:p<.7?1:2;
-      if(st!==last){ last=st; imgs.forEach((el,k)=>el.classList.toggle('on',k===st)); lines.forEach((el,k)=>el.classList.toggle('on',k===st)); } };
+      const st=p<.42?0:p<.68?1:2, show=up>=.85 && p<.9, key=st+(show?'s':'h');
+      const out=clamp((p-.88)/.12,0,1); stage.style.opacity=(1-out).toFixed(3); stage.style.transform=rm||!out?'':`translateY(${(-out*6).toFixed(2)}vh) scale(${(1-out*.04).toFixed(4)})`;
+      if(key!==last){ last=key; imgs.forEach((el,k)=>el.classList.toggle('on',k===st)); lines.forEach((el,k)=>el.classList.toggle('on',show&&k===st)); } };
     addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); addEventListener('hashchange',()=>setTimeout(upd,60)); upd();
   }
 })();
