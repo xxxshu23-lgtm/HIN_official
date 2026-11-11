@@ -2672,6 +2672,12 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #hxLook .hxl-media::before{content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
   background:linear-gradient(#000 0%,rgba(0,0,0,.6) 9%,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 76%,rgba(0,0,0,.6) 91%,#000 100%);}
 @media (max-width:680px){ #hxLook .hxl-media::before{display:none;} }
+/* A CLOSER LOOK: no numbers under the X; wider HIN tracking on the buttons; mouse pad image moved right of the list */
+#hxLook .hxl-stat{display:none !important;}
+#hxLook .hxl-pill{letter-spacing:.13em !important;}
+#hxLook .hxl-m[data-k="pad"]{left:calc(var(--gut,0px) + 68px + min(440px, (100% - 2 * var(--gut,0px)) * .42) + 32px); right:calc(var(--gut,0px) * .5);}
+#hxLook .hxl-m[data-k="pad"] img{object-position:50% 50% !important; -webkit-mask-image:radial-gradient(ellipse 60% 66% at 50% 50%,#000 55%,rgba(0,0,0,.5) 80%,transparent 100%) !important; mask-image:radial-gradient(ellipse 60% 66% at 50% 50%,#000 55%,rgba(0,0,0,.5) 80%,transparent 100%) !important;}
+@media (max-width:680px){ #hxLook .hxl-m[data-k="pad"]{left:0; right:0;} }
 </style>
 </head>
 <body>
