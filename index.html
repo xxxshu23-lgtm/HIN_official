@@ -4628,7 +4628,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const desk=matchMedia('(min-width:681px)'), fine=matchMedia('(hover:hover) and (pointer:fine)');
   const $=q=>document.querySelector(q);
-  const DEF=[['#s_viewWrap'],['#hpd-intro'],['#hx14'],['#hx15'],['#hpd-fold'],['#hxLook','#pdPage .hx-buy'],['#hxUnfold'],['#hxFeatures'],['#hxPin'],['#hxSpec'],['#shopAboutSlot']];
+  const DEF=[['#viewShop .shop-screen'],['#hpd-intro'],['#hx14'],['#hx15'],['#hpd-fold'],['#hxLook','#pdPage .hx-buy'],['#hxUnfold'],['#hxFeatures'],['#hxPin'],['#hxSpec'],['#shopAboutSlot']];
   const cl=(v,a=0,b=1)=>Math.min(Math.max(v,a),b), sm=t=>t*t*(3-2*t), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
   let CH=[], maxY=0;
   const measure=()=>{ const vh=innerHeight; maxY=Math.max(0,html.scrollHeight-vh);
