@@ -2651,8 +2651,8 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 .hx15-roll .hx15-sl img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.04) !important; transition:transform 1.2s cubic-bezier(.22,1,.36,1) !important;}
 .hx15-roll .hx15-sl.on img{transform:none !important;}
 .hx15-dots{position:absolute; left:clamp(14px,1.6vw,24px); bottom:clamp(14px,1.6vw,24px); z-index:3; display:flex; gap:calc(22*var(--u));}
-.hx15-dots button{width:max(8px,calc(11*var(--u))); height:max(8px,calc(11*var(--u))); padding:0; border:0; cursor:pointer; background:rgba(255,255,255,.35); transition:background .3s ease;}
-.hx15-dots button.on{background:var(--dot);}
+#pdPage .hx15-dots button{width:max(8px,calc(11*var(--u))) !important; height:max(8px,calc(11*var(--u))) !important; padding:0 !important; border:0 !important; border-radius:0 !important; cursor:pointer; background:rgba(255,255,255,.35) !important; transition:background .3s ease;}
+#pdPage .hx15-dots button.on{background:var(--dot) !important;}
 .hx15-dots button:focus-visible{outline:1px solid var(--dot); outline-offset:3px;}
 @media (prefers-reduced-motion:reduce){ .hx15-sl,.hx15-roll .hx15-sl img{transition:none !important;} }
 </style>
