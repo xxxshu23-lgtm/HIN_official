@@ -2660,6 +2660,10 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #pdPage .hxu-sticky::before{top:0; background:linear-gradient(#000,rgba(0,0,0,.72) 35%,rgba(0,0,0,0));}
 #pdPage .hxu-sticky::after{bottom:0; background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.72) 65%,#000);}
 #pdPage .hxu.static .hxu-sticky::before,#pdPage .hxu.static .hxu-sticky::after{display:none;}
+/* A CLOSER LOOK: heading + stage + BUY NOW fit in one screen */
+@media (min-width:681px){ #hxLook .hxl-stage{height:clamp(440px,calc(100vh - 330px),700px) !important;} }
+/* 02 Overview headline: HIN tracking / leading as on the main page (.13em / 1.72) */
+#pdPage .hpd-lead-h{letter-spacing:.13em !important; line-height:1.72 !important;}
 </style>
 </head>
 <body>
