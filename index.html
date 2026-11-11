@@ -4686,6 +4686,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   addEventListener('resize',remeasure); addEventListener('load',remeasure); addEventListener('hashchange',remeasure);
   new MutationObserver(remeasure).observe(html,{attributes:true,attributeFilter:['data-view']});
   if(window.ResizeObserver){ const pd=$('#pdPage'); if(pd) new ResizeObserver(remeasure).observe(pd); }
+  window.__hxFlow={get CH(){return CH;}, get st(){return {target,cur,raf,anim:!!anim,lockUntil,needFresh,acc,maxY};}, measure};
   measure(); paint();
 })();
 </script>
