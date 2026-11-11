@@ -6,7 +6,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
 <title>HIN : Here I Am Now</title>
 <link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-<script src="assets/model-viewer.min.js?v=6"></script>
+<link rel="preload" href="assets/hin-001.glb.gz?v=6" as="fetch" crossorigin>
+<link rel="preload" href="assets/model-viewer.min.js?v=6" as="script">
+<script src="assets/model-viewer.min.js?v=6" defer></script>
 <style>
   @font-face{
     font-family:"HIN Type";
@@ -2664,6 +2666,12 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 @media (min-width:681px){ #hxLook .hxl-stage{height:clamp(440px,calc(100vh - 330px),700px) !important;} }
 /* 02 Overview headline: HIN tracking / leading as on the main page (.13em / 1.72) */
 #pdPage .hpd-lead-h{letter-spacing:.13em !important; line-height:1.72 !important;}
+/* A CLOSER LOOK: no heading; image blends into the black page at the top and bottom */
+#hxLook .hxl-head{display:none !important;}
+@media (min-width:681px){ #hxLook .hxl-stage{height:clamp(460px,calc(100vh - 250px),760px) !important;} }
+#hxLook .hxl-media::before{content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(#000 0%,rgba(0,0,0,.6) 9%,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 76%,rgba(0,0,0,.6) 91%,#000 100%);}
+@media (max-width:680px){ #hxLook .hxl-media::before{display:none;} }
 </style>
 </head>
 <body>
@@ -3113,9 +3121,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 <section class="hx15" id="hx15" aria-label="어디서든 이어지는 작업">
   <div class="hx15-box">
     <div class="hx15-roll" aria-roledescription="사진 롤링">
-      <div class="hx15-sl on"><img src="assets/s15-photo-1.webp?v=3" alt="잔디밭에 앉아 노트북으로 함께 작업하는 사람들" loading="lazy" decoding="async"></div>
-      <div class="hx15-sl"><img src="assets/s15-photo-2.webp?v=3" alt="창가 회의실에서 노트북을 펼치고 회의하는 팀" loading="lazy" decoding="async"></div>
-      <div class="hx15-sl"><img src="assets/s15-photo-3.webp?v=3" alt="카페 테이블에서 노트북으로 작업하는 사람들" loading="lazy" decoding="async"></div>
+      <div class="hx15-sl on"><img src="assets/s15-photo-1.webp?v=4" alt="잔디밭에 앉아 노트북으로 함께 작업하는 사람들" loading="lazy" decoding="async"></div>
+      <div class="hx15-sl"><img src="assets/s15-photo-2.webp?v=4" alt="창가 회의실에서 노트북을 펼치고 회의하는 팀" loading="lazy" decoding="async"></div>
+      <div class="hx15-sl"><img src="assets/s15-photo-3.webp?v=4" alt="카페 테이블에서 노트북으로 작업하는 사람들" loading="lazy" decoding="async"></div>
       <div class="hx15-dots" role="tablist" aria-label="사진 선택"><button type="button" role="tab" aria-label="1 / 3" class="on" aria-selected="true"></button><button type="button" role="tab" aria-label="2 / 3" aria-selected="false"></button><button type="button" role="tab" aria-label="3 / 3" aria-selected="false"></button></div>
     </div>
     <div class="hx15-panel">
@@ -3337,7 +3345,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     <div class="hx-stage hxp-stage">
       <div class="hxp-rise">
         <div class="hxp-img on" data-i="0"><img class="cover" src="assets/d01-quick.webp?v=2" alt="펼쳐진 HIN-001 본체와 분리된 마우스패드, 라이트 모듈" loading="lazy" decoding="async"></div>
-        <div class="hxp-img" data-i="1"><img class="cover" src="assets/d02-mark.webp?v=2" alt="HIN-001 상단 모듈에 각인된 HIN 마크" loading="lazy" decoding="async"></div>
+        <div class="hxp-img" data-i="1"><img class="cover" src="assets/d02-mark.webp?v=3" alt="HIN-001 상단 모듈에 각인된 HIN 마크" loading="lazy" decoding="async"></div>
         <div class="hxp-img" data-i="2"><i class="hxp-glow" aria-hidden="true"></i><img class="d03" src="assets/d03-stable.webp?v=3" alt="노트북을 올린 HIN-001 정면" loading="lazy" decoding="async"></div>
       </div>
       <i class="hxp-fade" aria-hidden="true"></i>
@@ -4631,5 +4639,14 @@ document.addEventListener('touchstart',()=>{},{passive:true});
 
 
 
+
+<script>
+/* get the photos ready before they are scrolled to: after the page has loaded, fetch the lazy images in the background */
+(() => {
+  const warm=()=>document.querySelectorAll('img[loading="lazy"]').forEach((im,k)=>setTimeout(()=>{ im.loading='eager'; },k*60));
+  const go=()=>('requestIdleCallback' in window)?requestIdleCallback(warm,{timeout:2500}):setTimeout(warm,1200);
+  if(document.readyState==='complete') go(); else addEventListener('load',go,{once:true});
+})();
+</script>
 </body>
 </html>
