@@ -2800,6 +2800,21 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #pdPage #hpd-numbers .hpd-chip{font-size:clamp(9px,.7vw,11px) !important; padding:6px 9px !important;}
 #pdPage #hpd-numbers .hpd-num .hpd-v small{font-family:var(--pixel) !important; font-weight:600 !important;}
 #pdPage #hpd-numbers .hpd-dg .hpd-mm{font-size:.67em;}
+
+/* Work, unfolded: home-manifesto layout — render centred, heading left, short copy + Buy now right */
+@media (min-width:681px){
+  #pdPage .hxu-copy{left:0 !important; top:0 !important; width:100% !important; max-width:none !important; height:100%; pointer-events:none; transform:translateY(var(--cy,0px)) !important;}
+  #pdPage .hxu-copy > div{position:absolute; top:50%; transform:translateY(-50%); pointer-events:auto;}
+  #pdPage .hxu-l{right:calc(50% + min(20vw, 34vh) + 56 * var(--u)); text-align:right;}
+  #pdPage .hxu-r{left:calc(50% + min(20vw, 34vh) + 56 * var(--u)); text-align:left; width:max-content; max-width:calc(50% - min(20vw, 34vh) - 56 * var(--u) - 120 * var(--u));}
+  #pdPage .hxu-l .hxu-h{white-space:nowrap; font-size:max(18px,calc(30*var(--u))) !important; line-height:1.3 !important;}
+  #pdPage .hxu-l .hxu-hl{display:block;}
+  #pdPage .hxu-l .hxu-eb{margin-bottom:calc(16*var(--u)) !important;}
+  #pdPage .hxu-r .hxu-p{margin:0 !important; font-size:max(13px,calc(17*var(--u))) !important; line-height:1.65 !important;}
+  #pdPage .hxu-r .hxu-ln{display:block; white-space:nowrap;}
+  #pdPage .hxu-buy{display:block; margin-top:calc(28 * var(--u)); min-width:0 !important; height:max(42px,calc(56*var(--u))) !important; padding:0 calc(36*var(--u)) !important; font-size:max(13px,calc(17*var(--u))) !important;}
+}
+@media (max-width:680px){ #pdPage .hxu-buy{margin:20px auto 0; display:block; min-width:0 !important; height:44px !important; padding:0 28px !important; font-size:14px !important;} #pdPage .hxu-copy{text-align:center;} }
 </style>
 </head>
 <body>
@@ -3372,10 +3387,14 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   <div class="hxu-seq">
     <div class="hxu-sticky">
       <div class="hxu-copy">
-      <p class="hxu-eb reveal">HIN-001 Portable Workspace</p>
-      <h2 class="hxu-h reveal d1" id="hxu-h">Work, unfolded.</h2>
-      <p class="hxu-p reveal d2" data-words><span class="hxu-ln">HIN-001 brings a complete workspace into one folded form: 1.2&nbsp;kg and 340&nbsp;×&nbsp;215&nbsp;×&nbsp;24&nbsp;mm when folded.</span> <span class="hxu-ln">It unfolds in one motion into a stable stand for 11–16&Prime; laptops, at the height and angle you choose,</span> <span class="hxu-ln">with an LED light bar, a 65Wh USB-C battery and a detachable mouse pad built in.</span></p>
-      <a class="hxu-link reveal d3" href="#hxSpec"><span>View HIN-001 Specifications</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 5.5H18.5V16"/><path d="M18 6L5.5 18.5"/></svg></a>
+        <div class="hxu-l">
+          <p class="hxu-eb reveal">Portable Workspace</p>
+          <h2 class="hxu-h reveal d1" id="hxu-h"><span class="hxu-hl">Work,</span> <span class="hxu-hl">unfolded.</span></h2>
+        </div>
+        <div class="hxu-r">
+          <p class="hxu-p reveal d2" data-words><span class="hxu-ln">A complete workspace in one fold, 1.2&nbsp;kg.</span> <span class="hxu-ln">It opens in one motion for 11–16&Prime; laptops.</span></p>
+          <button type="button" class="hx-buynow hxu-buy reveal d3" id="hxuBuy">Buy now</button>
+        </div>
       </div>
       <div class="hxu-a"><img class="hxu-img" src="assets/product/work-unfolded.webp" alt="HIN-001 스탠드에 거치된 노트북 — 라이트 바 모듈과 후면 서포트가 펼쳐진 모습" decoding="async"></div>
       <i class="hxu-veil hxu-va" aria-hidden="true"></i>
@@ -4724,7 +4743,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
 (() => { const sec=document.getElementById('hxUnfold'); if(!sec) return;
   const seq=sec.querySelector('.hxu-seq'), stg=sec.querySelector('.hxu-sticky'), copy=sec.querySelector('.hxu-copy'), A=sec.querySelector('.hxu-a'), S=sec.querySelector('.hxu-scr'), SI=S.querySelector('img'),
         VA=sec.querySelector('.hxu-va'), VB=sec.querySelector('.hxu-vb'), D=sec.querySelector('.hxu-dims'), mark=sec.querySelector('.hxu-mark'), rv=[...D.querySelectorAll('.hxr')];
-  const link=sec.querySelector('.hxu-link'); if(link) link.addEventListener('click',e=>{ const t=document.getElementById('hxSpec'); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); } });
+  const buy=sec.querySelector('#hxuBuy'); if(buy) buy.addEventListener('click',()=>{ const b=document.getElementById('hxlBuy'); if(b) b.click(); });
   const desk=matchMedia('(min-width:681px)'), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cl=(v,a=0,b=1)=>Math.min(Math.max(v,a),b), seg=(p,a,b)=>cl((p-a)/(b-a)), eo=t=>1-Math.pow(1-t,3), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
   const AR=2400/1979, SR=2400/1548, LW=1600, LH=LW/AR, SW=1600, SH=SW/SR;
@@ -4746,15 +4765,16 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   const paint=()=>{ raf=0; if(isStatic) return; const vw=stg.clientWidth, vh=stg.clientHeight, r=seq.getBoundingClientRect();
     const p=cl(-r.top/(seq.offsetHeight-vh));
     // base placement: render fits the space under the copy, so copy + render read as one screen
-    const top=copy.offsetTop+copy.offsetHeight+vh*.03, bot=vh-Math.max(64,vh*.08), ah=Math.max(bot-top,vh*.3);
-    const bw=Math.min(vw*.84, ah*AR, 1500), bh=bw/AR;
+    // base placement: render in the middle of the screen, heading on its left, copy + Buy now on its right (like the home manifesto)
+    const ah=vh*.56, fl=reduce?0:Math.sin(performance.now()/1000*Math.PI*2/4.2)*vh*.012*(1-seg(p,.02,.2)), top=(vh-ah)/2+fl; /* gentle float while it sits */
+    const bw=Math.min(vw*.4, ah*AR, 1500), bh=bw/AR;
     const pe=eo(cl((vh-r.top)/(vh*.9))), se=.9+.1*pe, Bw=bw*se, Bh=bh*se, Bx=(vw-Bw)/2, By=top+(ah-bh)/2+(bh-Bh)+(1-pe)*50;
     const q0=NQ.map(([x,y])=>[Bx+x*Bw,By+y*Bh]);
     const wR=Math.min(vw*.6, vh*.62*SR), hR=wR/SR, R1=rectQ((vw-wR)/2,(vh-hR)/2,wR,hR);
     const k=Math.max(vw/wR,vh/hR)*1.02, wF=wR*k, hF=hR*k, RF=rectQ((vw-wF)/2,(vh-hF)/2,wF,hF);
     const t1=eio(seg(p,.06,.34)), t2=eio(seg(p,.34,.60)), Q=lerpQ(lerpQ(q0,R1,t1),RF,t2);
     if(!gl){ A.style.transform=homo(LQ,Q); S.style.transform=homo(SQ,Q); }
-    else window.__hxuGL.draw({vw,vh,ax:0,ay:top,aw:vw,ah,t1,t2,zs:1+.16*eio(seg(p,.28,.74))});
+    else window.__hxuGL.draw({vw,vh,ax:0,ay:top,aw:vw,ah:Math.min(ah,bw/AR*1.05),t1,t2,zs:1+.16*eio(seg(p,.28,.74))});
     SI.style.setProperty('--zs',(1+.16*eio(seg(p,.28,.74))).toFixed(4));
     const c=seg(p,.02,.12); copy.style.setProperty('--co',(1-c).toFixed(3)); copy.style.setProperty('--cy',(-36*eo(c)).toFixed(1)+'px'); copy.style.pointerEvents=c>.5?'none':'';
     VA.style.setProperty('--va',(.5*seg(p,.08,.34)+.5*seg(p,.34,.56)).toFixed(3));
@@ -4762,6 +4782,8 @@ document.addEventListener('touchstart',()=>{},{passive:true});
     const d=seg(p,.64,.76); D.style.setProperty('--do',d.toFixed(3)); D.style.setProperty('--dy',((1-eo(d))*40).toFixed(1)+'px'); D.classList.toggle('live',d>.6);
     rv.forEach((e,i)=>e.classList.toggle('in',p>.66+i*.018)); };
   const on=()=>{ if(!raf) raf=requestAnimationFrame(paint); };
+  let vis=false; if('IntersectionObserver' in window) new IntersectionObserver(es=>{ vis=es.some(e=>e.isIntersecting); if(vis) loop(); }).observe(sec);
+  const loop=()=>{ if(!vis||isStatic||reduce) return; on(); setTimeout(()=>requestAnimationFrame(loop),16); };
   addEventListener('scroll',on,{passive:true}); addEventListener('resize',()=>{ mode(); on(); });
   (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>{ mode(); on(); });
   mode(); paint();
