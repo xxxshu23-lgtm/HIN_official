@@ -2787,6 +2787,24 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   #pdPage #hpd-numbers .hpd-nums{margin-top:calc(36*var(--u)) !important;} /* keeps the taller boxes inside one screen */
 }
 @media (max-width:680px){ #pdPage #hpd-numbers .hpd-num{padding-top:24px !important; padding-bottom:24px !important;} }
+
+/* 08 table rules in the same gray as the pointer lines */
+#pdPage #hxSpec .hxs-rule{background:rgba(255,255,255,.22) !important;}
+
+/* 06 -> 07: 07 overlaps 06's last screen and fades in over it, like the 06 slide changes */
+@media (min-width:681px){
+  #pdPage #hxFeatures{height:385vh !important;}
+  #pdPage section#hxPin{margin-top:-125vh !important; z-index:4; background:transparent !important;}
+  #pdPage #hxPin .hxp-sticky{opacity:0; pointer-events:none; transition:opacity .9s ease;}
+  #pdPage #hxPin.live .hxp-sticky{opacity:1; pointer-events:auto;}
+}
+/* 07 stage changes fade like the 06 slides */
+#pdPage #hxPin .hxp-line{opacity:0; transition:opacity .9s ease;}
+#pdPage #hxPin .hxp-line.on{opacity:1;}
+/* 05 dimensions: chips smaller than the yellow labels, units in HIN Type, yellow MM at ~2/3 of the digits */
+#pdPage #hpd-numbers .hpd-chip{font-size:clamp(9px,.7vw,11px) !important; padding:6px 9px !important;}
+#pdPage #hpd-numbers .hpd-num .hpd-v small{font-family:var(--pixel) !important; font-weight:600 !important;}
+#pdPage #hpd-numbers .hpd-dg .hpd-mm{font-size:.67em;}
 </style>
 </head>
 <body>
@@ -3379,9 +3397,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
               <rect class="hpd-slab" x="10" y="48" width="340" height="24" rx="3"/>
               <line class="hpd-hair" x1="350" y1="48" x2="392" y2="48"/><line class="hpd-hair" x1="350" y1="72" x2="392" y2="72"/>
               <line class="hpd-dim" x1="384" y1="48" x2="384" y2="72"/><line class="hpd-dim" x1="379" y1="48" x2="389" y2="48"/><line class="hpd-dim" x1="379" y1="72" x2="389" y2="72"/>
-              <text x="398" y="64">24 MM</text>
+              <text x="398" y="64">24 <tspan class="hpd-mm">MM</tspan></text>
               <line class="hpd-dim" x1="10" y1="108" x2="350" y2="108"/><line class="hpd-dim" x1="10" y1="103" x2="10" y2="113"/><line class="hpd-dim" x1="350" y1="103" x2="350" y2="113"/>
-              <text x="180" y="130" text-anchor="middle">340 MM</text>
+              <text x="180" y="130" text-anchor="middle">340 <tspan class="hpd-mm">MM</tspan></text>
             </svg>
           </article>
           <article class="hpd-num hpd-s3 hxr">
@@ -3389,7 +3407,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
             <svg class="hpd-dg" viewBox="0 0 260 190" role="img" aria-label="평면 도면: 폭 340mm">
               <rect class="hpd-slab" x="14" y="34" width="211" height="134" rx="4"/>
               <line class="hpd-dim" x1="14" y1="20" x2="225" y2="20"/><line class="hpd-dim" x1="14" y1="15" x2="14" y2="25"/><line class="hpd-dim" x1="225" y1="15" x2="225" y2="25"/>
-              <text x="119" y="11" text-anchor="middle">340 MM</text>
+              <text x="119" y="11" text-anchor="middle">340 <tspan class="hpd-mm">MM</tspan></text>
             </svg>
           </article>
           <article class="hpd-num hpd-s3 hxr d1">
@@ -3397,7 +3415,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
             <svg class="hpd-dg" viewBox="0 0 300 190" role="img" aria-label="평면 도면: 깊이 215mm">
               <rect class="hpd-slab" x="14" y="28" width="211" height="134" rx="4"/>
               <line class="hpd-dim" x1="246" y1="28" x2="246" y2="162"/><line class="hpd-dim" x1="241" y1="28" x2="251" y2="28"/><line class="hpd-dim" x1="241" y1="162" x2="251" y2="162"/>
-              <text x="258" y="99">215 MM</text>
+              <text x="258" y="99">215 <tspan class="hpd-mm">MM</tspan></text>
             </svg>
           </article>
           <article class="hpd-num hxr">
@@ -4031,7 +4049,12 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     const paintWords = () => {
       wordEls.forEach(el => {
         const r = el.getBoundingClientRect(), vh = innerHeight;
-        const p = reduceM ? 1 : clamp((vh*.86 - r.top) / (vh*.86 - vh*.38 + r.height), 0, 1);
+        let p = reduceM ? 1 : clamp((vh*.86 - r.top) / (vh*.86 - vh*.38 + r.height), 0, 1);
+        /* inside a held chapter screen: keep filling while the screen holds, and be complete just before it moves on */
+        const pw = !reduceM && el.closest('.chs-pin'), pin_in = pw && pw.firstElementChild;
+        if (pin_in && pw.dataset.hold) { const hold=+pw.dataset.hold, st=parseFloat(pin_in.style.top)||0, wDoc=pw.getBoundingClientRect().top+scrollY;
+          const off=r.top-pin_in.getBoundingClientRect().top, y0=wDoc+off-vh*.86, y1=wDoc-st+hold*.8;
+          p = y1>y0 ? clamp((scrollY-y0)/(y1-y0),0,1) : 1; }
         const n = el._w.length, k = Math.round(p * n * 1.04);
         el._w.forEach((w,i) => w.classList.toggle('on', i < k));
       });
@@ -4279,7 +4302,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     const update=()=>{
       const v=html.dataset.view||'home', items=list(v); if(!items.length) return;
       if(v!==curView){ curView=v; cur=-1; }
-      let idx=0; items.forEach(([el],k)=>{ if(el.getBoundingClientRect().top<=innerHeight*.5) idx=k; });
+      let idx=0; items.forEach(([el],k)=>{ if(el.id==='hxPin'&&matchMedia('(min-width:681px)').matches ? el.getBoundingClientRect().top<=1 : el.getBoundingClientRect().top<=innerHeight*.5) idx=k; }); /* 07 counts once it has faded in over 06 */
       if(idx!==cur){ cur=idx; sI.textContent=String(idx+1).padStart(2,'0')+' / '+String(items.length).padStart(2,'0'); setName(items[idx][1]); }
       const doc=document.documentElement, max=doc.scrollHeight-innerHeight; sBar.style.transform=`scaleX(${max>0?Math.min(scrollY/max,1):0})`;
       const foot=document.querySelector('.site-footer'), fr=foot?foot.getBoundingClientRect().top:1e9;
@@ -4632,9 +4655,12 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   if(pin){
     const rise=pin.querySelector('.hxp-rise'), stage=pin.querySelector('.hxp-stage'), imgs=[...pin.querySelectorAll('.hxp-img')], lines=[...pin.querySelectorAll('.hxp-line')];
     let last=-1;
+    const deskQ=matchMedia('(min-width:681px)');
     const upd=()=>{ const r=pin.getBoundingClientRect(), vh=innerHeight, total=pin.offsetHeight-vh, y=clamp(-r.top,0,Math.max(total,0));
-      const R=Math.min(.77*vh,total*.35), up=R>0?Math.min(y/R,1):1; rise.style.transform=rm?'none':`translateY(${((1-up)*60).toFixed(2)}vh)`;
-      const q=total>R?(y-R)/(total-R):0, st=q<.36?0:q<.66?1:2, show=up>=.85, key=st+(show?'s':'h'); /* same rise as before, then a longer stay for each of 04 / 05 / 06 */
+      rise.style.transform='none';
+      /* desktop: 07 sits on top of 06's last screen and fades in over it (same .9s fade as the 06 slides) */
+      const show=!deskQ.matches||r.top<=1; pin.classList.toggle('live',show);
+      const q=total>0?y/total:0, st=q<1/3?0:q<2/3?1:2, key=st+(show?'s':'h');
       if(key!==last){ last=key; imgs.forEach((el,k)=>el.classList.toggle('on',k===st)); lines.forEach((el,k)=>el.classList.toggle('on',show&&k===st)); } };
     addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); addEventListener('hashchange',()=>setTimeout(upd,60)); upd();
   }
@@ -4772,7 +4798,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
  */
 (() => {
   const desk=matchMedia('(min-width:681px)'), html=document.documentElement;
-  const groups=[[['#hpd-intro','#hx14'],.4],[['#hx15'],.4],[['#hpd-fold'],.4],[['#hxLook','#pdPage .hx-buy'],.4],[['#hxSpec'],1.1]];
+  const groups=[[['#hpd-intro','#hx14'],.4],[['#hx15'],.4],[['#hpd-fold'],.4],[['#hxLook','#pdPage .hx-buy'],.4],[['#hxSpec'],1.7]];
   const made=[];
   for(const [g,hold] of groups){ const els=g.map(q=>document.querySelector(q)).filter(Boolean); if(!els.length) continue;
     const w=document.createElement('div'); w.className='chs-pin'; const inn=document.createElement('div'); inn.className='chs-pin-in';
@@ -4780,15 +4806,15 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   const spec=made.find(m=>m.id==='hxSpec'), rules=spec?[...spec.inn.querySelectorAll('.hxs-rule')]:[];
   const fit=()=>{ const vh=innerHeight, on=desk.matches;
     for(const m of made){ const {w,inn,hold}=m;
-      if(!on){ w.style.height=''; inn.style.top=''; continue; }
-      const h=inn.offsetHeight; if(!h) continue; m.holdPx=Math.round(vh*hold); w.style.height=(h+m.holdPx)+'px'; inn.style.top=Math.min(0,Math.round(vh-h))+'px'; m.h=h; }
+      if(!on){ w.style.height=''; inn.style.top=''; delete w.dataset.hold; continue; }
+      const h=inn.offsetHeight; if(!h) continue; m.holdPx=Math.round(vh*hold); w.dataset.hold=m.holdPx; w.style.height=(h+m.holdPx)+'px'; inn.style.top=Math.min(0,Math.round(vh-h))+'px'; m.h=h; }
     if(!on) return;
     draw(); };
   /* 08: each rule draws in as you scroll through the held table, one after another; scrolling back takes them away */
   const draw=()=>{ if(!spec||!rules.length) return;
     if(!desk.matches||!spec.holdPx){ rules.forEach(r=>{ r.style.transform=''; r.style.transition=''; }); return; }
     const vh=innerHeight, base=spec.h>vh?spec.h-vh:0, p=Math.min(Math.max((-spec.w.getBoundingClientRect().top-base)/(spec.holdPx*.85),0),1), n=rules.length;
-    rules.forEach((r,k)=>{ const a=k/(n+1), v=Math.min(Math.max((p-a)/(1.6/(n+1)),0),1); r.style.transition='none'; r.style.transform=`scaleX(${v.toFixed(4)})`; }); };
+    rules.forEach((r,k)=>{ const v=Math.min(Math.max(p*n-k,0),1); r.style.transition='none'; r.style.transform=`scaleX(${v.toFixed(4)})`; }); }; /* one line after another, slowly */
   if('ResizeObserver' in window){ const ro=new ResizeObserver(()=>requestAnimationFrame(fit)); made.forEach(m=>ro.observe(m.inn)); }
   addEventListener('resize',fit); addEventListener('scroll',draw,{passive:true}); desk.addEventListener?.('change',fit); fit();
 })();
