@@ -59,8 +59,13 @@ if (stage && !window.__hxuGL) {
     ribbon([[1.15, .08], [.82, .2], [.74, .62], [.88, 1.18]], U * 1.05);
     ribbon([[-.1, .55], [.05, .62], [.1, .9], [.08, 1.2]], U * .6);
   })(scrCanvas);
-  const scrTex = new THREE.CanvasTexture(scrCanvas); scrTex.colorSpace = THREE.SRGBColorSpace; scrTex.anisotropy = R.capabilities.getMaxAnisotropy();
-  scrTex.generateMipmaps = true; scrTex.minFilter = THREE.LinearMipmapLinearFilter;
+  // the screen plays the page's video (same <video> as the flat fallback); the drawn ribbons stay as a fallback
+  const vid = sec.querySelector('.hxu-scr video');
+  let scrTex, VA = DW / DH;
+  if (vid) { scrTex = new THREE.VideoTexture(vid); scrTex.colorSpace = THREE.SRGBColorSpace; scrTex.minFilter = THREE.LinearFilter; scrTex.generateMipmaps = false;
+    const setA = () => { if (vid.videoWidth) VA = vid.videoWidth / vid.videoHeight; }; vid.addEventListener('loadedmetadata', setA); setA(); }
+  else { scrTex = new THREE.CanvasTexture(scrCanvas); scrTex.colorSpace = THREE.SRGBColorSpace; scrTex.anisotropy = R.capabilities.getMaxAnisotropy();
+    scrTex.generateMipmaps = true; scrTex.minFilter = THREE.LinearMipmapLinearFilter; }
 
   const lap = new THREE.Group();
   const base = new THREE.Mesh(new RoundedBoxGeometry(LW, BH, LD, 4, 0.0045), alu); base.position.set(0, BH / 2, LD / 2); lap.add(base);
@@ -102,7 +107,7 @@ if (stage && !window.__hxuGL) {
     P, cam, scene, R,
     draw(L) {   // L: {vw,vh,ax,ay,aw,ah,t1,t2,zs}
       if (!geomReady) return;
-      const key = [L.vw, L.vh, L.ax, L.ay, L.aw, L.ah, L.t1.toFixed(4), L.t2.toFixed(4), L.zs.toFixed(4), P.az, P.el, P.fit].join(); if (key === last) return; last = key;
+      const key = [L.vw, L.vh, L.ax, L.ay, L.aw, L.ah, L.t1.toFixed(4), L.t2.toFixed(4), L.zs.toFixed(4), (L.vf ?? 1).toFixed(3), L.tick || 0, VA.toFixed(3), P.az, P.el, P.fit].join(); if (key === last) return; last = key;
       const dpr = Math.min(devicePixelRatio || 1, 2); if (cv.width !== Math.round(L.vw * dpr) || cv.height !== Math.round(L.vh * dpr)) { R.setPixelRatio(dpr); R.setSize(L.vw, L.vh, false); }
       cam.aspect = L.vw / L.vh; const th = Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
       // start: fit the whole product (projected bbox) inside the image area under the copy, centred
@@ -125,7 +130,9 @@ if (stage && !window.__hxuGL) {
       cam.position.copy(tgt).addScaledVector(dir, dist);
       cam.up.set(0, 1, 0).lerp(up, t1).normalize(); cam.lookAt(tgt);
       cam.setViewOffset(L.vw, L.vh, fit0.ox * (1 - t1), fit0.oy * (1 - t1), L.vw, L.vh); cam.updateProjectionMatrix();
-      const z = 1 / L.zs; scrTex.repeat.set(z, z); scrTex.offset.set((1 - z) / 2, (1 - z) * 0.5);
+      const z = 1 / L.zs, da = DW / DH, kx = VA > da ? da / VA : 1, ky = VA > da ? 1 : VA / da;   // cover-fit the video on the display
+      scrTex.repeat.set(z * kx, z * ky); scrTex.offset.set((1 - z * kx) / 2, (1 - z * ky) * 0.5);
+      disp.material.color.setScalar(L.vf ?? 1);   // fades to black as the camera dives into the screen
       R.render(scene, cam);
     }
   };
