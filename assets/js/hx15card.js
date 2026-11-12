@@ -2,6 +2,12 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/+esm';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js/+esm';
 import { RoomEnvironment } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/environments/RoomEnvironment.js/+esm';
+const loadGLB = async (path) => {   // fetch the gzip copy (much smaller), unpack in the browser; plain .glb as a fallback
+  const u = new URL(path, document.baseURI).href, base = u.replace(/[^/]*$/, '');
+  if ('DecompressionStream' in window) { try { const r = await fetch(u + '.gz'); if (r.ok) { let buf = new Uint8Array(await r.arrayBuffer());
+    if (!(buf[0] === 0x67 && buf[1] === 0x6c && buf[2] === 0x54 && buf[3] === 0x46)) buf = new Uint8Array(await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
+    return await new GLTFLoader().parseAsync(buf.buffer, base); } } catch (_) {} }
+  return new GLTFLoader().loadAsync(u); };
 
 const box = document.querySelector('#hx15 .hx15-3d');
 if (box && !box.dataset.on) {
@@ -41,7 +47,7 @@ if (box && !box.dataset.on) {
   };
   const kick = () => { if (!raf && vis) raf = requestAnimationFrame(frame); };
 
-  new GLTFLoader().loadAsync(new URL('assets/3d/hin-id-card.glb', document.baseURI).href).then(g => {
+  loadGLB('assets/3d/hin-id-card.glb').then(g => {
     const m = g.scene; const bb = new THREE.Box3().setFromObject(m); const c = bb.getCenter(new THREE.Vector3()); m.position.sub(c);
     m.traverse(o => { if (o.isMesh && o.material) { o.material.envMapIntensity = 1.1; } });
     pivot.add(m); box.classList.add('ready'); fit();

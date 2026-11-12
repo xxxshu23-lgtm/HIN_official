@@ -4620,7 +4620,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     if(!rm){ addEventListener('scroll',zoom,{passive:true}); addEventListener('resize',zoom); zoom(); }
   }
 
-  if(s15){ const box=s15.querySelector('.hx15-3d'); if(box){ const load=()=>import(new URL('assets/js/hx15card.js?v=4',document.baseURI).href).catch(()=>{});
+  if(s15){ const box=s15.querySelector('.hx15-3d'); if(box){ const load=()=>import(new URL('assets/js/hx15card.js?v=5',document.baseURI).href).catch(()=>{});
     if('IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); load(); } },{rootMargin:'150% 0px'}); io.observe(s15); } else load(); } }
 
   // 4) feature slider: squares, mouse drag / swipe with follow, arrow keys
@@ -4776,7 +4776,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   // real 3D stage (three.js + HIN glb) — loaded only when the section gets close, desktop only
   const useGL=()=>{ gl=!!window.__hxuGL; sec.classList.toggle('gl',gl); on(); };
   addEventListener('hxu-gl-ready',useGL);
-  if(!reduce && 'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting) && desk.matches){ io.disconnect(); import(new URL('assets/js/hxu3d.js?v=5',document.baseURI).href).catch(()=>{}); } },{rootMargin:'150% 0px'}); io.observe(sec); }
+  if(!reduce && 'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting) && desk.matches){ io.disconnect(); import(new URL('assets/js/hxu3d.js?v=6',document.baseURI).href).catch(()=>{}); } },{rootMargin:'150% 0px'}); io.observe(sec); }
   const mode=()=>{ const st=!desk.matches||reduce; if(st!==isStatic){ isStatic=st; sec.classList.toggle('static',st);
       if(st){ A.style.transform=S.style.transform=''; ['--co','--cy','--va','--vb','--zs'].forEach(k=>{ copy.style.removeProperty(k); VA.style.removeProperty(k); VB.style.removeProperty(k); SI.style.removeProperty(k); }); D.style.removeProperty('--do'); D.style.removeProperty('--dy'); rv.forEach(e=>e.classList.add('in')); } }
     if(st) mark.style.height=D.offsetHeight+'px'; else mark.style.height=''; sec.classList.add('ready'); };
@@ -4831,7 +4831,9 @@ document.addEventListener('touchstart',()=>{},{passive:true});
 /* get the photos ready before they are scrolled to: after the page has loaded, fetch the lazy images in the background */
 (() => {
   const warm=()=>document.querySelectorAll('img[loading="lazy"]').forEach((im,k)=>setTimeout(()=>{ im.loading='eager'; },k*60));
-  const go=()=>('requestIdleCallback' in window)?requestIdleCallback(warm,{timeout:2500}):setTimeout(warm,1200);
+  /* 3D files + video for the shop, fetched once the page is idle so they are ready before they are scrolled to */
+  const warm3d=()=>{ if(!matchMedia('(min-width:681px)').matches) return; ['assets/3d/hin-unfold.glb.gz','assets/3d/hin-id-card.glb.gz'].forEach((u,k)=>setTimeout(()=>fetch(u).catch(()=>{}),2500+k*800)); };
+  const go=()=>{ ('requestIdleCallback' in window)?requestIdleCallback(warm,{timeout:2500}):setTimeout(warm,1200); setTimeout(warm3d,1500); };
   if(document.readyState==='complete') go(); else addEventListener('load',go,{once:true});
   /* 06/07 pointer lines: keep a 1px stroke in the 1440-wide drawing whatever the screen width */
   const sw=()=>document.documentElement.style.setProperty('--hxsw',(1.8*1440/Math.max(1,innerWidth)).toFixed(4)); sw(); addEventListener('resize',sw);

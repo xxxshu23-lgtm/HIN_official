@@ -2,6 +2,12 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/+esm';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js/+esm';
 import { RoomEnvironment } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/environments/RoomEnvironment.js/+esm';
+const loadGLB = async (path) => {   // fetch the gzip copy (much smaller), unpack in the browser; plain .glb as a fallback
+  const u = new URL(path, document.baseURI).href, base = u.replace(/[^/]*$/, '');
+  if ('DecompressionStream' in window) { try { const r = await fetch(u + '.gz'); if (r.ok) { let buf = new Uint8Array(await r.arrayBuffer());
+    if (!(buf[0] === 0x67 && buf[1] === 0x6c && buf[2] === 0x54 && buf[3] === 0x46)) buf = new Uint8Array(await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
+    return await new GLTFLoader().parseAsync(buf.buffer, base); } } catch (_) {} }
+  return new GLTFLoader().loadAsync(u); };
 import { RoundedBoxGeometry } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/geometries/RoundedBoxGeometry.js/+esm';
 
 const sec = document.getElementById('hxUnfold');
@@ -81,7 +87,7 @@ if (stage && !window.__hxuGL) {
 
   /* ---------- stand + placement ---------- */
   const N = new THREE.Vector3(0, 0.8924, 0.4512).normalize(), SLOPE = Math.atan2(N.z, N.y);
-  const ready = new GLTFLoader().loadAsync(new URL('assets/3d/hin-unfold.glb', document.baseURI).href).then(g => {
+  const ready = loadGLB('assets/3d/hin-unfold.glb').then(g => {
     const stand = g.scene; stand.scale.x = -1;               // mirrored so the light-bar module sits on the left, as in the render
     stand.traverse(o => { if (!o.isMesh) return; const m = o.material; if (!m || !m.color) return;
       const l = m.color.r + m.color.g + m.color.b;
