@@ -2744,7 +2744,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 .sc-eyebrow{margin-bottom:calc(18*var(--u)) !important;}
 @media (max-width:680px){ .sc-eyebrow{margin-bottom:10px !important;} }
 /* A CLOSER LOOK: the opening picture (before any button) sits a bit further right */
-@media (min-width:681px){ #hxLook .hxl-m[data-k="intro"] img{transform:translateX(7%);} }
+@media (min-width:681px){ #hxLook .hxl-m[data-k="intro"] img{transform:translateX(calc(7% + 10vw));} }
 
 /* HIN Type tracking = MAIN: small labels .25em, headings .10em, sentences .136em */
 #pdPage #hpd-intro .hpd-label, #pdPage #hpd-fold .hpd-label, #pdPage #hpd-numbers .hpd-label, #pdPage #hxUnfold .hxu-eb{letter-spacing:.25em !important;}
@@ -4619,7 +4619,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     if(!rm){ addEventListener('scroll',zoom,{passive:true}); addEventListener('resize',zoom); zoom(); }
   }
 
-  if(s15){ const box=s15.querySelector('.hx15-3d'); if(box){ const load=()=>import(new URL('assets/js/hx15card.js?v=1',document.baseURI).href).catch(()=>{});
+  if(s15){ const box=s15.querySelector('.hx15-3d'); if(box){ const load=()=>import(new URL('assets/js/hx15card.js?v=2',document.baseURI).href).catch(()=>{});
     if('IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); load(); } },{rootMargin:'150% 0px'}); io.observe(s15); } else load(); } }
 
   // 4) feature slider: squares, mouse drag / swipe with follow, arrow keys

@@ -18,7 +18,8 @@ if (box && !box.dataset.on) {
   const pivot = new THREE.Group(); scene.add(pivot);
   const CW = 0.0856, CH = 0.054;
 
-  let rx = -0.18, ry = 0.5, vx = 0, vy = 0, drag = false, lx = 0, ly = 0, t0 = performance.now(), touched = false, vis = false, raf = 0;
+  const RX = 0.04, RY = -0.2, RZ = 0.03;   // resting pose: almost front-on, right edge a touch closer
+  let rx = RX, ry = RY, vx = 0, vy = 0, drag = false, lx = 0, ly = 0, t0 = performance.now(), touched = false, vis = false, raf = 0;
   const fit = () => {
     const w = box.clientWidth, h = box.clientHeight; if (!w || !h) return;
     const dpr = Math.min(devicePixelRatio || 1, 2); R.setPixelRatio(dpr); R.setSize(w, h, false);
@@ -31,11 +32,11 @@ if (box && !box.dataset.on) {
   const frame = () => {
     raf = 0; if (!vis) return;
     if (!drag) {
-      ry += vy; rx += vx; vy *= .95; vx *= .9;
-      if (!touched) ry = .5 + Math.sin((performance.now() - t0) / 1000 * .6) * .45;   // gentle sway until someone grabs it
-      rx += (-.18 - rx) * .04;                                                           // tilt settles back
+      ry += vy; rx += vx; vy *= .93; vx *= .88;
+      if (Math.abs(vy) < .002) { const tgt = RY + Math.round((ry - RY) / (Math.PI * 2)) * Math.PI * 2; ry += (tgt - ry) * .06; }   // after a spin, settle back to the resting pose
+      rx += (RX - rx) * .06;
     }
-    pivot.rotation.set(rx, ry, 0);
+    pivot.rotation.set(rx, ry, RZ);
     R.render(scene, cam); kick();
   };
   const kick = () => { if (!raf && vis) raf = requestAnimationFrame(frame); };
