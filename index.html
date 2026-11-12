@@ -2819,6 +2819,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 /* chapter 3: specs link instead of Buy now */
 #pdPage .hx-buy .hx-speclink{margin-top:0; font-size:max(12px,calc(16*var(--u))) !important;}
 #pdPage .hx-buy .hx-speclink, #pdPage .hx-buy .hx-speclink span{letter-spacing:.136em !important;}
+
+/* 08 specs: no lopsided padding, so table + image sit in the true middle of the held screen */
+@media (min-width:681px){ #pdPage .chs-pin #hxSpec{padding-top:0 !important; padding-bottom:0 !important;} }
 </style>
 </head>
 <body>
