@@ -2815,6 +2815,10 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   #pdPage .hxu-buy{display:block; margin-top:calc(28 * var(--u)); min-width:0 !important; height:max(42px,calc(56*var(--u))) !important; padding:0 calc(36*var(--u)) !important; font-size:max(13px,calc(17*var(--u))) !important;}
 }
 @media (max-width:680px){ #pdPage .hxu-buy{margin:20px auto 0; display:block; min-width:0 !important; height:44px !important; padding:0 28px !important; font-size:14px !important;} #pdPage .hxu-copy{text-align:center;} }
+
+/* chapter 3: specs link instead of Buy now */
+#pdPage .hx-buy .hx-speclink{margin-top:0; font-size:max(12px,calc(16*var(--u))) !important;}
+#pdPage .hx-buy .hx-speclink, #pdPage .hx-buy .hx-speclink span{letter-spacing:.136em !important;}
 </style>
 </head>
 <body>
@@ -3382,7 +3386,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     <button type="button" class="hxl-x" aria-label="닫기"><svg class="hinx" viewBox="0 0 69 69" fill="currentColor" aria-hidden="true"><path d="M19.182 56.5508L26.8021 56.5508L45.701 37.6548L45.701 31.2486L26.8021 12.3497L19.182 12.3497L19.182 8.32937L28.4674 8.33217L49.6652 29.53L49.7185 29.53L49.7185 39.3173L28.4674 60.5712L19.182 60.5712L19.182 56.5508Z" transform="translate(-15.2 0)"/><path d="M19.182 56.5508L26.8021 56.5508L45.701 37.6548L45.701 31.2486L26.8021 12.3497L19.182 12.3497L19.182 8.32937L28.4674 8.33217L49.6652 29.53L49.7185 29.53L49.7185 39.3173L28.4674 60.5712L19.182 60.5712L19.182 56.5508Z" transform="translate(69 0) scale(-1 1) translate(-15.2 0)"/></svg></button>
   </div>
 </section>
-<div class="hx-buy"><button type="button" class="hx-buynow" id="hxlBuy">Buy now</button></div>
+<div class="hx-buy"><a class="hxu-link hx-speclink" href="#hxSpec"><span>View HIN-001 Specifications</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M8 5.5H18.5V16"/><path d="M18 6L5.5 18.5"/></svg></a></div>
 <section class="hxu" id="hxUnfold" aria-labelledby="hxu-h">
   <div class="hxu-seq">
     <div class="hxu-sticky">
@@ -4733,6 +4737,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
 </script>
 <script>
 /* BUY NOW: back to the configurator, focus ORDER */
+(() => { const l=document.querySelector('.hx-speclink'); if(l) l.addEventListener('click',e=>{ const t=document.getElementById('hxSpec'); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); } }); })();
 (() => { const b=document.getElementById('hxlBuy'); if(!b) return;
   b.addEventListener('click',()=>{ const t=document.getElementById('s_viewWrap')||document.querySelector('.shop-screen'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
     const o=document.getElementById('s_order'); if(o) setTimeout(()=>o.focus({preventScroll:true}),700); }); })();
@@ -4804,7 +4809,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   const go=()=>('requestIdleCallback' in window)?requestIdleCallback(warm,{timeout:2500}):setTimeout(warm,1200);
   if(document.readyState==='complete') go(); else addEventListener('load',go,{once:true});
   /* 06/07 pointer lines: keep a 1px stroke in the 1440-wide drawing whatever the screen width */
-  const sw=()=>document.documentElement.style.setProperty('--hxsw',(1440/Math.max(1,innerWidth)).toFixed(4)); sw(); addEventListener('resize',sw);
+  const sw=()=>document.documentElement.style.setProperty('--hxsw',(1.4*1440/Math.max(1,innerWidth)).toFixed(4)); sw(); addEventListener('resize',sw);
   /* if an image fails to arrive (slow or dropped connection), try it again instead of leaving it broken */
   const retry=im=>{ const n=+(im.dataset.retry||0); if(n>=4||!im.getAttribute('src')) return; im.dataset.retry=n+1;
     setTimeout(()=>{ const u=new URL(im.getAttribute('src'),document.baseURI); u.searchParams.set('r',Date.now()); im.src=u.href; },800*(n+1)); };
