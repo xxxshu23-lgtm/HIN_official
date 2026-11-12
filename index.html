@@ -3412,7 +3412,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       </div>
       <div class="hxu-a"><img class="hxu-img" src="assets/product/work-unfolded.webp" alt="HIN-001 스탠드에 거치된 노트북 — 라이트 바 모듈과 후면 서포트가 펼쳐진 모습" decoding="async"></div>
       <i class="hxu-veil hxu-va" aria-hidden="true"></i>
-      <div class="hxu-scr" aria-hidden="true"><video class="hxu-vid" src="assets/product/unfold-screen.mp4?v=1" muted playsinline loop preload="auto" poster="" disablepictureinpicture></video></div>
+      <div class="hxu-scr" aria-hidden="true"><video class="hxu-vid" src="assets/product/unfold-screen.mp4?v=1" muted playsinline preload="auto" disablepictureinpicture></video></div>
       <i class="hxu-veil hxu-vb" aria-hidden="true"></i>
       <section class="hpd-blk hxu-dims" id="hpd-numbers" aria-label="Dimensions">
         <div class="hpd-label hxr">Dimensions</div>
@@ -4780,11 +4780,18 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   const mode=()=>{ const st=!desk.matches||reduce; if(st!==isStatic){ isStatic=st; sec.classList.toggle('static',st);
       if(st){ A.style.transform=S.style.transform=''; ['--co','--cy','--va','--vb','--zs'].forEach(k=>{ copy.style.removeProperty(k); VA.style.removeProperty(k); VB.style.removeProperty(k); SI.style.removeProperty(k); }); D.style.removeProperty('--do'); D.style.removeProperty('--dy'); rv.forEach(e=>e.classList.add('in')); } }
     if(st) mark.style.height=D.offsetHeight+'px'; else mark.style.height=''; sec.classList.add('ready'); };
+  let seekN=0; const VEND=5.0; /* the settled frame (HERE I AM NOW) — thumbnail before, and where the zoom starts */
+  if(VID){ VID.loop=false; const toEnd=()=>{ try{ VID.currentTime=VEND; }catch(_){} }; if(VID.readyState>=1) toEnd(); else VID.addEventListener('loadedmetadata',toEnd,{once:true});
+    ['seeked','loadeddata','canplay'].forEach(ev=>VID.addEventListener(ev,()=>{ seekN++; setTimeout(on,30); }));
+    VID.dataset.st='thumb'; VID.addEventListener('timeupdate',()=>{ if(VID.dataset.st==='play'&&VID.currentTime>=VEND){ VID.pause(); VID.dataset.st='done'; try{ VID.currentTime=VEND; }catch(_){} } }); }
   const HOLD=.22; /* extra stretch of scroll where the camera faces the laptop and the screen video plays */
   const paint=()=>{ raf=0; if(isStatic) return; const vw=stg.clientWidth, vh=stg.clientHeight, r=seq.getBoundingClientRect();
     const P=cl(-r.top/(seq.offsetHeight-vh))*(1+HOLD), p=P<.34?P:(P<.34+HOLD?.34:P-HOLD);
     // screen video: plays during the hold, then fades to black as the camera dives in
-    if(VID){ const inHold=P>=.30&&P<.34+HOLD+.12; if(inHold&&VID.paused){ VID.play().catch(()=>{}); } else if(!inHold&&!VID.paused){ VID.pause(); } if(P<.2&&VID.currentTime>0&&VID.paused) VID.currentTime=0; }
+    if(VID){ /* before: the last frame shows as a thumbnail · hold: plays once and stops on that frame · zoom: always on that frame */
+      if(P<.28){ if(VID.dataset.st!=='thumb'){ VID.pause(); VID.dataset.st='thumb'; try{ VID.currentTime=VEND; }catch(_){} } }
+      else if(P<.34+HOLD){ if(VID.dataset.st==='thumb'){ VID.dataset.st='play'; try{ VID.currentTime=0; }catch(_){} VID.play().catch(()=>{}); } }
+      else if(VID.dataset.st!=='end'){ VID.dataset.st='end'; VID.pause(); try{ VID.currentTime=VEND; }catch(_){} } }
     const vf=1-seg(p,.40,.56);
     // base placement: render fits the space under the copy, so copy + render read as one screen
     // base placement: render in the middle of the screen, heading on its left, copy + Buy now on its right (like the home manifesto)
@@ -4796,7 +4803,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
     const k=Math.max(vw/wR,vh/hR)*1.02, wF=wR*k, hF=hR*k, RF=rectQ((vw-wF)/2,(vh-hF)/2,wF,hF);
     const t1=eio(seg(p,.06,.34)), t2=eio(seg(p,.34,.60)), Q=lerpQ(lerpQ(q0,R1,t1),RF,t2);
     if(!gl){ A.style.transform=homo(LQ,Q); S.style.transform=homo(SQ,Q); }
-    else window.__hxuGL.draw({vw,vh,ax:0,ay:top,aw:vw,ah:Math.min(ah,bw/AR*1.05),t1,t2,zs:1+.16*eio(seg(p,.28,.74)),vf,tick:VID&&!VID.paused?VID.currentTime:0});
+    else window.__hxuGL.draw({vw,vh,ax:0,ay:top,aw:vw,ah:Math.min(ah,bw/AR*1.05),t1,t2,zs:1+.16*eio(seg(p,.28,.74)),vf,tick:VID?VID.currentTime.toFixed(3)+':'+seekN:0});
     S.style.setProperty('--vf',vf.toFixed(3)); SI.style.setProperty('--zs',(1+.16*eio(seg(p,.28,.74))).toFixed(4));
     const c=seg(p,.02,.12); copy.style.setProperty('--co',(1-c).toFixed(3)); copy.style.setProperty('--cy',(-36*eo(c)).toFixed(1)+'px'); copy.style.pointerEvents=c>.5?'none':'';
     VA.style.setProperty('--va',(.5*seg(p,.08,.34)+.5*seg(p,.34,.56)).toFixed(3));
