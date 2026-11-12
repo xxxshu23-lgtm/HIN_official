@@ -111,9 +111,18 @@ if (stage && !window.__hxuGL) {
       const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), port); m.rotation.y = -Math.PI / 2; m.position.set(px, BH * 0.5, z); lap.add(m); }); }
   const hinge = new THREE.Mesh(new THREE.CylinderGeometry(0.0042, 0.0042, LW - 0.07, 24), black); hinge.rotation.z = Math.PI / 2; hinge.position.set(0, BH, 0.003); lap.add(hinge);
   const lid = new THREE.Group(); lid.position.set(0, BH, 0.002); lap.add(lid);
-  const lidBox = new THREE.Mesh(new RoundedBoxGeometry(LW, LT, LD, 4, 0.0022), alu); lidBox.position.set(0, LT / 2, LD / 2); lid.add(lidBox);
-  const bezel = new THREE.Mesh(new THREE.PlaneGeometry(LW - 0.003, LD - 0.003), black); bezel.rotation.x = Math.PI / 2; bezel.position.set(0, -0.0002, LD / 2); lid.add(bezel);
-  const disp = new THREE.Mesh(new THREE.PlaneGeometry(DW, DH), new THREE.MeshBasicMaterial({ map: scrTex, toneMapped: false }));
+  // lid with rounded corners like a MacBook Pro display: large radius at the top, small at the hinge
+  const rrect = (w, v0, v1, rb, rt) => { const S = new THREE.Shape(), l = -w / 2, r = w / 2;
+    S.moveTo(l + rb, v0); S.lineTo(r - rb, v0); S.quadraticCurveTo(r, v0, r, v0 + rb); S.lineTo(r, v1 - rt); S.quadraticCurveTo(r, v1, r - rt, v1);
+    S.lineTo(l + rt, v1); S.quadraticCurveTo(l, v1, l, v1 - rt); S.lineTo(l, v0 + rb); S.quadraticCurveTo(l, v0, l + rb, v0); return S; };
+  const RT = 0.0105, RB = 0.0035;
+  const lidGeo = new THREE.ExtrudeGeometry(rrect(LW, 0, LD, RB, RT), { depth: LT - 0.0012, bevelEnabled: true, bevelThickness: 0.0006, bevelSize: 0.0006, bevelSegments: 3, curveSegments: 16 });
+  lidGeo.rotateX(Math.PI / 2); lidGeo.translate(0, LT - 0.0006, 0); lidGeo.computeVertexNormals();
+  const lidBox = new THREE.Mesh(lidGeo, alu); lid.add(lidBox);
+  const bezel = new THREE.Mesh(new THREE.ShapeGeometry(rrect(LW - 0.0016, 0.0008, LD - 0.0008, RB - 0.0008, RT - 0.0008), 16), black); bezel.rotation.x = Math.PI / 2; bezel.position.set(0, -0.0002, 0); lid.add(bezel);
+  const dispGeo = new THREE.ShapeGeometry(rrect(DW, -DH / 2, DH / 2, 0.0012, 0.0062), 16);   // screen corners rounded too (top more than bottom)
+  { const pos = dispGeo.attributes.position, uv = dispGeo.attributes.uv; for (let i = 0; i < pos.count; i++) uv.setXY(i, (pos.getX(i) + DW / 2) / DW, (pos.getY(i) + DH / 2) / DH); uv.needsUpdate = true; }
+  const disp = new THREE.Mesh(dispGeo, new THREE.MeshBasicMaterial({ map: scrTex, toneMapped: false }));
   disp.rotation.x = Math.PI / 2; disp.position.set(0, -0.0004, DB + DH / 2); lid.add(disp);
   const nW = 0.0190, nH = 0.0050, nR = 0.0016, ns = new THREE.Shape();   // camera notch with rounded lower corners, as on a MacBook Pro
   ns.moveTo(-nW / 2, 0); ns.lineTo(nW / 2, 0); ns.lineTo(nW / 2, -nH + nR); ns.quadraticCurveTo(nW / 2, -nH, nW / 2 - nR, -nH); ns.lineTo(-nW / 2 + nR, -nH); ns.quadraticCurveTo(-nW / 2, -nH, -nW / 2, -nH + nR); ns.lineTo(-nW / 2, 0);
