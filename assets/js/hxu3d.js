@@ -27,45 +27,52 @@ if (stage && !window.__hxuGL) {
   /* ---------- laptop (14-inch proportions, metres) ---------- */
   const LW = 0.3126, LD = 0.2212, BH = 0.0102, LT = 0.0050, OPEN = THREE.MathUtils.degToRad(112);
   const DW = 0.3024, DH = 0.1964, DB = 0.0176;            // display area + bottom bezel (hinge side)
-  const alu = new THREE.MeshPhysicalMaterial({ color: 0x5f6064, metalness: 0.9, roughness: 0.38, clearcoat: 0.15, clearcoatRoughness: 0.5 });   // space grey
+  const alu = new THREE.MeshPhysicalMaterial({ color: 0x55565a, metalness: 0.75, roughness: 0.48, clearcoat: 0.1, clearcoatRoughness: 0.6 });   // matte space grey
   const black = new THREE.MeshPhysicalMaterial({ color: 0x050505, metalness: 0.1, roughness: 0.18, clearcoat: 1, clearcoatRoughness: 0.08 });
   const rr = (ctx, x, y, w, h, r) => { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); };
 
-  // deck (keyboard + trackpad) texture — MacBook Pro look: space-grey deck, black keyboard with white legends, speaker grilles, large trackpad
+  // deck (keyboard + trackpad) texture — MacBook Pro 16 as in the KeyShot render: matte space-grey deck, black keys with white legends,
+  // tall speaker grilles either side, very large trackpad, thumb scoop at the front
   const deckTex = (() => {
-    const W = 3072, H = Math.round(W * LD / LW), c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
-    const g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#5a5b5e'); g.addColorStop(1, '#4c4d50'); x.fillStyle = g; x.fillRect(0, 0, W, H);
-    // keyboard well
-    const kx = W * 0.145, ky = H * 0.045, kw = W * 0.71, kh = H * 0.46; x.fillStyle = '#060607'; rr(x, kx - 10, ky - 10, kw + 20, kh + 20, 22); x.fill();
+    const W = 4096, H = Math.round(W * LD / LW), c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+    x.fillStyle = '#4f5053'; x.fillRect(0, 0, W, H);
+    const sg = x.createLinearGradient(0, 0, 0, H); sg.addColorStop(0, 'rgba(255,255,255,.02)'); sg.addColorStop(1, 'rgba(0,0,0,.05)'); x.fillStyle = sg; x.fillRect(0, 0, W, H);
+    const kx = W * 0.115, ky = H * 0.06, kw = W * 0.77, kh = H * 0.46;
+    // speaker grilles: tall panels flanking the keyboard, fine perforation
+    for (const sx of [W * 0.035, W * 0.89]) { const sw = W * 0.075; x.fillStyle = '#47484b'; rr(x, sx, ky, sw, kh, 10); x.fill();
+      x.fillStyle = 'rgba(0,0,0,.55)'; for (let yy = ky + 8; yy < ky + kh - 4; yy += 9) for (let xx2 = sx + 6 + ((yy / 9) % 2) * 4.5; xx2 < sx + sw - 4; xx2 += 9) { x.beginPath(); x.arc(xx2, yy, 2.2, 0, 7); x.fill(); } }
+    // keyboard well + keys
+    x.fillStyle = '#050505'; rr(x, kx - 12, ky - 12, kw + 24, kh + 24, 26); x.fill();
+    const F = ['☼','☼','▤','⌕','◉','☾','◀◀','▶‖','▶▶','◁','◁)','◁))'];
     const rows = [
-      [['esc',1.5],...['','','','','','','','','','','',''].map(t=>[t,1]),['',1]],
-      [['~',1],['1',1],['2',1],['3',1],['4',1],['5',1],['6',1],['7',1],['8',1],['9',1],['0',1],['-',1],['=',1],['delete',1.5]],
-      [['tab',1.5],['Q',1],['W',1],['E',1],['R',1],['T',1],['Y',1],['U',1],['I',1],['O',1],['P',1],['[',1],[']',1],['\\',1]],
-      [['caps lock',1.8],['A',1],['S',1],['D',1],['F',1],['G',1],['H',1],['J',1],['K',1],['L',1],[';',1],["'",1],['return',1.7]],
-      [['shift',2.3],['Z',1],['X',1],['C',1],['V',1],['B',1],['N',1],['M',1],['<',1],['>',1],['?',1],['shift',2.2]],
-      [['fn',1],['control',1],['option',1],['command',1.25],['',5.0],['command',1.25],['option',1],['◀',1],['▲▼',1],['▶',1]]];
-    const gap = W * 0.0042, fnH = (kh - gap * 7) / 5.6 * 0.6, rh = (kh - gap * 7 - fnH) / 5;
+      [['esc',1.5],...F.map((t,i)=>['f:'+t+':F'+(i+1),1]),['tid',1]],
+      [['~|`',1],['!|1',1],['@|2',1],['#|3',1],['$|4',1],['%|5',1],['^|6',1],['&|7',1],['*|8',1],['(|9',1],[')|0',1],['_|-',1],['+|=',1],['delete',1.5]],
+      [['tab',1.5],['Q',1],['W',1],['E',1],['R',1],['T',1],['Y',1],['U',1],['I',1],['O',1],['P',1],['{|[',1],['}|]',1],['||\\',1]],
+      [['caps lock',1.8],['A',1],['S',1],['D',1],['F',1],['G',1],['H',1],['J',1],['K',1],['L',1],[':|;',1],['"|\'',1],['return',1.7]],
+      [['shift',2.3],['Z',1],['X',1],['C',1],['V',1],['B',1],['N',1],['M',1],['<|,',1],['>|.',1],['?|/',1],['shift',2.2]],
+      [['fn ◍',1],['control',1],['option',1],['command',1.25],['',5.0],['command',1.25],['option',1],['◀',1],['▲▼',1],['▶',1]]];
+    const gap = W * 0.0048, rh = (kh - gap * 7) / 6;
+    const font = (px, wgt = 400) => `${wgt} ${Math.round(px)}px -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif`;
     let y = ky + gap;
-    rows.forEach((row, i) => { const hh = i === 0 ? fnH : rh, tot = row.reduce((a, k) => a + k[1], 0), unit = (kw - gap * (row.length + 1)) / tot; let xx = kx + gap;
-      row.forEach(([t, u]) => { const w = u * unit;
-        if (t === '▲▼') { const h2 = (hh - gap) / 2; x.fillStyle = '#141415'; rr(x, xx, y, w, h2, 8); x.fill(); rr(x, xx, y + h2 + gap, w, h2, 8); x.fill(); }
-        else { x.fillStyle = '#141415'; rr(x, xx, y + (t === '◀' || t === '▶' ? hh / 2 : 0), w, t === '◀' || t === '▶' ? hh / 2 : hh, 10); x.fill();
-          x.fillStyle = 'rgba(255,255,255,.04)'; rr(x, xx + 3, y + 3, w - 6, hh * 0.4, 8); x.fill(); }
-        if (t && t !== '▲▼') { x.fillStyle = 'rgba(235,235,240,.88)'; const big = t.length === 1;
-          x.font = `${big ? 500 : 400} ${Math.round((big ? rh * 0.3 : rh * 0.17))}px -apple-system, "Helvetica Neue", Arial, sans-serif`;
-          if (big || t === '◀' || t === '▶') { x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(t, xx + w / 2, y + (t === '◀' || t === '▶' ? hh * 0.75 : hh / 2)); }
-          else { x.textAlign = i === 5 && ['command','option','control','fn'].includes(t) ? 'center' : 'left'; x.textBaseline = 'bottom'; x.fillText(t, x.textAlign === 'center' ? xx + w / 2 : xx + w * 0.12, y + hh * 0.86); } }
-        if (i === 0 && u === 1 && xx > kx + kw - unit * 1.5) { x.strokeStyle = 'rgba(255,255,255,.12)'; x.lineWidth = 3; x.beginPath(); x.arc(xx + w / 2, y + hh / 2, hh * 0.3, 0, 7); x.stroke(); }   // Touch ID
+    rows.forEach((row, i) => { const tot = row.reduce((a, k) => a + k[1], 0), unit = (kw - gap * (row.length + 1)) / tot; let xx = kx + gap;
+      row.forEach(([t, u]) => { const w = u * unit, hh = rh;
+        const key = (yy, h) => { x.fillStyle = '#0d0d0e'; rr(x, xx, yy, w, h, 12); x.fill(); x.strokeStyle = 'rgba(255,255,255,.07)'; x.lineWidth = 2; rr(x, xx + 1, yy + 1, w - 2, h - 2, 11); x.stroke(); };
+        x.fillStyle = 'rgba(236,236,240,.9)';
+        if (t === '▲▼') { const h2 = (hh - gap) / 2; key(y, h2); key(y + h2 + gap, h2); x.fillStyle = 'rgba(236,236,240,.9)'; x.font = font(rh * .18); x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('▲', xx + w / 2, y + h2 / 2); x.fillText('▼', xx + w / 2, y + h2 * 1.5 + gap); }
+        else if (t === '◀' || t === '▶') { key(y + hh / 2 + gap / 2, hh / 2 - gap / 2); x.fillStyle = 'rgba(236,236,240,.9)'; x.font = font(rh * .18); x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(t, xx + w / 2, y + hh * 0.75); }
+        else { key(y, hh); x.fillStyle = 'rgba(236,236,240,.9)';
+          if (t === 'tid') { x.strokeStyle = 'rgba(255,255,255,.14)'; x.lineWidth = 3; x.beginPath(); x.arc(xx + w / 2, y + hh / 2, hh * 0.28, 0, 7); x.stroke(); }
+          else if (t.startsWith('f:')) { const [, ic, lb] = t.split(':'); x.textAlign = 'center'; x.textBaseline = 'middle'; x.font = font(rh * .24); x.fillText(ic, xx + w / 2, y + hh * .42); x.font = font(rh * .13); x.fillText(lb, xx + w / 2, y + hh * .78); }
+          else if (t.includes('|') && t.length <= 3) { const [up, lo] = t.split('|'); x.textAlign = 'center'; x.textBaseline = 'middle'; x.font = font(rh * .22); x.fillText(up, xx + w / 2, y + hh * .33); x.fillText(lo, xx + w / 2, y + hh * .68); }
+          else if (t.length === 1) { x.textAlign = 'center'; x.textBaseline = 'middle'; x.font = font(rh * .3, 500); x.fillText(t, xx + w / 2, y + hh / 2); }
+          else if (t) { const c2 = i === 5; x.textAlign = c2 ? 'center' : (/delete|return|shift$/.test(t) && xx > kx + kw / 2 ? 'right' : 'left'); x.textBaseline = 'bottom'; x.font = font(rh * .17);
+            x.fillText(t, x.textAlign === 'center' ? xx + w / 2 : x.textAlign === 'right' ? xx + w * .9 : xx + w * .12, y + hh * .85); } }
         xx += w + gap; });
-      y += hh + gap; });
-    // speaker grilles either side of the keyboard
-    x.fillStyle = 'rgba(0,0,0,.42)';
-    for (const sx of [W * 0.035, W * 0.885]) for (let yy = ky + 6; yy < ky + kh; yy += 13) for (let xx2 = sx; xx2 < sx + W * 0.08; xx2 += 13) { x.beginPath(); x.arc(xx2, yy, 3.2, 0, 7); x.fill(); }
-    // trackpad
-    const tw = W * 0.52, th = H * 0.40, tx = (W - tw) / 2, ty = H * 0.555; const tg = x.createLinearGradient(0, ty, 0, ty + th); tg.addColorStop(0, '#55565a'); tg.addColorStop(1, '#4e4f52');
-    x.fillStyle = tg; rr(x, tx, ty, tw, th, 28); x.fill(); x.strokeStyle = 'rgba(0,0,0,.35)'; x.lineWidth = 4; x.stroke(); x.strokeStyle = 'rgba(255,255,255,.06)'; x.lineWidth = 2; rr(x, tx + 4, ty + 4, tw - 8, th - 8, 25); x.stroke();
-    // front thumb notch
-    x.fillStyle = 'rgba(0,0,0,.25)'; rr(x, W / 2 - W * 0.05, H - 14, W * 0.1, 14, 7); x.fill();
+      y += rh + gap; });
+    // trackpad (very large, flush, hairline edge) + front scoop
+    const tw = W * 0.47, th = H * 0.405, tx = (W - tw) / 2, ty = H * 0.565;
+    x.fillStyle = '#4b4c4f'; rr(x, tx, ty, tw, th, 34); x.fill(); x.strokeStyle = 'rgba(0,0,0,.42)'; x.lineWidth = 4; x.stroke(); x.strokeStyle = 'rgba(255,255,255,.07)'; x.lineWidth = 2; rr(x, tx + 4, ty + 4, tw - 8, th - 8, 31); x.stroke();
+    x.fillStyle = 'rgba(0,0,0,.28)'; rr(x, W / 2 - W * 0.06, H - 18, W * 0.12, 18, 9); x.fill();
     const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = R.capabilities.getMaxAnisotropy(); return t;
   })();
 
@@ -97,8 +104,11 @@ if (stage && !window.__hxuGL) {
 
   const lap = new THREE.Group();
   const base = new THREE.Mesh(new RoundedBoxGeometry(LW, BH, LD, 4, 0.0045), alu); base.position.set(0, BH / 2, LD / 2); lap.add(base);
-  const deck = new THREE.Mesh(new THREE.PlaneGeometry(LW - 0.006, LD - 0.006), new THREE.MeshPhysicalMaterial({ map: deckTex, metalness: 0.6, roughness: 0.5 }));
+  const deck = new THREE.Mesh(new THREE.PlaneGeometry(LW - 0.006, LD - 0.006), new THREE.MeshPhysicalMaterial({ map: deckTex, metalness: 0.35, roughness: 0.62 }));
   deck.rotation.x = -Math.PI / 2; deck.position.set(0, BH + 0.0002, LD / 2); lap.add(deck);
+  { const port = new THREE.MeshBasicMaterial({ color: 0x050505 }); const px = -LW / 2 - 0.0002;   // left side: MagSafe, 2× USB-C, headphone jack
+    [[0.030, 0.0105, 0.0020], [0.055, 0.0085, 0.0026], [0.071, 0.0085, 0.0026], [0.088, 0.0032, 0.0032]].forEach(([z, w, h]) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), port); m.rotation.y = -Math.PI / 2; m.position.set(px, BH * 0.5, z); lap.add(m); }); }
   const hinge = new THREE.Mesh(new THREE.CylinderGeometry(0.0042, 0.0042, LW - 0.07, 24), black); hinge.rotation.z = Math.PI / 2; hinge.position.set(0, BH, 0.003); lap.add(hinge);
   const lid = new THREE.Group(); lid.position.set(0, BH, 0.002); lap.add(lid);
   const lidBox = new THREE.Mesh(new RoundedBoxGeometry(LW, LT, LD, 4, 0.0022), alu); lidBox.position.set(0, LT / 2, LD / 2); lid.add(lidBox);
