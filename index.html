@@ -2700,7 +2700,8 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 </style>
 <style id="update-2026-11-12-ch67">
 /* 06 Features + 07 Details: pointer line + square exactly like the Portable columns */
-#pdPage .hxf-lines path{stroke:rgba(255,255,255,.22) !important; stroke-width:1 !important;}
+#pdPage .hxf-lines path{stroke:rgba(255,255,255,.22) !important; stroke-width:var(--hxsw,1) !important; vector-effect:none !important;} /* --hxsw = 1440/stage width, so the line is 1px and its draw-in ends exactly at the square */
+#pdPage .hxf-txt p{color:var(--gray-500) !important;}
 #pdPage .hxf-lines rect{display:none !important;}
 #pdPage .hxf-sq{position:absolute; left:calc(var(--cx)/14.4*1cqw); top:calc(var(--cy)/14.4*1cqw); width:6px; height:6px; margin:-3px 0 0 -3px; background:#FFFBBA;
   box-shadow:0 0 10px 2px rgba(255,251,186,.5), 0 0 22px 4px rgba(255,251,186,.18); opacity:0; transition:opacity .4s ease; pointer-events:none; z-index:1;}
@@ -2762,6 +2763,14 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #pdPage #hpd-intro .hpd-sub{margin:clamp(26px,3.2vw,48px) 0 0 !important; display:flex; justify-content:flex-start;}
 #pdPage #hpd-intro .hpd-sub-kr{margin:0 !important; font-size:clamp(13px,.95vw,16px) !important; line-height:1.6 !important; color:var(--gray-500) !important;}
 #pdPage #hpd-intro .hpd-lead{margin-top:0 !important;} /* logo, slogan and Korean line removed (they repeat elsewhere) */
+
+/* shop chapters behave like the home sections: each one is a full screen that holds for a moment, then the next screen pushes it up (plain native scroll, position:sticky) */
+@media (min-width:681px){
+  #pdPage .pd-pin{position:relative; width:100%; align-self:stretch;}
+  #pdPage .pd-pin-in{position:sticky; top:0; width:100%; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:stretch;}
+  #pdPage .pd-pin-in > *{margin-top:0 !important; margin-bottom:0 !important; flex:none;}
+  #pdPage #hpd-intro, #pdPage #hx14, #pdPage #hx15, #pdPage #hpd-fold, #pdPage #hxLook, #pdPage #hxSpec{margin-top:0 !important; margin-bottom:0 !important;}
+}
 </style>
 </head>
 <body>
@@ -3397,22 +3406,22 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       <article class="hxf-slide on" data-i="0" aria-label="1 / 3">
         <div class="hx-stage hxf-stage">
           <img class="hxf-img f01" src="assets/f01-lightbar.webp?v=3" alt="세워진 HIN-001과 일체형 LED 라이트바" loading="lazy" decoding="async" draggable="false">
-          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H900L1280 477" pathLength="1"/></svg><i class="hxf-sq" style="--cx:1280;--cy:477" aria-hidden="true"></i>
-          <div class="hxf-txt" style="--x:150;--ly:181"><h3 class="hl" style="--i:0">01. LIGHT BAR</h3><p class="hl" style="--i:1">An integrated LED light bar provides soft, even illumination across your workspace, <br>helping create a more comfortable and focused environment for work.</p></div>
+          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 228H900L1280 477" pathLength="1"/></svg><i class="hxf-sq" style="--cx:1280;--cy:477" aria-hidden="true"></i>
+          <div class="hxf-txt" style="--x:150;--ly:228"><h3 class="hl" style="--i:0">01. LIGHT BAR</h3><p class="hl" style="--i:1">An integrated LED light bar provides soft, even illumination across your workspace, <br>helping create a more comfortable and focused environment for work.</p></div>
         </div>
       </article>
       <article class="hxf-slide" data-i="1" aria-label="2 / 3">
         <div class="hx-stage hxf-stage">
           <img class="hxf-img full" src="assets/f02-power.webp?v=2" alt="라이트 라인이 들어간 HIN-001 배터리 모듈" loading="lazy" decoding="async" draggable="false">
-          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 180H806L951 384" pathLength="1"/></svg><i class="hxf-sq" style="--cx:951;--cy:384" aria-hidden="true"></i>
-          <div class="hxf-txt" style="--x:150;--ly:180"><h3 class="hl" style="--i:0">02. POWER</h3><p class="hl" style="--i:1">65Wh built-in battery and USB-C connectivity, <br>an uninterrupted workflow wherever you go.</p></div>
+          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 228H806L951 384" pathLength="1"/></svg><i class="hxf-sq" style="--cx:951;--cy:384" aria-hidden="true"></i>
+          <div class="hxf-txt" style="--x:150;--ly:228"><h3 class="hl" style="--i:0">02. POWER</h3><p class="hl" style="--i:1">65Wh built-in battery and USB-C connectivity, <br>an uninterrupted workflow wherever you go.</p></div>
         </div>
       </article>
       <article class="hxf-slide" data-i="2" aria-label="3 / 3">
         <div class="hx-stage hxf-stage">
           <img class="hxf-img full" src="assets/f03-mousepad.webp" alt="본체에서 분리된 HIN-001 마우스패드" loading="lazy" decoding="async" draggable="false">
-          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M1100 156H576L492 357" pathLength="1"/></svg><i class="hxf-sq" style="--cx:492;--cy:357" aria-hidden="true"></i>
-          <div class="hxf-txt r" style="--rx:1100;--ly:156"><h3 class="hl" style="--i:0">03. MOUSE PAD</h3><p class="hl" style="--i:1">A detachable mouse pad that adapts <br>to different spaces and working needs.</p></div>
+          <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 228H480L492 357" pathLength="1"/></svg><i class="hxf-sq" style="--cx:492;--cy:357" aria-hidden="true"></i>
+          <div class="hxf-txt" style="--x:150;--ly:228"><h3 class="hl" style="--i:0">03. MOUSE PAD</h3><p class="hl" style="--i:1">A detachable mouse pad that adapts <br>to different spaces and working needs.</p></div>
         </div>
       </article>
     </div>
@@ -3434,16 +3443,16 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       </div>
       <i class="hxp-fade" aria-hidden="true"></i>
       <div class="hxp-line on" data-i="0">
-        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H690L830 450" pathLength="1"/></svg><i class="hxf-sq" style="--cx:830;--cy:450" aria-hidden="true"></i>
-        <div class="hxf-txt" style="--x:150;--ly:181"><h3 class="hl" style="--i:0">04. QUICK SETTING</h3><p class="hl" style="--i:1">Designed to cut the transition time from the moment you arrive <br>to the moment you start working.</p></div>
+        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 228H690L830 450" pathLength="1"/></svg><i class="hxf-sq" style="--cx:830;--cy:450" aria-hidden="true"></i>
+        <div class="hxf-txt" style="--x:150;--ly:228"><h3 class="hl" style="--i:0">04. QUICK SETTING</h3><p class="hl" style="--i:1">Designed to cut the transition time from the moment you arrive <br>to the moment you start working.</p></div>
       </div>
       <div class="hxp-line" data-i="1">
         <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 600H520L780 500" pathLength="1"/></svg><i class="hxf-sq" style="--cx:780;--cy:500" aria-hidden="true"></i>
         <div class="hxf-txt" style="--x:150;--ly:600"><h3 class="hl" style="--i:0">05. HIN MARK</h3><p class="hl" style="--i:1">The HIN mark, carrying the identity of the brand, <br>is engraved on the top module.</p></div>
       </div>
       <div class="hxp-line" data-i="2">
-        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 181H550L690 560" pathLength="1"/></svg><i class="hxf-sq" style="--cx:690;--cy:560" aria-hidden="true"></i>
-        <div class="hxf-txt" style="--x:150;--ly:181"><h3 class="hl" style="--i:0">06. STABLE STRUCTURE</h3><p class="hl" style="--i:1">Provides a stable working environment, <br>even away from a fixed workspace.</p></div>
+        <svg class="hxf-lines" viewBox="0 0 1440 900" aria-hidden="true"><path d="M150 228H550L690 560" pathLength="1"/></svg><i class="hxf-sq" style="--cx:690;--cy:560" aria-hidden="true"></i>
+        <div class="hxf-txt" style="--x:150;--ly:228"><h3 class="hl" style="--i:0">06. STABLE STRUCTURE</h3><p class="hl" style="--i:1">Provides a stable working environment, <br>even away from a fixed workspace.</p></div>
       </div>
     </div>
   </div>
@@ -4732,12 +4741,30 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   const warm=()=>document.querySelectorAll('img[loading="lazy"]').forEach((im,k)=>setTimeout(()=>{ im.loading='eager'; },k*60));
   const go=()=>('requestIdleCallback' in window)?requestIdleCallback(warm,{timeout:2500}):setTimeout(warm,1200);
   if(document.readyState==='complete') go(); else addEventListener('load',go,{once:true});
+  /* 06/07 pointer lines: keep a 1px stroke in the 1440-wide drawing whatever the screen width */
+  const sw=()=>document.documentElement.style.setProperty('--hxsw',(1440/Math.max(1,innerWidth)).toFixed(4)); sw(); addEventListener('resize',sw);
   /* if an image fails to arrive (slow or dropped connection), try it again instead of leaving it broken */
   const retry=im=>{ const n=+(im.dataset.retry||0); if(n>=4||!im.getAttribute('src')) return; im.dataset.retry=n+1;
     setTimeout(()=>{ const u=new URL(im.getAttribute('src'),document.baseURI); u.searchParams.set('r',Date.now()); im.src=u.href; },800*(n+1)); };
   addEventListener('error',e=>{ if(e.target&&e.target.tagName==='IMG') retry(e.target); },true);
   const sweep=()=>document.querySelectorAll('img').forEach(im=>{ if(im.complete&&im.naturalWidth===0&&im.getAttribute('src')&&im.loading!=='lazy') retry(im); });
   addEventListener('load',()=>setTimeout(sweep,1500),{once:true}); setTimeout(sweep,8000);
+})();
+</script>
+<script>
+/* SHOP — home-like chapter screens: wrap each chapter in a pin; the screen holds for 40% of a viewport of scrolling, then scrolls on. Native scroll only. */
+(() => {
+  const desk=matchMedia('(min-width:681px)'), HOLD=.4;
+  const groups=[['#hpd-intro','#hx14'],['#hx15'],['#hpd-fold'],['#hxLook','#pdPage .hx-buy'],['#hxSpec']];
+  const made=[];
+  for(const g of groups){ const els=g.map(q=>document.querySelector(q)).filter(Boolean); if(!els.length) continue;
+    const w=document.createElement('div'); w.className='pd-pin'; const inn=document.createElement('div'); inn.className='pd-pin-in';
+    els[0].before(w); w.append(inn); els.forEach(e=>inn.append(e)); made.push({w,inn}); }
+  const fit=()=>{ const vh=innerHeight; for(const {w,inn} of made){
+      if(!desk.matches){ w.style.height=''; inn.style.top=''; continue; }
+      const h=inn.offsetHeight; if(!h) continue; w.style.height=Math.round(h+vh*HOLD)+'px'; inn.style.top=Math.min(0,Math.round(vh-h))+'px'; } };
+  if('ResizeObserver' in window){ const ro=new ResizeObserver(()=>requestAnimationFrame(fit)); made.forEach(m=>ro.observe(m.inn)); }
+  addEventListener('resize',fit); desk.addEventListener?.('change',fit); fit();
 })();
 </script>
 </body>
