@@ -4864,9 +4864,10 @@ document.addEventListener('touchstart',()=>{},{passive:true});
     draw(); };
   /* 08: each rule draws in as you scroll through the held table, one after another; scrolling back takes them away */
   const draw=()=>{ if(!spec||!rules.length) return;
-    if(!desk.matches||!spec.holdPx){ rules.forEach(r=>{ r.style.transform=''; r.style.transition=''; }); return; }
+    if(!desk.matches||!spec.holdPx){ rules.forEach(r=>{ r.style.transform=''; r.style.transition=''; delete r.dataset.on; }); return; }
     const vh=innerHeight, base=spec.h>vh?spec.h-vh:0, p=Math.min(Math.max((-spec.w.getBoundingClientRect().top-base)/(spec.holdPx*.85),0),1), n=rules.length;
-    rules.forEach((r,k)=>{ const v=Math.min(Math.max(p*n-k,0),1); r.style.transition='none'; r.style.transform=`scaleX(${v.toFixed(4)})`; }); }; /* one line after another, slowly */
+    rules.forEach((r,k)=>{ const on=p>(k/n)*.8+.02; if(r.dataset.on===String(on)) return; r.dataset.on=String(on);   /* each line is triggered in turn by the scroll, then draws smoothly on its own */
+      r.style.transition='transform 1.1s cubic-bezier(.65,0,.35,1)'; r.style.transform=on?'scaleX(1)':'scaleX(0)'; }); };
   if('ResizeObserver' in window){ const ro=new ResizeObserver(()=>requestAnimationFrame(fit)); made.forEach(m=>ro.observe(m.inn)); }
   addEventListener('resize',fit); addEventListener('scroll',draw,{passive:true}); desk.addEventListener?.('change',fit); fit();
 })();
