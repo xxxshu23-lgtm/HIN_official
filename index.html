@@ -4776,7 +4776,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   // real 3D stage (three.js + HIN glb) — loaded only when the section gets close, desktop only
   const useGL=()=>{ gl=!!window.__hxuGL; sec.classList.toggle('gl',gl); on(); };
   addEventListener('hxu-gl-ready',useGL);
-  if(!reduce && 'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting) && desk.matches){ io.disconnect(); import(new URL('assets/js/hxu3d.js?v=6',document.baseURI).href).catch(()=>{}); } },{rootMargin:'150% 0px'}); io.observe(sec); }
+  if(!reduce && 'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting) && desk.matches){ io.disconnect(); import(new URL('assets/js/hxu3d.js?v=7',document.baseURI).href).catch(()=>{}); } },{rootMargin:'150% 0px'}); io.observe(sec); }
   const mode=()=>{ const st=!desk.matches||reduce; if(st!==isStatic){ isStatic=st; sec.classList.toggle('static',st);
       if(st){ A.style.transform=S.style.transform=''; ['--co','--cy','--va','--vb','--zs'].forEach(k=>{ copy.style.removeProperty(k); VA.style.removeProperty(k); VB.style.removeProperty(k); SI.style.removeProperty(k); }); D.style.removeProperty('--do'); D.style.removeProperty('--dy'); rv.forEach(e=>e.classList.add('in')); } }
     if(st) mark.style.height=D.offsetHeight+'px'; else mark.style.height=''; sec.classList.add('ready'); };
