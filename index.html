@@ -4619,7 +4619,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     if(!rm){ addEventListener('scroll',zoom,{passive:true}); addEventListener('resize',zoom); zoom(); }
   }
 
-  if(s15){ const box=s15.querySelector('.hx15-3d'); if(box){ const load=()=>import(new URL('assets/js/hx15card.js?v=2',document.baseURI).href).catch(()=>{});
+  if(s15){ const box=s15.querySelector('.hx15-3d'); if(box){ const load=()=>import(new URL('assets/js/hx15card.js?v=3',document.baseURI).href).catch(()=>{});
     if('IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); load(); } },{rootMargin:'150% 0px'}); io.observe(s15); } else load(); } }
 
   // 4) feature slider: squares, mouse drag / swipe with follow, arrow keys

@@ -18,7 +18,7 @@ if (box && !box.dataset.on) {
   const pivot = new THREE.Group(); scene.add(pivot);
   const CW = 0.0856, CH = 0.054;
 
-  const RX = 0.04, RY = -0.2, RZ = 0.03;   // resting pose: almost front-on, right edge a touch closer
+  const RX = 0.04, RY = -0.2, RZ = 0.03;   // starting pose: almost front-on, right edge a touch closer
   let rx = RX, ry = RY, vx = 0, vy = 0, drag = false, lx = 0, ly = 0, t0 = performance.now(), touched = false, vis = false, raf = 0;
   const fit = () => {
     const w = box.clientWidth, h = box.clientHeight; if (!w || !h) return;
@@ -32,9 +32,7 @@ if (box && !box.dataset.on) {
   const frame = () => {
     raf = 0; if (!vis) return;
     if (!drag) {
-      ry += vy; rx += vx; vy *= .93; vx *= .88;
-      if (Math.abs(vy) < .002) { const tgt = RY + Math.round((ry - RY) / (Math.PI * 2)) * Math.PI * 2; ry += (tgt - ry) * .06; }   // after a spin, settle back to the resting pose
-      rx += (RX - rx) * .06;
+      ry += vy; rx += vx; vy *= .94; vx *= .9;   // free: it stays wherever you leave it (starts in the resting pose)
     }
     pivot.rotation.set(rx, ry, RZ);
     R.render(scene, cam); kick();
@@ -49,7 +47,7 @@ if (box && !box.dataset.on) {
 
   box.addEventListener('pointerdown', e => { if (e.button > 0) return; drag = true; touched = true; lx = e.clientX; ly = e.clientY; vx = vy = 0; box.classList.add('grab'); try { box.setPointerCapture(e.pointerId); } catch (_) {} });
   box.addEventListener('pointermove', e => { if (!drag) return; const dx = e.clientX - lx, dy = e.clientY - ly; lx = e.clientX; ly = e.clientY;
-    vy = dx * .012; vx = dy * .008; ry += vy; rx = Math.max(-1.1, Math.min(1.1, rx + vx)); kick(); });
+    vy = dx * .012; vx = dy * .008; ry += vy; rx += vx; kick(); });
   const up = () => { drag = false; box.classList.remove('grab'); };
   box.addEventListener('pointerup', up); box.addEventListener('pointercancel', up); box.addEventListener('lostpointercapture', up);
   if ('ResizeObserver' in window) new ResizeObserver(fit).observe(box); addEventListener('resize', fit);
