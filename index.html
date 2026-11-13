@@ -2834,6 +2834,23 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 /* 05 dimensions: every box the same height */
 @media (min-width:681px){ #pdPage #hpd-numbers .hpd-nums{grid-auto-rows:max(150px,calc((100vh - 340px) / 3));} #pdPage #hpd-numbers .hpd-num{overflow:hidden;} }
 </style>
+
+<style id="update-2026-11-13-unfold-copy">
+/* 04 Work, unfolded — copy moves like the home manifesto: each line blurs in (staggered), blurs out upward */
+#pdPage #hxUnfold .hxu-bl{display:block; opacity:0; transform:translateY(.6em); filter:blur(8px);
+  transition:opacity .55s ease, transform .8s cubic-bezier(.22,1,.36,1), filter .6s ease; transition-delay:calc(var(--i)*120ms);}
+#pdPage #hxUnfold .hxu-copy.on .hxu-bl{opacity:1; transform:none; filter:none;}
+#pdPage #hxUnfold .hxu-copy:not(.on) .hxu-bl{transform:translateY(-.5em); transition-delay:0s; transition-duration:.35s,.45s,.35s;}
+#pdPage #hxUnfold .hxu-copy:not(.on){pointer-events:none;}
+@media (min-width:681px){
+  /* left block: same spot as the home manifesto's left text */
+  #pdPage #hxUnfold .hxu-l{right:calc(50% + 50vh * .60 + 40*var(--u)) !important;}
+  /* right block: same spot and type as the home manifesto's right text, aligned right */
+  #pdPage #hxUnfold .hxu-r{left:calc(50% + 50vh * .60 + 40*var(--u)) !important; max-width:none !important; text-align:right !important;}
+  #pdPage #hxUnfold .hxu-r .hxu-p{font-family:var(--grotesk) !important; font-weight:500 !important; font-size:calc(17*var(--u)) !important; line-height:1.25 !important; letter-spacing:-0.01em !important; color:#C9C9C9 !important;}
+}
+@media (prefers-reduced-motion:reduce){ #pdPage #hxUnfold .hxu-bl{opacity:1; transform:none; filter:none; transition:none;} }
+</style>
 </head>
 <body>
 
@@ -3406,11 +3423,11 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     <div class="hxu-sticky">
       <div class="hxu-copy">
         <div class="hxu-l">
-          <p class="hxu-eb reveal">Portable Workspace</p>
-          <h2 class="hxu-h reveal d1" id="hxu-h"><span class="hxu-hl">Work,</span> <span class="hxu-hl">unfolded.</span></h2>
+          <p class="hxu-eb"><span class="hxu-bl" style="--i:0">Portable Workspace</span></p>
+          <h2 class="hxu-h" id="hxu-h"><span class="hxu-hl hxu-bl" style="--i:1">Work,</span> <span class="hxu-hl hxu-bl" style="--i:2">unfolded.</span></h2>
         </div>
         <div class="hxu-r">
-          <p class="hxu-p reveal d2" data-words><span class="hxu-ln">A complete workspace in one fold, 1.2&nbsp;kg.</span> <span class="hxu-ln">It opens in one motion for 11–16&Prime; laptops.</span></p>
+          <p class="hxu-p"><span class="hxu-ln hxu-bl" style="--i:0">A complete workspace in one fold, 1.2&nbsp;kg.</span> <span class="hxu-ln hxu-bl" style="--i:1">It opens in one motion for 11–16&Prime; laptops.</span></p>
         </div>
       </div>
       <div class="hxu-a"><img class="hxu-img" src="assets/product/work-unfolded.webp" alt="HIN-001 스탠드에 거치된 노트북 — 라이트 바 모듈과 후면 서포트가 펼쳐진 모습" decoding="async"></div>
@@ -4781,7 +4798,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   addEventListener('hxu-gl-ready',useGL);
   if(!reduce && 'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting) && desk.matches){ io.disconnect(); import(new URL('assets/js/hxu3d.js?v=9',document.baseURI).href).catch(()=>{}); } },{rootMargin:'150% 0px'}); io.observe(sec); }
   const mode=()=>{ const st=!desk.matches||reduce; if(st!==isStatic){ isStatic=st; sec.classList.toggle('static',st);
-      if(st){ A.style.transform=S.style.transform=''; ['--co','--cy','--va','--vb','--zs'].forEach(k=>{ copy.style.removeProperty(k); VA.style.removeProperty(k); VB.style.removeProperty(k); SI.style.removeProperty(k); }); D.style.removeProperty('--do'); D.style.removeProperty('--dy'); rv.forEach(e=>e.classList.add('in')); } }
+      copy.classList.toggle('on',st); if(st){ A.style.transform=S.style.transform=''; ['--co','--cy','--va','--vb','--zs'].forEach(k=>{ copy.style.removeProperty(k); VA.style.removeProperty(k); VB.style.removeProperty(k); SI.style.removeProperty(k); }); D.style.removeProperty('--do'); D.style.removeProperty('--dy'); rv.forEach(e=>e.classList.add('in')); } }
     if(st) mark.style.height=D.offsetHeight+'px'; else mark.style.height=''; sec.classList.add('ready'); };
   let seekN=0; const VEND=5.0; /* the settled frame (HERE I AM NOW) — thumbnail before, and where the zoom starts */
   if(VID){ VID.loop=false; const toEnd=()=>{ try{ VID.currentTime=VEND; }catch(_){} }; if(VID.readyState>=1) toEnd(); else VID.addEventListener('loadedmetadata',toEnd,{once:true});
@@ -4808,7 +4825,8 @@ document.addEventListener('touchstart',()=>{},{passive:true});
     if(!gl){ A.style.transform=homo(LQ,Q); S.style.transform=homo(SQ,Q); }
     else window.__hxuGL.draw({vw,vh,ax:0,ay:top,aw:vw,ah:Math.min(ah,bw/AR*1.05),t1,t2,zs:1+.16*eio(seg(p,.28,.74)),vf,tick:VID?VID.currentTime.toFixed(3)+':'+seekN:0});
     S.style.setProperty('--vf',vf.toFixed(3)); SI.style.setProperty('--zs',(1+.16*eio(seg(p,.28,.74))).toFixed(4));
-    const c=seg(p,.02,.12); copy.style.setProperty('--co',(1-c).toFixed(3)); copy.style.setProperty('--cy',(-36*eo(c)).toFixed(1)+'px'); copy.style.pointerEvents=c>.5?'none':'';
+    /* copy: lines blur in one after another, and blur out upward as the camera starts moving (same as the home manifesto) */
+    copy.classList.toggle('on', r.top<vh*.5 && p<.07);
     VA.style.setProperty('--va',(.5*seg(p,.08,.34)+.5*seg(p,.34,.56)).toFixed(3));
     VB.style.setProperty('--vb',(.86*seg(p,.62,.74)).toFixed(3));
     const d=seg(p,.64,.76); D.style.setProperty('--do',d.toFixed(3)); D.style.setProperty('--dy',((1-eo(d))*40).toFixed(1)+'px'); D.classList.toggle('live',d>.6);
