@@ -2851,6 +2851,24 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 }
 @media (prefers-reduced-motion:reduce){ #pdPage #hxUnfold .hxu-bl{opacity:1; transform:none; filter:none; transition:none;} }
 </style>
+
+<style id="update-2026-11-17-shop01">
+/* SHOP 01 — color tiles selected like the main page swatches (dark inner gap + yellow ring) */
+#viewShop .sh-tile{box-shadow:inset 0 0 0 calc(5*var(--u)) #050506, 0 0 0 1px rgba(255,255,255,.35) !important; transition:box-shadow .3s ease, transform .3s ease;}
+#viewShop .sh-tile.on{box-shadow:inset 0 0 0 calc(5*var(--u)) #050506, 0 0 0 max(1.5px,calc(2*var(--u))) var(--dot) !important;}
+/* 01 → 02 without a seam: the background ends in the same black as 02 */
+#viewShop .shop-screen{background:linear-gradient(rgba(0,0,0,0) 62%, #000 100%), radial-gradient(75% 75% at 34% 54%, #131314 0%, #050506 62%, #000 100%) !important;}
+@media (min-width:681px){
+  /* OTHER COLORS · 02 / BLACK · PORTABLE WORKSPACE S · YOUR CONFIGURATION — one size */
+  #viewShop .sh-label, #viewShop .sc-eyebrow, #viewShop .sc-label{font-size:calc(12*var(--u)) !important; letter-spacing:calc(2.2*var(--u)) !important;}
+  /* summary line — same as the main page BRAND text (gray, size, weight) */
+  #viewShop .sc-summary{font-size:calc(15.5*var(--u)) !important; font-weight:500 !important; color:#9C9C9C !important;}
+}
+@media (max-width:680px){
+  #viewShop .sh-label, #viewShop .sc-eyebrow, #viewShop .sc-label{font-size:9px !important; letter-spacing:1.6px !important;}
+  #viewShop .sc-summary{font-weight:500 !important; color:#9C9C9C !important;}
+}
+</style>
 </head>
 <body>
 
@@ -4359,7 +4377,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       const doc=document.documentElement, max=doc.scrollHeight-innerHeight; sBar.style.transform=`scaleX(${max>0?Math.min(scrollY/max,1):0})`;
       const foot=document.querySelector('.site-footer'), fr=foot?foot.getBoundingClientRect().top:1e9;
       const fs=document.fullscreenElement||document.webkitFullscreenElement;
-      story.classList.toggle('on', fr>innerHeight*.9 && !fs && !document.querySelector('.hero.blurred, #viewProduct .ph.blurred'));
+      story.classList.toggle('on', fr>innerHeight*.9 && !fs && !document.querySelector('.hero.blurred, #viewProduct .ph.blurred') && !(v==='shop'&&cur===0)); /* shop 01: only the view toggle, the counter shows from 02 */
     };
     let tk=false; addEventListener('scroll',()=>{ if(!tk){ tk=true; requestAnimationFrame(()=>{ tk=false; update(); }); } },{passive:true});
     addEventListener('resize',update); addEventListener('hashchange',()=>setTimeout(update,900)); addEventListener('popstate',()=>setTimeout(update,900));
