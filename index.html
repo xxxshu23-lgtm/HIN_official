@@ -2869,6 +2869,17 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
   #viewShop .sc-summary{font-weight:500 !important; color:#9C9C9C !important;}
 }
 </style>
+
+<style id="update-2026-11-19-intro-fast">
+/* 인트로 단축 (~8.5s → ~3.7s): 같은 순서, 모든 전환을 짧게 */
+.dot-shape{transition:transform .5s cubic-bezier(.22,1,.36,1), background-color .5s ease, opacity .4s ease;}
+.dot-photo{transition:opacity .7s ease, filter .8s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);}
+.dot-caption{transition:opacity .6s ease, transform .7s cubic-bezier(.22,1,.36,1), filter .6s ease;}
+.dot-photo-wrap.out-cap .dot-caption{transition:opacity .5s ease, filter .5s ease; transition-delay:0s;}
+.dot-photo::after{transition:opacity .45s ease .4s;}
+.dot-intro.night.reveal{transition:background-color .4s ease;}
+.dot-intro.reveal .dot-caption{transition:transform .6s cubic-bezier(.65,0,.35,1), opacity .3s ease .1s !important;}
+</style>
 </head>
 <body>
 
@@ -3669,9 +3680,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
     const burst = () => {
       const r = dot.getBoundingClientRect();
       const sc = Math.hypot(innerWidth, innerHeight) * 2.2 / r.width;
-      dot.style.transition = 'transform .5s cubic-bezier(.7,0,.84,0)';
+      dot.style.transition = 'transform .35s cubic-bezier(.7,0,.84,0)';
       dot.style.transform = `scale(${sc})`;
-      setTimeout(()=>intro.classList.add('night'), 480);
+      setTimeout(()=>intro.classList.add('night'), 330);
     };
     // ===== 인트로 → 홈 연결: 문구는 사라지고 사진이 작아져 흰 점이 됨 → 점이 페이드 아웃 → 홈 =====
     const EASE = 'cubic-bezier(.65,0,.35,1)';
@@ -3697,24 +3708,24 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       photo.classList.add('out-cap');
       const pic = photo.querySelector('.dot-photo'), pr = pic.getBoundingClientRect();
       const dx = (cx + w/2) - (pr.left + pr.width/2), dy = (cy + h/2) - (pr.top + pr.height/2);
-      pic.style.transition = `transform 1.6s ${EASE}`;
+      pic.style.transition = `transform .9s ${EASE}`;
       pic.style.transform = `translate(${dx}px, ${dy}px) scale(${w/pr.width}, ${h/pr.height})`;
       pic.classList.add('to-dot');
       // 2) 흰 점이 된 사진은 그 자리에서 페이드 아웃
-      setTimeout(()=>{ pic.style.transition = 'opacity .6s ease'; pic.style.opacity = '0'; }, 1650);
+      setTimeout(()=>{ pic.style.transition = 'opacity .35s ease'; pic.style.opacity = '0'; }, 950);
       // 4) 배경이 걷히며 홈이 드러남
-      setTimeout(()=>{ intro.classList.add('reveal'); }, 2000);
+      setTimeout(()=>{ intro.classList.add('reveal'); }, 1150);
     };
     const endOutro = () => { tracks().forEach(t=>t.style.animationPlayState=''); };
 
     const steps = [
-      [200,  ()=>dot.classList.add('grow')],
-      [1150, ()=>{ dot.style.transition='transform .22s cubic-bezier(.4,0,.2,1)'; dot.style.transform='scale(.9)'; }],   // 멈칫 (살짝 움츠렸다가)
-      [230,  burst],
-      [650,  ()=>photo.classList.add('show-photo')],   // 제자리에서 블러 → 선명
-      [1100, ()=>photo.classList.add('show-cap')],
-      [2500, outro],
-      [2700, ()=>{ stopped=true; endOutro(); finish(); scrollTo(0,0); }]
+      [80,   ()=>dot.classList.add('grow')],
+      [480,  ()=>{ dot.style.transition='transform .15s cubic-bezier(.4,0,.2,1)'; dot.style.transform='scale(.9)'; }],   // 멈칫 (살짝 움츠렸다가)
+      [160,  burst],
+      [380,  ()=>photo.classList.add('show-photo')],   // 제자리에서 블러 → 선명
+      [450,  ()=>photo.classList.add('show-cap')],
+      [900,  outro],
+      [1250, ()=>{ stopped=true; endOutro(); finish(); scrollTo(0,0); }]
     ];
     const next = i => { if (i>=steps.length||stopped) return; setTimeout(()=>{ if(stopped) return; steps[i][1](); requestAnimationFrame(()=>next(i+1)); }, steps[i][0]); };
     next(0);
