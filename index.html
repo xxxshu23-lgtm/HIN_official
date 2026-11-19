@@ -2894,6 +2894,15 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 #idleVeil{position:fixed; inset:0; z-index:998; background:#000; opacity:0; pointer-events:none; transition:opacity .8s ease;}
 #idleVeil.on{opacity:1;}
 </style>
+
+<style id="update-2026-11-20-light">
+/* corner dots: blend each square by itself instead of a full-screen layer (same look, much less to redraw while scrolling) */
+@media (min-width:681px){
+  .dots{display:contents; mix-blend-mode:normal;}
+  .dots i{position:fixed; mix-blend-mode:difference; pointer-events:none; transition:opacity .9s cubic-bezier(.22,1,.36,1);}
+  html[data-view="shop"]:not(.shop-below) .dots i{opacity:0;}
+}
+</style>
 </head>
 <body>
 
@@ -3473,9 +3482,9 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
           <p class="hxu-p"><span class="hxu-ln hxu-bl" style="--i:0">A complete workspace in one fold, 1.2&nbsp;kg.</span> <span class="hxu-ln hxu-bl" style="--i:1">It opens in one motion for 11–16&Prime; laptops.</span></p>
         </div>
       </div>
-      <div class="hxu-a"><img class="hxu-img" src="assets/product/work-unfolded.webp" alt="HIN-001 스탠드에 거치된 노트북 — 라이트 바 모듈과 후면 서포트가 펼쳐진 모습" decoding="async"></div>
+      <div class="hxu-a"><img class="hxu-img" src="assets/product/work-unfolded.webp" alt="HIN-001 스탠드에 거치된 노트북 — 라이트 바 모듈과 후면 서포트가 펼쳐진 모습" loading="lazy" decoding="async"></div>
       <i class="hxu-veil hxu-va" aria-hidden="true"></i>
-      <div class="hxu-scr" aria-hidden="true"><video class="hxu-vid" src="assets/product/unfold-screen.mp4?v=1" muted playsinline preload="auto" disablepictureinpicture></video></div>
+      <div class="hxu-scr" aria-hidden="true"><video class="hxu-vid" src="assets/product/unfold-screen.mp4?v=1" muted playsinline preload="none" disablepictureinpicture></video></div>
       <i class="hxu-veil hxu-vb" aria-hidden="true"></i>
       <section class="hpd-blk hxu-dims" id="hpd-numbers" aria-label="Dimensions">
         <div class="hpd-label hxr">Dimensions</div>
@@ -4897,7 +4906,11 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   const warm=()=>document.querySelectorAll('img[loading="lazy"]').forEach((im,k)=>setTimeout(()=>{ im.loading='eager'; },k*60));
   /* 3D files + video for the shop, fetched once the page is idle so they are ready before they are scrolled to */
   const warm3d=()=>{ if(!matchMedia('(min-width:681px)').matches) return; ['assets/3d/hin-unfold.glb.gz','assets/3d/hin-id-card.glb.gz'].forEach((u,k)=>setTimeout(()=>fetch(u).catch(()=>{}),2500+k*800)); };
-  const go=()=>{ ('requestIdleCallback' in window)?requestIdleCallback(warm,{timeout:2500}):setTimeout(warm,1200); setTimeout(warm3d,1500); };
+  /* shop screen video: not fetched during the home page's first load; fetched right away on the shop, otherwise once the page is idle */
+  const vidOn=()=>{ const v=document.querySelector('#hxUnfold .hxu-vid'); if(v && v.preload!=='auto'){ v.preload='auto'; v.load(); } };
+  const isShop=()=>document.documentElement.dataset.view==='shop'||/shop/.test(location.hash);
+  addEventListener('hashchange',()=>{ if(isShop()) vidOn(); });
+  const go=()=>{ ('requestIdleCallback' in window)?requestIdleCallback(warm,{timeout:2500}):setTimeout(warm,1200); setTimeout(warm3d,1500); if(isShop()) vidOn(); else setTimeout(vidOn,4000); };
   if(document.readyState==='complete') go(); else addEventListener('load',go,{once:true});
   /* 06/07 pointer lines: keep a 1px stroke in the 1440-wide drawing whatever the screen width */
   const sw=()=>document.documentElement.style.setProperty('--hxsw',(1.8*1440/Math.max(1,innerWidth)).toFixed(4)); sw(); addEventListener('resize',sw);
@@ -4937,19 +4950,18 @@ document.addEventListener('touchstart',()=>{},{passive:true});
 })();
 </script>
 <script>
-  // ===== 대기 모드: 아무도 안 만지면 20초 뒤, 한 화면씩 넘기며 보여줌 (화면마다 6초 머묾 · 만지면 바로 멈춤) — 홈·샵 =====
+  // ===== 대기 모드: 아무도 안 만지면 20초 뒤, 한 화면씩 넘기며 보여줌 (화면마다 6초 머묾 · 만지면 바로 멈춤) — 홈만 =====
   (() => {
     const IDLE=20000, HOLD=6000, html=document.documentElement, vh=()=>innerHeight;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const veil=document.createElement('div'); veil.id='idleVeil'; veil.setAttribute('aria-hidden','true'); document.body.appendChild(veil);
-    const CH={ home:['#heroPinWrap','#productRise','#hingeGallery','section.slider.second','#magStack','section.slider.first','#aboutSection'],
-               shop:['#s_viewWrap','#hpd-intro','#hpd-fold','#hxUnfold','#hxuDimMark','#hxFeatures','#hxSpec','#shopAboutSlot'] };
+    const CH={ home:['#heroPinWrap','#productRise','#hingeGallery','section.slider.second','#magStack','section.slider.first','#aboutSection'] };
     let last=performance.now(), auto=false, raf=0, tmr=0, stops=[];
     const view=()=>html.dataset.view||'home';
     const stop=()=>{ last=performance.now(); if(!auto) return; auto=false; cancelAnimationFrame(raf); clearTimeout(tmr); veil.classList.remove('on'); };
     ['pointerdown','wheel','keydown','touchstart'].forEach(t=>addEventListener(t,stop,{passive:true,capture:true}));
     let mx=null,my=null; addEventListener('pointermove',e=>{ if(mx!==null && Math.abs(e.clientX-mx)+Math.abs(e.clientY-my)<6) return; mx=e.clientX; my=e.clientY; stop(); },{passive:true});
-    const ok=()=>{ const v=view(); return (v==='home'||v==='shop') && !html.classList.contains('pre-active') && !document.fullscreenElement && !document.webkitFullscreenElement
+    const ok=()=>{ const v=view(); return v==='home' && !html.classList.contains('pre-active') && !document.fullscreenElement && !document.webkitFullscreenElement
       && !document.querySelector('.pd-zoom.on, .hero.is-full'); };   /* the hero's INFO blur is its normal state, so it doesn't block */
     const topOf=el=>Math.round(el.getBoundingClientRect().top+scrollY);
     /* stops: each chapter start, plus one stop per screen inside tall chapters;
