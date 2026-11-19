@@ -2041,7 +2041,7 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 .mag-ui.mag-link .mag-go{font-style:normal; font-weight:500; color:var(--dot); margin-left:.35em; transition:opacity .3s ease;}
 .mag-ui.mag-link:hover .mag-go{opacity:.7;}
 /* 커서 사진: 더 천천히 뜨고, 천천히 사라짐 */
-.about-tiles .hero-tile{transition:opacity 1.2s ease, filter 1.2s ease, transform 1.5s cubic-bezier(.22,1,.36,1) !important;}
+.about-tiles .hero-tile{transition:opacity .7s ease, filter .7s ease, transform .9s cubic-bezier(.22,1,.36,1) !important;}  /* appears faster (was 1.2s / 1.5s) */
 .about-tiles .hero-tile.out{transition:opacity 1.6s ease, filter 1.6s ease, transform 2s cubic-bezier(.22,1,.36,1) !important;}
 </style>
 <style id="links2-1025">
@@ -3928,6 +3928,8 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
       { w:170, h:95, img:'assets/x-42f6792b25.webp' },
       { w:128, h:170, img:'assets/x-0089035fd5.webp' }
     ];
+    /* load the photos before the section is reached, so each one shows the moment it is placed */
+    if('IntersectionObserver' in window){ const pre=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ pre.disconnect(); specs.forEach(sp=>{ const im=new Image(); im.decoding='async'; im.src=sp.img; }); } },{rootMargin:'150% 0px'}); pre.observe(pin); }
     // 사진 수와 관계없이 8장 틀을 돌려 쓰고, 놓일 때마다 다음 사진으로
     const tiles=Array.from({length:8},()=>{ const el=document.createElement('div'); el.className='hero-tile'; wrap.appendChild(el); return {el, timer:null}; });
     let pic=0;
