@@ -2880,6 +2880,20 @@ html[data-view="shop"] #navShop span, html[data-view="shop"] #navShop .nav-sq{co
 .dot-intro.night.reveal{transition:background-color .4s ease;}
 .dot-intro.reveal .dot-caption{transition:transform .6s cubic-bezier(.65,0,.35,1), opacity .3s ease .1s !important;}
 </style>
+
+<style id="update-2026-11-19-perf">
+/* 스크롤 부담 줄이기 — 보이는 모습은 그대로, 안 보일 때만 흐림 계산을 끔 */
+/* 04 Look: 꺼진 사진(투명+블러 14px, 824×820)은 사라진 뒤 아예 그리지 않음 */
+#hxLook .hxl-m{visibility:hidden; transition:opacity .75s ease, transform 1.4s cubic-bezier(.16,1,.3,1), filter .9s ease, visibility 0s linear 1.4s;}
+#hxLook .hxl-m.on{visibility:visible; transition:opacity .75s ease, transform 1.4s cubic-bezier(.16,1,.3,1), filter .9s ease, visibility 0s linear 0s;}
+#hxLook .hxl-m.out{transition:opacity .55s ease, transform .9s cubic-bezier(.4,0,.2,1), filter .6s ease, visibility 0s linear 1s;}
+/* 05 Dimensions: 박스가 아직 투명할 때는 뒤 유리 흐림(24px)을 계산하지 않음 */
+#pdPage .hxu-dims:not(.vis) .hxr{backdrop-filter:none !important; -webkit-backdrop-filter:none !important; visibility:hidden;}
+#pdPage .hxu.static .hxu-dims .hxr{visibility:visible;}
+/* 대기 모드 화면 전환용 */
+#idleVeil{position:fixed; inset:0; z-index:998; background:#000; opacity:0; pointer-events:none; transition:opacity .8s ease;}
+#idleVeil.on{opacity:1;}
+</style>
 </head>
 <body>
 
@@ -4858,7 +4872,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
     copy.classList.toggle('on', r.top<vh*.5 && p<.07);
     VA.style.setProperty('--va',(.5*seg(p,.08,.34)+.5*seg(p,.34,.56)).toFixed(3));
     VB.style.setProperty('--vb',(.86*seg(p,.62,.74)).toFixed(3));
-    const d=seg(p,.64,.76); D.style.setProperty('--do',d.toFixed(3)); D.style.setProperty('--dy',((1-eo(d))*40).toFixed(1)+'px'); D.classList.toggle('live',d>.6);
+    const d=seg(p,.64,.76); D.style.setProperty('--do',d.toFixed(3)); D.style.setProperty('--dy',((1-eo(d))*40).toFixed(1)+'px'); D.classList.toggle('live',d>.6); D.classList.toggle('vis',d>0);
     rv.forEach((e,i)=>e.classList.toggle('in',p>.66+i*.018)); };
   const on=()=>{ if(!raf) raf=requestAnimationFrame(paint); };
   let vis=false; if('IntersectionObserver' in window) new IntersectionObserver(es=>{ vis=es.some(e=>e.isIntersecting); if(vis) loop(); }).observe(sec);
@@ -4921,6 +4935,56 @@ document.addEventListener('touchstart',()=>{},{passive:true});
   if('ResizeObserver' in window){ const ro=new ResizeObserver(()=>requestAnimationFrame(fit)); made.forEach(m=>ro.observe(m.inn)); }
   addEventListener('resize',fit); addEventListener('scroll',draw,{passive:true}); desk.addEventListener?.('change',fit); fit();
 })();
+</script>
+<script>
+  // ===== 대기 모드: 아무도 안 만지면 20초 뒤, 한 화면씩 넘기며 보여줌 (화면마다 6초 머묾 · 만지면 바로 멈춤) — 홈·샵 =====
+  (() => {
+    const IDLE=20000, HOLD=6000, html=document.documentElement, vh=()=>innerHeight;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const veil=document.createElement('div'); veil.id='idleVeil'; veil.setAttribute('aria-hidden','true'); document.body.appendChild(veil);
+    const CH={ home:['#heroPinWrap','#productRise','#hingeGallery','section.slider.second','#magStack','section.slider.first','#aboutSection'],
+               shop:['#s_viewWrap','#hpd-intro','#hpd-fold','#hxUnfold','#hxuDimMark','#hxFeatures','#hxSpec','#shopAboutSlot'] };
+    let last=performance.now(), auto=false, raf=0, tmr=0, stops=[];
+    const view=()=>html.dataset.view||'home';
+    const stop=()=>{ last=performance.now(); if(!auto) return; auto=false; cancelAnimationFrame(raf); clearTimeout(tmr); veil.classList.remove('on'); };
+    ['pointerdown','wheel','keydown','touchstart'].forEach(t=>addEventListener(t,stop,{passive:true,capture:true}));
+    let mx=null,my=null; addEventListener('pointermove',e=>{ if(mx!==null && Math.abs(e.clientX-mx)+Math.abs(e.clientY-my)<6) return; mx=e.clientX; my=e.clientY; stop(); },{passive:true});
+    const ok=()=>{ const v=view(); return (v==='home'||v==='shop') && !html.classList.contains('pre-active') && !document.fullscreenElement && !document.webkitFullscreenElement
+      && !document.querySelector('.pd-zoom.on, .hero.is-full'); };   /* the hero's INFO blur is its normal state, so it doesn't block */
+    const topOf=el=>Math.round(el.getBoundingClientRect().top+scrollY);
+    /* stops: each chapter start, plus one stop per screen inside tall chapters;
+       06 features stops on each slide, 04 unfolded holds longer while the screen video plays */
+    const build=()=>{
+      const v=view(), root=document.getElementById(v==='shop'?'viewShop':'viewHome'), H=vh(), max=html.scrollHeight-H, desk=matchMedia('(min-width:681px)').matches;
+      const S=[], keep=[];   // keep = ranges scrolled through in one go (no extra stops)
+      const add=(y,hold=HOLD)=>{ y=Math.max(0,Math.min(Math.round(y),max)); S.push({y,hold}); };
+      (CH[v]||[]).forEach(q=>{ const el=root&&root.querySelector(q); if(!el) return; const w=el.closest('.chs-pin')||el, t=topOf(w), span=Math.max(0,w.offsetHeight-H);
+        add(t);
+        if(desk && el.id==='hxFeatures'){ [.07,.225,.375,.535,.71,.9].forEach(f=>add(t+span*f)); keep.push([t,t+span]); }
+        else if(desk && el.id==='hxUnfold'){ const sq=el.querySelector('.hxu-seq')||el, s2=Math.max(0,sq.offsetHeight-H), t2=topOf(sq); add(t2+s2*.37,8000); add(t2+s2); keep.push([t2,t2+s2]); }
+      });
+      S.sort((a,b)=>a.y-b.y);
+      const out=[]; S.forEach(s=>{ const p=out[out.length-1]; if(p && Math.abs(p.y-s.y)<H*.25){ p.hold=Math.max(p.hold,s.hold); return; } out.push(s); });
+      if(!out.length || out[out.length-1].y<max-H*.25) out.push({y:max,hold:HOLD});
+      const fill=[]; out.forEach((s,i)=>{ fill.push(s); const n=out[i+1]; if(!n) return; const gap=n.y-s.y;
+        if(gap>H*1.3 && !keep.some(([a,b])=>s.y>=a-2 && n.y<=b+2)){ const k=Math.ceil(gap/H); for(let j=1;j<k;j++) fill.push({y:Math.round(s.y+gap*j/k),hold:HOLD}); } });
+      return fill;
+    };
+    const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+    const glide=(y1,done)=>{ const y0=scrollY, d=y1-y0, dur=Math.min(6000,1100+900*Math.abs(d)/vh()), t0=performance.now();
+      const f=now=>{ if(!auto) return; if(!ok()){ stop(); return; } const k=Math.min(1,(now-t0)/dur); scrollTo({top:y0+d*ease(k),behavior:'instant'}); if(k<1) raf=requestAnimationFrame(f); else done(); };
+      raf=requestAnimationFrame(f); };
+    const next=()=>{ if(!auto) return; if(!ok()){ stop(); return; }
+      const s=stops.find(s=>s.y>scrollY+4);
+      if(!s){ // end: fade to black, back to the top, show it again
+        veil.classList.add('on'); tmr=setTimeout(()=>{ if(!auto) return; scrollTo({top:0,behavior:'instant'}); veil.classList.remove('on'); stops=build(); tmr=setTimeout(next,HOLD); },900); return; }
+      glide(s.y,()=>{ tmr=setTimeout(next,s.hold); });
+    };
+    const start=()=>{ auto=true; stops=build(); next(); };
+    setInterval(()=>{ if(!auto && !document.hidden && performance.now()-last>IDLE && ok()) start(); }, 1000);
+    document.addEventListener('visibilitychange',()=>{ if(document.hidden) stop(); });
+    addEventListener('hashchange',stop);
+  })();
 </script>
 </body>
 </html>
